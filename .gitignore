@@ -1,0 +1,48 @@
+# Node.js dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Vite cache
+.vite/
+
+# Dependency directories
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Environment files
+.env
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Miscellaneous
+*.log
+*.tmp
+
+# Coverage directory used by testing tools
+coverage/
+
+# Temporary files created by editors or IDEs
+*.swp
+*.swo
+*~
+
+# NPM package files
+*.tgz
+
+# React Native specific
+.expo/
