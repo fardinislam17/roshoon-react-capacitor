@@ -1,0 +1,10 @@
+[build]
+  # The directory where the production-ready files are located after the build
+  publish = "dist"
+  # The command to build your project
+  command = "npm run build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
