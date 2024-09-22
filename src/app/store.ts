@@ -1,10 +1,11 @@
 import { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { roshoonsApi } from "src/features/roshoonsApi";
+import { roshoonsApi } from "src/features/roshoon/roshoonsApi";
 import { sessionSlice } from "src/features/session";
+import roshoonsSlice from "src/features/roshoon/roshoonsSlice";
 
-const rootReducer = combineSlices(roshoonsApi, sessionSlice);
+const rootReducer = combineSlices(roshoonsApi, roshoonsSlice, sessionSlice);
 
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
@@ -12,12 +13,34 @@ export type RootState = ReturnType<typeof rootReducer>;
 // The store setup is wrapped in `makeStore` to allow reuse
 // when setting up tests that need the same store config
 export const makeStore = (preloadedState?: Partial<RootState>) => {
+  const appMiddleWare = [roshoonsApi.middleware];
   const store = configureStore({
     reducer: rootReducer,
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) => {
-      return getDefaultMiddleware();
+      const defaultMiddleware = import.meta.env.VITEST
+        ? getDefaultMiddleware({
+            serializableCheck: false,
+            immutableChcek: false,
+          })
+        : getDefaultMiddleware({
+            immutableCheck: {
+              warnAfter: 200,
+            },
+            serializableCheck: {
+              warnAfter: 200,
+              ignoredActionPaths: [
+                "payload.file",
+                "meta.args",
+                "meta.args.originalArgs",
+                "meta.baseQueryMeta",
+              ],
+              ignoredPaths: ["api.mutation", "meta.args.originalArgs"],
+            },
+          });
+
+      return defaultMiddleware.concat(...appMiddleWare);
     },
     preloadedState,
   });
