@@ -1,26 +1,26 @@
-import { styled, Box, Container } from "@mui/material";
-import RoshoonSkeleton from "./RoshoonSkeleton";
-import { useNavigate, Route, Routes } from "react-router-dom";
-import { useEffect } from "react";
-import * as paths from "./paths";
-import AppBar from "src/features/appBar";
-import Footer from "src/features/footer";
-import ErrorBoundary from "src/features/errorBoundary";
-import EntitledElement from "./components/EntitledElement";
-import Roshoon from "src/features/roshoon";
+import { styled, Box, Container } from '@mui/material';
+import RoshoonSkeleton from './RoshoonSkeleton';
+import { useNavigate, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import * as paths from './paths';
+import AppBar from './features/appBar/AppBar';
+import Footer from './features/footer';
+import ErrorBoundary from './features/errorBoundary';
+import EntitledElement from './components/EntitledElement';
+import Roshoon from './features/roshoon';
 
 const AppRoot = styled(Box)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  height: "100vh",
-  width: "100%",
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100vh',
+  width: '100%',
   minHeight: 500,
 }));
 
 const MainContent = styled(Container)(({ theme }) => ({
-  flex: "1 1 auto",
-  display: "flex",
-  flexDirection: "column",
+  flex: '1 1 auto',
+  display: 'flex',
+  flexDirection: 'column',
   marginTop: 80,
 }));
 
@@ -42,7 +42,7 @@ const App = () => {
             path={paths.homepage}
             element={
               <ErrorBoundary>
-                <EntitledElement role={"dev"} fallback={<RoshoonSkeleton />}>
+                <EntitledElement role={'dev'} fallback={<RoshoonSkeleton />}>
                   <Roshoon />
                 </EntitledElement>
               </ErrorBoundary>

@@ -1,18 +1,14 @@
-import React, { useState, ReactNode, useEffect } from "react";
+import React, { useState, ReactNode, useEffect } from 'react';
 
-interface ErrorBoundaryProps {
-  children: ReactNode;
-}
-
-const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
+const ErrorBoundary = ({ children }) => {
   const [hasError, setHasError] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState(null);
 
   // Error handling function for the boundary
-  const handleError = (error: Error) => {
+  const handleError = (error) => {
     setHasError(true);
     setError(error);
-    console.error("Error caught by ErrorBoundary:", error);
+    console.error('Error caught by ErrorBoundary:', error);
   };
 
   // Reset error when children change, useful when the error is fixed
@@ -25,14 +21,14 @@ const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
 
   // Error boundary logic using event listener for runtime errors
   useEffect(() => {
-    const handleWindowError = (event: ErrorEvent) => {
+    const handleWindowError = (event) => {
       handleError(event.error);
     };
 
-    window.addEventListener("error", handleWindowError);
+    window.addEventListener('error', handleWindowError);
 
     return () => {
-      window.removeEventListener("error", handleWindowError);
+      window.removeEventListener('error', handleWindowError);
     };
   }, []);
 

@@ -1,5 +1,5 @@
-import React from "react";
-import { Stack, Skeleton } from "@mui/material";
+import React from 'react';
+import { Stack, Skeleton } from '@mui/material';
 
 const RoshoonSkeleton = () => {
   return (

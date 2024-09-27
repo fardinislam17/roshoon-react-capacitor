@@ -1,5 +1,5 @@
-import React from "react";
-import { Stack, styled, AppBar as MuiAppBar, Toolbar } from "@mui/material";
+import React from 'react';
+import { Stack, styled, AppBar as MuiAppBar, Toolbar } from '@mui/material';
 
 const BarHeader = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.white,
