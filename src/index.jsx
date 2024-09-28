@@ -10,6 +10,7 @@ import './i18n';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.roshoon';
 
+
 const container = document.getElementById('root');
 
 if (container) {
