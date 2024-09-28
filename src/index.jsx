@@ -4,6 +4,12 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './app/store';
 import { BrowserRouter } from 'react-router-dom';
+import './index.css';
+import './i18n';
+
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme/theme.roshoon';
+
 
 const container = document.getElementById('root');
 
@@ -14,7 +20,9 @@ if (container) {
     <React.StrictMode>
       <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
         </Provider>
       </BrowserRouter>
     </React.StrictMode>
