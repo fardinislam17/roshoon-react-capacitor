@@ -1,7 +1,10 @@
 import React from 'react';
+import TailwindExample from '@/documentation/TailwindExample';
 
 const Roshoon = () => {
-  return <>Test</>;
+  return (
+    <TailwindExample />
+  );
 };
 
 export default Roshoon;

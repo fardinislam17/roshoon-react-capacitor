@@ -14,7 +14,9 @@ const AppBar = () => {
   return (
     <StyledAppBar>
       <Toolbar disableGutters>
-        <BarHeader>Roshoon</BarHeader>
+        <BarHeader>
+          <h1 className='text-3xl text-slate-300 mx-3 font-bold'>Roshoon</h1>
+        </BarHeader>
       </Toolbar>
     </StyledAppBar>
   );
