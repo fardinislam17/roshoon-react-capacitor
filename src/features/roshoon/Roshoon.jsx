@@ -1,9 +1,16 @@
 import React from 'react';
-import TailwindExample from '@/documentation/TailwindExample';
+import { useSelector } from 'react-redux';
 
 const Roshoon = () => {
+  const searchText = useSelector((state) => state.roshoonsSlice?.search);
   return (
-    <TailwindExample />
+    <div>
+      <h1>{
+        searchText && searchText.length > 0
+          ? `Search results for "${searchText}"`
+          : 'Roshoon'
+      }</h1>
+    </div>
   );
 };
 
