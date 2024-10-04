@@ -1,13 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
-  chefs: [], 
+  chefs: [
+    {
+      id: 1,
+      name: 'Sam houdini',
+      deliveryAreas: ['Toronto', 'Mississauga'],
+    },
+    {
+      id: 2,
+      name: 'Ahmad bin ladin',
+      deliveryAreas: ['Toronto', 'Brampton'],
+    },
+    {
+      id: 3,
+      name: 'John Doe',
+      deliveryAreas: ['Toronto', 'Scarborough'],
+    }
+  ], 
   filteredChefs: [], 
   search: '', 
 };
 
-const roshoonsSlice = createSlice({
-  name: 'roshoonsSlice',
+const roshoonSlice = createSlice({
+  name: 'roshoon',
   initialState,
   reducers: {
     setChefs(state, action) {
@@ -15,10 +31,10 @@ const roshoonsSlice = createSlice({
       state.filteredChefs = action.payload; 
     },
     searchChefsByAddress(state, action) {
-      /* const address = action.payload.toLowerCase();
+      const address = action.payload.toLowerCase();
       state.filteredChefs = state.chefs.filter(chef =>
         chef.deliveryAreas.some(area => area.toLowerCase().includes(address))
-      ); */
+      );
       state.search = action.payload; 
     },
    
@@ -29,5 +45,5 @@ const roshoonsSlice = createSlice({
   },
 });
 
-export const { setChefs, searchChefsByAddress, clearSearch } = roshoonsSlice.actions;
-export default roshoonsSlice.reducer;
+export const { setChefs, searchChefsByAddress, clearSearch } = roshoonSlice.actions;
+export default roshoonSlice;

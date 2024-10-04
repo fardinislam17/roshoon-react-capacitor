@@ -1,6 +1,6 @@
 import React from 'react';
 import { Stack, styled, AppBar as MuiAppBar, Toolbar } from '@mui/material';
-import SearchBar from '@/components/EntitledElement/SearchBar';
+import SearchBar from '@/components/SearchBar';
 
 const BarHeader = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.white,

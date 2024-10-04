@@ -2,17 +2,16 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const Roshoon = () => {
-  //const filteredChefs = useSelector((state) => state.roshoons?.filteredChefs);
-  const search = useSelector((state) => state.roshoonsSlice.search);
-
+  const roshoon = useSelector((state) => state.roshoon);
+  console.log('search object =>', roshoon);
   return (
     <div>
-      <h1>Available Chefs {search && `for "${search}"`}</h1>
-      {/* <ul>
-        {filteredChefs?.map((chef) => (
+      <h1>Available Chefs {roshoon.search && `for "${roshoon?.search}"`}</h1>
+      <ul>
+        {roshoon.filteredChefs?.map((chef) => (
           <li key={chef.id}>{chef.name}</li>
         ))}
-      </ul> */}
+      </ul>
     </div>
   );
 };

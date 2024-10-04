@@ -1,12 +1,12 @@
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { roshoonsApi } from '../features/roshoon/roshoonsApi';
+import { roshoonApi } from '../features/roshoon/roshoonApi';
 import { sessionSlice } from '../features/session';
-import roshoonsSlice from '../features/roshoon/roshoonsSlice';
-const rootReducer = combineSlices(roshoonsApi, roshoonsSlice, sessionSlice);
+import roshoonSlice from '../features/roshoon/roshoonSlice';
+const rootReducer = combineSlices(roshoonApi, roshoonSlice, sessionSlice);
 
 export const makeStore = (preloadedState) => {
-  const appMiddleWare = [roshoonsApi.middleware];
+  const appMiddleWare = [roshoonApi.middleware];
   console.log('redux store created, ', rootReducer);
   const store = configureStore({
     reducer: rootReducer,

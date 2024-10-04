@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   searchChefsByAddress,
   clearSearch,
-} from '../../features/roshoon/roshoonsSlice';
+} from '../features/roshoon/roshoonSlice';
 
 const SearchBar = () => {
   const [searchText, setSearchText] = useState('');
