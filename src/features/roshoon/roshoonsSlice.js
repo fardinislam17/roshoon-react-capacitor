@@ -15,10 +15,10 @@ const roshoonsSlice = createSlice({
       state.filteredChefs = action.payload; 
     },
     searchChefsByAddress(state, action) {
-      const address = action.payload.toLowerCase();
+      /* const address = action.payload.toLowerCase();
       state.filteredChefs = state.chefs.filter(chef =>
         chef.deliveryAreas.some(area => area.toLowerCase().includes(address))
-      );
+      ); */
       state.search = action.payload; 
     },
    

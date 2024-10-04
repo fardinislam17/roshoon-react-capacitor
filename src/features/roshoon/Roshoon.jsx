@@ -2,14 +2,17 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 const Roshoon = () => {
-  const searchText = useSelector((state) => state.roshoonsSlice?.search);
+  //const filteredChefs = useSelector((state) => state.roshoons?.filteredChefs);
+  const search = useSelector((state) => state.roshoonsSlice.search);
+
   return (
     <div>
-      <h1>{
-        searchText && searchText.length > 0
-          ? `Search results for "${searchText}"`
-          : 'Roshoon'
-      }</h1>
+      <h1>Available Chefs {search && `for "${search}"`}</h1>
+      {/* <ul>
+        {filteredChefs?.map((chef) => (
+          <li key={chef.id}>{chef.name}</li>
+        ))}
+      </ul> */}
     </div>
   );
 };

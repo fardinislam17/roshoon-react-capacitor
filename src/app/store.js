@@ -7,6 +7,7 @@ const rootReducer = combineSlices(roshoonsApi, roshoonsSlice, sessionSlice);
 
 export const makeStore = (preloadedState) => {
   const appMiddleWare = [roshoonsApi.middleware];
+  console.log('redux store created, ', rootReducer);
   const store = configureStore({
     reducer: rootReducer,
 
