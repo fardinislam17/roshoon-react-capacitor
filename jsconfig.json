@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // Root directory of the project
+    "target": "ESNext", // Modern JavaScript syntax
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Libraries for DOM and ESNext support
+    "module": "ESNext", // Use ESNext modules
+    "paths": {
+      "src/*": ["./src/*"] // Map "src" to the "src" directory
+    },
+    "jsx": "react", // Support for JSX (React projects)
+    "resolveJsonModule": true, // Allow importing JSON files
+    "moduleResolution": "node"
+  },
+  "include": ["src"], // Include only the src folder
+  "exclude": ["node_modules", "dist"] // Exclude these folders
+}
