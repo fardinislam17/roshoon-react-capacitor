@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'url';
+import path from 'path';
 
 export default defineConfig({
   base: '/',
@@ -10,7 +11,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)), // Correct alias configuration
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      src: path.resolve(__dirname, './src'),
     },
   },
   server: {

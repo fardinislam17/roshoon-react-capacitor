@@ -10,7 +10,10 @@ import './i18n';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.roshoon';
 
-
+if (import.meta.env.DEV) {
+  const { enableMockApi } = await import('./mock/mockApi');
+  await enableMockApi();
+}
 const container = document.getElementById('root');
 
 if (container) {
