@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  authenticationType: null, //null, 'chef', 'user'
   user: null,
 };
 
@@ -11,8 +12,15 @@ export const sessionSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+    setAuthenticationType: (state, action) => {
+      if(action.payload === 'chef' || action.payload === 'user'){
+        state.authenticationType = action.payload;
+      }else{
+        state.authenticationType = null;
+      }
+    },
   },
 });
-export const { setUser } = sessionSlice.actions;
+export const { setUser, setAuthenticationType } = sessionSlice.actions;
 
-export const selectUser = (state) => state.session.user;
+export default sessionSlice;
