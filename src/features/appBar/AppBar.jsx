@@ -1,5 +1,6 @@
 import React from 'react';
 import { Stack, styled, AppBar as MuiAppBar, Toolbar } from '@mui/material';
+import SearchBar from '@/components/SearchBar';
 
 const BarHeader = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.white,
@@ -13,10 +14,13 @@ const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
 const AppBar = () => {
   return (
     <StyledAppBar>
-      <Toolbar disableGutters>
+      <Toolbar disableGutters className='flex justify-between'>
         <BarHeader>
-          <h1 className='text-3xl text-slate-300 mx-3 font-bold'>Roshoon</h1>
+          <h1 className="text-3xl w-full text-slate-300 mx-3 font-bold">
+            Roshoon
+          </h1>
         </BarHeader>
+        <SearchBar />
       </Toolbar>
     </StyledAppBar>
   );

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const roshoonsApi = createApi({
+export const roshoonApi = createApi({
   keepUnusedDataFor: import.meta.env.VITEST ? 0 : 60,
 
   tagTypes: ['MostLovedChefs'], // we will add all other api list here as tag
@@ -29,4 +29,4 @@ export const roshoonsApi = createApi({
   }),
 });
 
-export const { useGetRolesQuery } = roshoonsApi;
+export const { useGetRolesQuery } = roshoonApi;
