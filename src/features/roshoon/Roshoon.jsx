@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import SearchBar from 'src/components/SearchBar';
 const Roshoon = () => {
   const roshoon = useSelector((state) => state.roshoon);
   
@@ -21,11 +21,18 @@ const Roshoon = () => {
   }
   
   return (
-    <div>
-      <h1>Available Chefs {roshoon.search && `for "${roshoon?.search}"`}</h1>
-      <ul>
-        {findMatchedChefs()}
-      </ul>
+    <div className="flex flex-col">
+      <div className="flex flex-col justify-center w-100 h-60 bg-slate-100">
+        <div className="flex flex-col justify-center items-center w-100 gap-4">
+          <SearchBar />
+          <div>
+            <h1>
+              Available Chefs: {roshoon.search && `for "${roshoon?.search}"`}
+            </h1>
+            <ul>{findMatchedChefs()}</ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -6,9 +6,13 @@ import {
 } from '../features/roshoon/roshoonSlice';
 
 const SearchBar = () => {
-  const [searchText, setSearchText] = useState('');
+  //standard
   const dispatch = useDispatch();
-
+  
+  //state
+  const [searchText, setSearchText] = useState('');
+  
+  //function
   const handleSearch = () => {
     if (searchText.trim() !== '') {
       dispatch(searchChefsByAddress(searchText));

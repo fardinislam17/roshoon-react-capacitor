@@ -6,6 +6,7 @@ import { store } from './app/store';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import './i18n';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.roshoon';
@@ -24,7 +25,11 @@ if (container) {
       <BrowserRouter>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            <App />
+            <GoogleOAuthProvider
+              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+            >
+              <App />
+            </GoogleOAuthProvider>
           </ThemeProvider>
         </Provider>
       </BrowserRouter>
