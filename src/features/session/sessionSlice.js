@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  authenticationType: '', // '' (empty string), 'chef', 'user'
+  authenticationType: '', // roshoon, google, facebook 
   user: null,
+  userApiData: null,
+  userType: '', // (empty string), 'chef', 'user'
   error: null, // Added for error handling
 };
 
@@ -10,38 +12,50 @@ export const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload;
+    setUserApiData: (state, action) => {
+      state.userApiData = action.payload;
     },
     setAuthenticationType: (state, action) => {
       const authType = action.payload;
-      if (authType === 'chef' || authType === 'user') {
+      if (
+        authType === 'roshoon' ||
+        authType === 'google' ||
+        authType === 'facebook'
+      ) {
         state.authenticationType = authType;
       } else {
         state.authenticationType = ''; // Reset to empty if invalid
       }
     },
+    setUserType: (state, action) => {
+      const authType = action.payload;
+      if (authType === 'chef' || authType === 'user') {
+        state.userType = authType;
+      } else {
+        state.userType = ''; // Reset to empty if invalid
+      }
+    },
     login: (state, action) => {
       // Assume action.payload contains user data on successful login
       state.user = action.payload.user; // Set user info from payload
-      state.authenticationType = action.payload.type; // Set the authentication type
     },
     logout: (state) => {
       state.user = null;
-      state.authenticationType = ''; 
+      state.authenticationType = '';
     },
     loginFailed: (state, action) => {
-      state.error = action.payload; 
+      state.error = action.payload;
     },
     clearError: (state) => {
-      state.error = null; 
+      state.error = null;
     },
   },
 });
 
 export const {
-  setUser,
+  setUserApiData,
   setAuthenticationType,
+  setUserType,
   login,
   logout,
   loginFailed,

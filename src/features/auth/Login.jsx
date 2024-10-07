@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser, setAuthenticationType, login, loginFailed } from '../session';
+import { setUserApiData, setAuthenticationType, login, loginFailed } from '../session';
 import { Button, TextField, Container, Typography } from '@mui/material';
 import { FaGoogle, FaFacebook } from 'react-icons/fa'; // Using react-icons
 import { GoogleLogin } from '@react-oauth/google';
-
+import { useSelector } from 'react-redux';
 
 
 
 const Login = () => {
   const dispatch = useDispatch();
+  const session = useSelector((state) => state.session); 
   // state
   const [loginType, setLoginType] = useState(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  
   // function
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ const Login = () => {
     try {
       const response = { user: { name: username }, type: 'user' }; // Mock response
 
-      dispatch(setUser(response.user));
+      dispatch(setUserApiData(response.user));
       dispatch(setAuthenticationType(response.type));
       dispatch(login(response));
     } catch (err) {
@@ -32,9 +33,9 @@ const Login = () => {
     }
   };
 
-  const loginUserToSession = (response) => {
+  const googleAuthenticationProcess = (response) => {
     console.log(response);
-    dispatch(setUser(response));
+    dispatch(setUserApiData(response));
   };
   const errorMessage = (error) => {
     console.log(error);
@@ -105,7 +106,7 @@ const Login = () => {
             <div className="flex flex-col justify-center items-center w-full max-w-md">
               <div style={{ width: '100%', marginBottom: '16px' }}>
                 <GoogleLogin
-                  onSuccess={loginUserToSession}
+                  onSuccess={googleAuthenticationProcess}
                   onError={errorMessage}
                   style={{
                     width: '100%', // Ensures Google button takes full width
