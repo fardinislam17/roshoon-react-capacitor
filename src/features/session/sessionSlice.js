@@ -3,17 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   authenticationType: '', // roshoon, google, facebook 
   user: null,
-  userApiData: null,
   userType: '', // (empty string), 'chef', 'user'
   error: null, // Added for error handling
 };
+
+
 
 export const sessionSlice = createSlice({
   name: 'session',
   initialState,
   reducers: {
-    setUserApiData: (state, action) => {
-      state.userApiData = action.payload;
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
     setAuthenticationType: (state, action) => {
       const authType = action.payload;
@@ -37,7 +38,7 @@ export const sessionSlice = createSlice({
     },
     login: (state, action) => {
       // Assume action.payload contains user data on successful login
-      state.user = action.payload.user; // Set user info from payload
+      state.user = action.payload; // Set user info from payload
     },
     logout: (state) => {
       state.user = null;
@@ -53,7 +54,7 @@ export const sessionSlice = createSlice({
 });
 
 export const {
-  setUserApiData,
+  setUser,
   setAuthenticationType,
   setUserType,
   login,

@@ -1,45 +1,69 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUserApiData, setAuthenticationType, login, loginFailed } from '../session';
+import { setUser, setAuthenticationType, login, loginFailed } from '../session';
 import { Button, TextField, Container, Typography } from '@mui/material';
 import { FaGoogle, FaFacebook } from 'react-icons/fa'; // Using react-icons
 import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import FacebookLogin from 'react-facebook-login';
 import { useSelector } from 'react-redux';
-
-
+import axios from 'axios';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const session = useSelector((state) => state.session); 
+  const session = useSelector((state) => state.session);
   // state
   const [loginType, setLoginType] = useState(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
+  const menuAnchorRef = useRef(null);
+
   // function
-  const handleLogin = async (e) => {
+  async function handleLogin(e) {
     e.preventDefault();
 
     try {
       const response = { user: { name: username }, type: 'user' }; // Mock response
-
-      dispatch(setUserApiData(response.user));
+      dispatch(setUser(response.user));
       dispatch(setAuthenticationType(response.type));
       dispatch(login(response));
     } catch (err) {
       setError('Login failed. Please try again.');
       dispatch(loginFailed(err.message));
     }
-  };
+  }
 
-  const googleAuthenticationProcess = (response) => {
-    console.log(response);
-    dispatch(setUserApiData(response));
-  };
-  const errorMessage = (error) => {
+  function googleAuthenticationProcess(response) {
+    const token = response.credential;
+    const decoded = jwtDecode(token);
+    authorizeUserLogin('google', decoded);
+  }
+  function errorMessage(error) {
     console.log(error);
-  };
+  }
+
+  async function authorizeUserLogin(type, data) {
+    //TODO:take login data and checks if user is authorized within our db
+    dispatch(setAuthenticationType(type));
+    console.log(type, data);
+
+    if (type === 'google') {
+      dispatch(login(data));
+    }
+
+    try {
+      const response = await axios.get('/v1/auth/login', {
+        params: {
+          apiId: data.sub, 
+        },
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error('Login error:', error.response?.data || error.message);
+    }
+  }
 
   return (
     <>

@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Stack, styled, AppBar as MuiAppBar, Toolbar } from '@mui/material';
-import SearchBar from '@/components/SearchBar';
+import { useEffect, useState, useRef } from 'react';
+import {
+  Stack,
+  styled,
+  AppBar as MuiAppBar,
+  Toolbar,
+  Menu,
+  MenuItem,
+  IconButton,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../session';
-import axios from 'axios';
+import { logout } from '../session'; // import the logout action
 
 const BarHeader = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.white,
@@ -19,35 +25,34 @@ const AppBar = () => {
   const navigate = useNavigate();
   const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
-  
-  
-  //function
-  useEffect(() => {
-    console.log('triggering');
-    if (session.userApiData) {
-      axios
-        .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${session.userApiData.credential}`,
-          {
-            headers: {
-              Authorization: `Bearer ${session.userApiData.credential}`,
-              Accept: 'application/json',
-            },
-          }
-        )
-        .then((res) => {
-          console.log('res.data', res.data);
-          dispatch(login(res.data));
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [session.userApiData]);
-  
+  const menuAnchorRef = useRef(null); // use ref for the menu anchor
+
+  // states
+  const [open, setOpen] = useState(false);
+
   const logOut = () => {
-    googleLogout();
-    setProfile(null);
+    dispatch(logout()); 
+    setOpen(false); 
+    navigate('/login');
   };
-  
+
+  const handleMenuClose = () => {
+    setOpen(false);
+  };
+
+  // toggle menu open/close
+  const handleMenuClick = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  useEffect(() => {
+    console.log(
+      'session',
+      session,
+      session.authenticationType.includes(['google', 'facebook', 'roshoon'])
+    );
+  }, [session]);
+
   return (
     <StyledAppBar>
       <Toolbar disableGutters className="flex justify-between">
@@ -57,14 +62,40 @@ const AppBar = () => {
           </h1>
         </BarHeader>
         <div className="flex gap-4 mr-4">
-          {session?.userApiData ? (
-            <>{session.userApiData.clientId}</>
-          ) : session?.user  ? (
-          <>
-            <div className='round-full w-10 h-10 bg-slate-400'>
-              <img src={session.user.picture} alt={session.user.name} className='w-full h-full object-cover rounded-full'/>
+          {session?.user &&
+          ['google', 'facebook', 'roshoon'].includes(
+            session.authenticationType
+          ) ? (
+            <div className="flex justify-center items-center gap-2">
+              <h1 className="text-white text-sm">{session.user?.name}</h1>
+              <IconButton
+                onClick={handleMenuClick}
+                ref={menuAnchorRef}
+                aria-controls={open ? 'menu-appbar' : undefined}
+                aria-haspopup="true"
+                className='w-14'
+              >
+                <img
+                  src={session.user?.picture}
+                  alt={session.user?.name}
+                  className="w-full h-full object-cover rounded-full cursor-pointer"
+                  onError={(e) => {
+                    e.target.src = '/path/to/default-image.jpg'; // Fallback image if error
+                  }}
+                />
+              </IconButton>
+              <Menu
+                anchorEl={menuAnchorRef.current}
+                open={open}
+                onClose={handleMenuClose}
+                id="menu-appbar"
+              >
+                <MenuItem onClick={() => navigate('/profile')}>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={logOut}>Logout</MenuItem>
+              </Menu>
             </div>
-          </>
           ) : (
             <>
               <button

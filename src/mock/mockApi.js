@@ -6,7 +6,22 @@ export const handlers = [
     await delay(500);
     return HttpResponse.json(['developer', 'chef'], { status: 200 });
   }),
+
+  http.get('/v1/auth/login', async (req) => {
+    await delay(500);
+    console.log('FINAL' , req);
+    const apiId = req.request?.url?.search || {}; // Fallback to an empty object if req.query is undefined
+
+    if (!apiId) {
+      return HttpResponse.json({ message: 'apiId is required' }, { status: 400 });
+    }
+
+    // Simulating a successful response with the apiId
+    return HttpResponse.json({ message : 'found user', user: 'RoshoonAdmin', uid: apiId }, { status: 200 });
+  }),
 ];
+
+
 
 export const enableMockApi = async () => {
   const { setupWorker } = await import('msw/browser');
