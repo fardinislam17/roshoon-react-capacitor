@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const roshoonApi = createApi({
   keepUnusedDataFor: import.meta.env.VITEST ? 0 : 60,
 
-  tagTypes: ['MostLovedChefs'], // we will add all other api list here as tag
+  tagTypes: [],
   baseQuery: fetchBaseQuery({
     baseUrl: `${window.location.origin.concat(import.meta.env.VITE_API_BASE_URL)}`,
 

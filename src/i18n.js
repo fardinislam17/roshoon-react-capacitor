@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import enUS from './locales/es-US.json';
+import enUS from './locales/en-US.json';
 import enAu from './locales/en-AU.json';
 import esEs from './locales/es-ES.json';
 
@@ -31,14 +31,15 @@ i18n
     },
     detection: {
       order: [
+        'navigator',
         'queryString',
         'cookie',
         'localStorage',
-        'navigator',
         'htmlTag',
         'path',
         'subdomain',
       ],
+      lookupQuerystring: 'lng',
       caches: ['localStorage', 'cookie'],
     },
   });
