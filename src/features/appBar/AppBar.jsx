@@ -4,16 +4,18 @@ import {
   styled,
   AppBar as MuiAppBar,
   Toolbar as MuiToolBar,
-  Box,
-  Paper,
+  Typography,
 } from '@mui/material';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { Link, Typography } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
 import { ToolbarmenuOptions } from '../../app/constants';
 import HamburgerMenu from '../../components/HamburgerMenu';
 import { generatePath } from '../../paths';
+import SearchBar from 'src/components/SearchBar';
+
+const BarHeader = styled(Stack)(({ theme }) => ({
+  color: theme.palette.common.white,
+}));
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
   height: 80,
@@ -56,23 +58,24 @@ const AppBar = () => {
   };
 
   return (
-    <div>
-      <StyledAppBar>
-        <Toolbar disableGutters>
-          <LeftBox>
-            <HamburgerMenu
-              menuOptions={ToolbarmenuOptions}
-              onMenuClick={navigateTo}
-            />
-            <RoshoonLogo>
-              <Link component={RouterLink} to="/" underline="none">
-                <StyledTypography variant="h4">Roshoon</StyledTypography>
-              </Link>
-            </RoshoonLogo>
-          </LeftBox>
-        </Toolbar>
-      </StyledAppBar>
-    </div>
+    <StyledAppBar>
+      <Toolbar disableGutters>
+        <LeftBox>
+          <HamburgerMenu
+            menuOptions={ToolbarmenuOptions}
+            onMenuClick={navigateTo}
+          />
+          <RoshoonLogo>
+            <Link to="/" underline="none">
+              <StyledTypography variant="h4">Roshoon</StyledTypography>
+            </Link>
+          </RoshoonLogo>
+        </LeftBox>
+        <RightBox>
+          <SearchBar />
+        </RightBox>
+      </Toolbar>
+    </StyledAppBar>
   );
 };
 
