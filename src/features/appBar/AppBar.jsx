@@ -52,7 +52,6 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 const AppBar = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const navigateTo = (url) => {
     navigate(generatePath(url.path));
   };
