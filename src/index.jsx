@@ -6,7 +6,7 @@ import { store } from './app/store';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import './i18n';
-
+import SnackbarProvider from './features/snackbarProvider';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.roshoon';
 
@@ -24,7 +24,9 @@ if (container) {
       <BrowserRouter>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
-            <App />
+            <SnackbarProvider>
+              <App />
+            </SnackbarProvider>
           </ThemeProvider>
         </Provider>
       </BrowserRouter>
