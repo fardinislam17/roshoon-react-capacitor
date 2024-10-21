@@ -11,6 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../session'; // import the logout action
+import { FaUser } from 'react-icons/fa';
 
 const BarHeader = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.white,
@@ -68,22 +69,22 @@ const AppBar = () => {
           ) ? (
             <div className="flex justify-center items-center gap-2">
               <h1 className="text-white text-sm">{session.user?.name}</h1>
-              <IconButton
+              {/* <IconButton
                 onClick={handleMenuClick}
                 ref={menuAnchorRef}
                 aria-controls={open ? 'menu-appbar' : undefined}
                 aria-haspopup="true"
-                className='w-14'
+                className="w-10 bg-slate-300"
+                style={{ backgroundColor: '#fff', padding: 0 }}
               >
                 <img
-                  src={session.user?.picture}
-                  alt={session.user?.name}
-                  className="w-full h-full object-cover rounded-full cursor-pointer"
+                  src={session.user?.picture || '/path/to/default-image.jpg'}
+                  alt={'user'}
                   onError={(e) => {
-                    e.target.src = '/path/to/default-image.jpg'; // Fallback image if error
+                    e.target.src = '/path/to/default-image.jpg'; // Fallback if error loading
                   }}
                 />
-              </IconButton>
+              </IconButton> */}
               <Menu
                 anchorEl={menuAnchorRef.current}
                 open={open}

@@ -39,6 +39,44 @@ const Login = () => {
     const decoded = jwtDecode(token);
     authorizeUserLogin('google', decoded);
   }
+  
+  const handleFacebookCallback = (response) => {
+    if (response?.status === 'unknown') {
+      console.error('Sorry!', 'Something went wrong with facebook Login.');
+      return;
+    }
+    console.log(response);
+    
+    
+    if(response?.error){
+      console.error('Sorry!', 'Something went wrong with facebook Login.');
+      return;
+    }
+    
+    
+    authorizeUserLogin('facebook', response);
+    
+    // console will print following object for you.
+    /* {
+          "name": "Syed M Ahmad",
+          "email": "ssgcommando90@yahoo.com",
+          "picture": {
+              "data": {
+                  "height": 50,
+                  "is_silhouette": false,
+                  "url": "...jpg",
+                  "width": 50
+              }
+          },
+          "id": "7138203302951151",
+          "userID": "7138203302951151",
+          "expiresIn": 7142,
+          "accessToken": "EAA....Q",
+          "graphDomain": "facebook",
+          "data_access_expiration_time": 1719914458
+      } */
+  };
+  
   function errorMessage(error) {
     console.log(error);
   }
@@ -50,12 +88,17 @@ const Login = () => {
 
     if (type === 'google') {
       dispatch(login(data));
+    }else if(type === 'facebook'){
+      dispatch(login(data));
     }
+    
 
     try {
+        const uid = type === 'google' ? data?.sub : data?.id;
+      
       const response = await axios.get('/v1/auth/login', {
         params: {
-          apiId: data.sub, 
+          apiId: uid, 
         },
       });
 
@@ -64,7 +107,8 @@ const Login = () => {
       console.error('Login error:', error.response?.data || error.message);
     }
   }
-
+  
+  
   return (
     <>
       <Container className="flex flex-col h-[100%] items-center justify-center ">
@@ -138,22 +182,13 @@ const Login = () => {
                   }}
                 />
               </div>
-
-              <Button
-                variant="contained"
-                startIcon={<FaFacebook />}
-                fullWidth
-                style={{
-                  backgroundColor: '#4267B2',
-                  color: 'white',
-                  marginTop: '16px',
-                  padding: '8px',
-                }}
-                onClick={() => setLoginType('facebookLogin')}
-              >
-                Login with Facebook
-              </Button>
-
+              <FacebookLogin
+                appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                autoLoad={false}
+                fields="name,email,picture"
+                callback={handleFacebookCallback}
+                scope="public_profile"
+              />
               <Button
                 variant="contained"
                 fullWidth
