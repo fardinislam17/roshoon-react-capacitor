@@ -89,6 +89,7 @@ const Login = () => {
     if (type === 'google') {
       dispatch(login(data));
     }else if(type === 'facebook'){
+      data.picture = data.picture.data.url;
       dispatch(login(data));
     }
     

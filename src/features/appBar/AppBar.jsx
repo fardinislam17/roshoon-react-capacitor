@@ -32,8 +32,8 @@ const AppBar = () => {
   const [open, setOpen] = useState(false);
 
   const logOut = () => {
-    dispatch(logout()); 
-    setOpen(false); 
+    dispatch(logout());
+    setOpen(false);
     navigate('/login');
   };
 
@@ -50,7 +50,8 @@ const AppBar = () => {
     console.log(
       'session',
       session,
-      session.authenticationType.includes(['google', 'facebook', 'roshoon'])
+      ['google', 'facebook', 'roshoon'].includes(session.authenticationType),
+      session.authenticationType
     );
   }, [session]);
 
@@ -63,13 +64,14 @@ const AppBar = () => {
           </h1>
         </BarHeader>
         <div className="flex gap-4 mr-4">
-          {session?.user &&
+          {
+          session?.user &&
           ['google', 'facebook', 'roshoon'].includes(
             session.authenticationType
           ) ? (
             <div className="flex justify-center items-center gap-2">
               <h1 className="text-white text-sm">{session.user?.name}</h1>
-              {/* <IconButton
+              <IconButton
                 onClick={handleMenuClick}
                 ref={menuAnchorRef}
                 aria-controls={open ? 'menu-appbar' : undefined}
@@ -81,10 +83,10 @@ const AppBar = () => {
                   src={session.user?.picture || '/path/to/default-image.jpg'}
                   alt={'user'}
                   onError={(e) => {
-                    e.target.src = '/path/to/default-image.jpg'; // Fallback if error loading
+                    e.target.src = '/path/to/default-image.jpg';
                   }}
                 />
-              </IconButton> */}
+              </IconButton>
               <Menu
                 anchorEl={menuAnchorRef.current}
                 open={open}
