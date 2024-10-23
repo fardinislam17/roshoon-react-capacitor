@@ -1,0 +1,20 @@
+{
+  "roshoon": "Roshoon",
+  "input": "Input",
+  "common": {
+    "createNew": "Create New",
+    "signIn": "Sign In",
+    "login": "login",
+    "signUp": "Sign Up",
+    "name": "Name",
+    "email": "Email",
+    "userName": "user Name",
+    "password": "Password",
+    "loginWithEmailAndPassword": "Login with email and password",
+    "continueAsGuest": "Continue as Guest"
+  },
+  "legal": {
+    "disclosure": "Roshoon ....."
+  },
+  "chef": {}
+}
