@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import './i18n';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+import SnackbarProvider from './features/snackbarProvider';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.roshoon';
 
@@ -28,7 +28,9 @@ if (container) {
             <GoogleOAuthProvider
               clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
             >
-              <App />
+              <SnackbarProvider>
+                <App />
+              </SnackbarProvider>
             </GoogleOAuthProvider>
           </ThemeProvider>
         </Provider>

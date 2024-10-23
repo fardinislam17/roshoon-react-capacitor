@@ -65,6 +65,9 @@ const theme = createTheme({
   },
   palette: {
     mode: 'light',
+    logo: {
+      primary: 'white',
+    },
     primary: {
       main: '#ff5722', // Example primary color (orange)
     },

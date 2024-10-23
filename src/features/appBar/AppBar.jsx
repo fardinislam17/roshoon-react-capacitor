@@ -3,15 +3,21 @@ import {
   Stack,
   styled,
   AppBar as MuiAppBar,
-  Toolbar,
   Menu,
   MenuItem,
   IconButton,
+  Toolbar as MuiToolBar,
+  Typography,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../session'; // import the logout action
 import { FaUser } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { ToolbarmenuOptions } from '../../app/constants';
+import HamburgerMenu from '../../components/HamburgerMenu';
+import { generatePath } from '../../paths';
+
 
 const BarHeader = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.white,
@@ -22,7 +28,35 @@ const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
   padding: 4,
 }));
 
+const Toolbar = styled(MuiToolBar)(({ theme }) => ({
+  padding: theme.spacing(2),
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
+
+const LeftBox = styled(Stack)(({ theme }) => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  flex: 1,
+}));
+
+const RightBox = styled(Stack)(({ theme }) => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  flex: 4,
+  justifyContent: 'flex-end',
+}));
+
+const RoshoonLogo = styled(Stack)(({ theme }) => ({
+  color: theme.palette.common.white,
+}));
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  color: theme.palette.logo.primary,
+}));
+
 const AppBar = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
@@ -55,17 +89,27 @@ const AppBar = () => {
     );
   }, [session]);
 
+  
+  const navigateTo = (url) => {
+    navigate(generatePath(url.path));
+  };
+
   return (
     <StyledAppBar>
       <Toolbar disableGutters className="flex justify-between">
-        <BarHeader>
-          <h1 className="text-3xl w-full text-slate-300 mx-3 font-bold">
-            Roshoon
-          </h1>
-        </BarHeader>
+        <LeftBox>
+          <HamburgerMenu
+            menuOptions={ToolbarmenuOptions}
+            onMenuClick={navigateTo}
+          />
+          <RoshoonLogo>
+            <Link to="/" underline="none">
+              <StyledTypography variant="h4">Roshoon</StyledTypography>
+            </Link>
+          </RoshoonLogo>
+        </LeftBox>
         <div className="flex gap-4 mr-4">
-          {
-          session?.user &&
+          {session?.user &&
           ['google', 'facebook', 'roshoon'].includes(
             session.authenticationType
           ) ? (
