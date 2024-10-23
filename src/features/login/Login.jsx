@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Button,
   Dialog,
@@ -13,12 +13,44 @@ import { LoginOptions } from 'src/app/constants';
 import { useTranslation } from 'react-i18next';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import FacebookLogin from 'react-facebook-login';
+
+import { useGoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const facebookButtonRef = useRef(null);
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      const { access_token } = tokenResponse;
+      console.log({ access_token });
+      // call backend with success token
+    },
+    onError: (error) => console.log(error),
+  });
+
+  const triggerFacebookLogin = () => {
+    if (facebookButtonRef.current) {
+      facebookButtonRef.current.click();
+    }
+  };
+
+  const loginWithFacebook = (response) => {
+    window.FB.login(
+      function (response) {
+        if (response.authResponse) {
+          console.log('Logged in:', response);
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+        }
+      },
+      { scope: 'public_profile,email' }
+    );
+  };
 
   // Handle opening and closing of the login dialog
   const handleClickOpen = () => {
@@ -39,16 +71,6 @@ const Login = () => {
 
   const handleRegistration = () => {
     console.log('register here');
-  };
-
-  const handleGoogleLogin = () => {
-    // Add Google login logic here
-    console.log('Continue with Google');
-  };
-
-  const handleFacebookLogin = () => {
-    // Add Facebook login logic here
-    console.log('Continue with Facebook');
   };
 
   return (
@@ -87,23 +109,39 @@ const Login = () => {
                 color="primary"
                 startIcon={<GoogleIcon />}
                 fullWidth
-                onClick={handleGoogleLogin}
-                sx={{ mb: 2 }}
+                onClick={loginWithGoogle}
+                sx={{ mb: 2, justifyContent: 'center' }}
               >
                 Continue with Google
               </Button>
             )}
             {LoginOptions.includes('facebookLogin') && (
-              <Button
-                variant="outlined"
-                color="primary"
-                startIcon={<FacebookIcon />}
-                fullWidth
-                onClick={handleFacebookLogin}
-                sx={{ mb: 2 }}
-              >
-                Continue with Facebook
-              </Button>
+              <>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<FacebookIcon />}
+                  fullWidth
+                  onClick={loginWithFacebook}
+                  sx={{ mb: 2, justifyContent: 'center' }}
+                >
+                  Continue with Facebook
+                </Button>
+                <div
+                  style={{
+                    position: 'absolute',
+                    opacity: 0,
+                    pointerEvents: 'none',
+                  }}
+                >
+                  <FacebookLogin
+                    appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                    callback={loginWithFacebook}
+                    scope="public_profile"
+                    ref={facebookButtonRef}
+                  />
+                </div>
+              </>
             )}
             <Divider flexItem sx={{ width: '100%', marginTop: '20px' }} />
             <DialogTitle>{t('common.loginWithEmailAndPassword')}</DialogTitle>
