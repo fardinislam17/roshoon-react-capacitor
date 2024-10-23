@@ -17,7 +17,6 @@ import {
 
 import { Login, Register } from './features/auth';
 
-
 const AppRoot = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
@@ -39,42 +38,6 @@ const UnknownRoute = () => {
     navigate(paths.homepage);
   }, [navigate]);
   return null;
-};
-
-
-const NotificationButtons = () => {
-  return (
-    <Box spacing={2} marginTop={10}>
-      <Button
-        variant="outlined"
-        color="success"
-        onClick={() => notifySuccess('This is a success Message')}
-      >
-        Notify Success
-      </Button>
-      <Button
-        variant="outlined"
-        color="error"
-        onClick={() => notifyError('This is an Error Message')}
-      >
-        Notify Error
-      </Button>
-      <Button
-        variant="outlined"
-        color="info"
-        onClick={() => notifyInfo('This is an Info Message')}
-      >
-        Notify Info
-      </Button>
-      <Button
-        variant="outlined"
-        color="warning"
-        onClick={() => notifyWarning('This is a Warning Message')}
-      >
-        Notify Warning
-      </Button>
-    </Box>
-  );
 };
 
 const App = () => {
@@ -111,7 +74,6 @@ const App = () => {
           />
           <Route path="*" element={<UnknownRoute />} />
         </Routes>
-        <NotificationButtons />
         <Footer />
       </MainContent>
     </AppRoot>
