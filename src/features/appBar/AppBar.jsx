@@ -16,7 +16,7 @@ import { logout } from '../session';
 import HamburgerMenu from 'src/components/HamburgerMenu';
 import { generatePath } from '../../paths';
 import { ToolbarmenuOptions } from '../../app/constants';
-import Login from 'src/features/login';
+import Login from '../auth/Login';
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
   height: 80,
@@ -133,13 +133,6 @@ const AppBar = () => {
               </div>
             ) : (
               <>
-                <button
-                  onClick={() => navigate('/login')}
-                  className="bg-orange-700 text-white px-4 py-2 rounded"
-                >
-                  Login
-                </button>
-
                 <Login />
               </>
             )}

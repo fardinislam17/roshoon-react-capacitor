@@ -1,23 +1,37 @@
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setAuthenticationType, login, loginFailed } from '../session';
-import { Button, TextField, Container, Typography } from '@mui/material';
-import { FaGoogle, FaFacebook } from 'react-icons/fa'; // Using react-icons
-import { GoogleLogin } from '@react-oauth/google';
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Box,
+  Divider,
+} from '@mui/material';
+import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import FacebookLogin from 'react-facebook-login';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { useGoogleLogin } from '@react-oauth/google';
+import { LoginOptions } from 'src/app/constants';
+import { useTranslation } from 'react-i18next';
+import GoogleIcon from '@mui/icons-material/Google';
+import FacebookIcon from '@mui/icons-material/Facebook';
+
 
 const Login = () => {
   const dispatch = useDispatch();
   const session = useSelector((state) => state.session);
   // state
-  const [loginType, setLoginType] = useState(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const menuAnchorRef = useRef(null);
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const facebookButtonRef = useRef(null);
 
   // function
   async function handleLogin(e) {
@@ -108,103 +122,164 @@ const Login = () => {
       console.error('Login error:', error.response?.data || error.message);
     }
   }
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      const { access_token } = tokenResponse;
+      console.log({ access_token });
+      // call backend with success token
+    },
+    onError: (error) => console.log(error),
+  });
+
+  const triggerFacebookLogin = () => {
+    if (facebookButtonRef.current) {
+      facebookButtonRef.current.click();
+    }
+  };
+
+  const loginWithFacebook = (response) => {
+    window.FB.login(
+      function (response) {
+        if (response.authResponse) {
+          console.log('Logged in:', response);
+        } else {
+          console.log('User cancelled login or did not fully authorize.');
+        }
+      },
+      { scope: 'public_profile,email' }
+    );
+  };
+
+  // Handle opening and closing of the login dialog
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
+  const handleRegistration = () => {
+    console.log('register here');
+  };
   
   
   return (
     <>
-      <Container className="flex flex-col h-[100%] items-center justify-center ">
-        <div className="w-100">
-          {loginType === 'roshoonLogin' ? (
-            <>
-              <Typography variant="h4" component="h1">
-                User Login
-              </Typography>
-              <form onSubmit={handleLogin}>
-                <TextField
-                  label="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  fullWidth
-                  required
-                />
-                <TextField
-                  label="Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  fullWidth
-                  required
-                />
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                >
-                  Login
-                </Button>
-                {error && <Typography color="error">{error}</Typography>}
-              </form>
+      <div>
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+          {t('common.login')}
+        </Button>
 
-              <Button onClick={() => setLoginType('')} fullWidth>
-                Back
-              </Button>
-            </>
-          ) : loginType === 'facebookLogin' ? (
-            <>
-              <Typography variant="h4">Login with Facebook</Typography>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          maxWidth="sm"
+          sx={{
+            '& .MuiDialog-container': {
+              '& .MuiPaper-root': {
+                width: '100%',
+                maxWidth: '420px',
+              },
+            },
+          }}
+        >
+          <DialogContent>
+            <Box
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              mt={2}
+            >
               <Button
-                variant="contained"
+                variant="outlined"
                 color="primary"
-                startIcon={<FaFacebook />}
-                onClick={() => alert('Facebook login')}
                 fullWidth
-                style={{
-                  backgroundColor: '#4267B2',
-                  color: 'white',
-                  marginTop: '16px',
-                }}
+                onClick={handleRegistration}
+                sx={{ mb: 2 }}
               >
-                Login with Facebook
+                {t('common.signUp')}
               </Button>
-              <Button onClick={() => setLoginType('')} fullWidth>
-                Back
-              </Button>
-            </>
-          ) : (
-            <div className="flex flex-col justify-center items-center w-full max-w-md">
-              <div style={{ width: '100%', marginBottom: '16px' }}>
-                <GoogleLogin
-                  onSuccess={googleAuthenticationProcess}
-                  onError={errorMessage}
-                  style={{
-                    width: '100%', // Ensures Google button takes full width
-                    padding: '12px', // Consistent padding
-                  }}
-                />
-              </div>
-              <FacebookLogin
-                appId={import.meta.env.VITE_FACEBOOK_APP_ID}
-                autoLoad={false}
-                fields="name,email,picture"
-                callback={handleFacebookCallback}
-                scope="public_profile"
+              {LoginOptions.includes('googleLogin') && (
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<GoogleIcon />}
+                  fullWidth
+                  onClick={loginWithGoogle}
+                  sx={{ mb: 2, justifyContent: 'center' }}
+                >
+                  Continue with Google
+                </Button>
+              )}
+              {LoginOptions.includes('facebookLogin') && (
+                <>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<FacebookIcon />}
+                    fullWidth
+                    onClick={loginWithFacebook}
+                    sx={{ mb: 2, justifyContent: 'center' }}
+                  >
+                    Continue with Facebook
+                  </Button>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      opacity: 0,
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    <FacebookLogin
+                      appId={import.meta.env.VITE_FACEBOOK_APP_ID}
+                      callback={loginWithFacebook}
+                      scope="public_profile"
+                      ref={facebookButtonRef}
+                    />
+                  </div>
+                </>
+              )}
+              <Divider flexItem sx={{ width: '100%', marginTop: '20px' }} />
+              <DialogTitle>{t('common.loginWithEmailAndPassword')}</DialogTitle>
+
+              <TextField
+                label="Email"
+                type="email"
+                fullWidth
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                sx={{ mb: 2 }}
               />
-              <Button
-                variant="contained"
+              <TextField
+                label="Password"
+                type="password"
                 fullWidth
-                style={{
-                  marginTop: '16px',
-                  padding: '8px',
-                }}
-                onClick={() => setLoginType('roshoonLogin')}
-              >
-                Roshoon Login
-              </Button>
-            </div>
-          )}
-        </div>
-      </Container>
+                variant="outlined"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                sx={{ mb: 2 }}
+              />
+            </Box>
+          </DialogContent>
+
+          <Button color="secondary" onClick={() => setOpen(false)}>
+            {t('common.continueAsGuest')}
+          </Button>
+
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleLogin} color="primary" variant="contained">
+              Login
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </>
   );
 };
