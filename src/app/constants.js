@@ -5,3 +5,5 @@ export const ToolbarmenuOptions = [
   { label: 'Settings', path: 'settings' },
   { label: 'Help Center', path: 'helpCenter' },
 ];
+
+export const LoginOptions = ['facebookLogin', 'googleLogin'];

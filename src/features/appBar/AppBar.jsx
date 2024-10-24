@@ -1,31 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Stack,
   styled,
   AppBar as MuiAppBar,
-  Toolbar as MuiToolBar,
+  Menu,
+  MenuItem,
+  IconButton,
+  Toolbar,
   Typography,
 } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ToolbarmenuOptions } from '../../app/constants';
-import HamburgerMenu from '../../components/HamburgerMenu';
+import { logout } from '../session';
+import HamburgerMenu from 'src/components/HamburgerMenu';
 import { generatePath } from '../../paths';
-import SearchBar from 'src/components/SearchBar';
-
-const BarHeader = styled(Stack)(({ theme }) => ({
-  color: theme.palette.common.white,
-}));
+import { ToolbarmenuOptions } from '../../app/constants';
+import Login from 'src/features/login';
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
   height: 80,
   padding: 4,
-}));
-
-const Toolbar = styled(MuiToolBar)(({ theme }) => ({
-  padding: theme.spacing(2),
-  justifyContent: 'space-between',
-  alignItems: 'center',
 }));
 
 const LeftBox = styled(Stack)(({ theme }) => ({
@@ -55,10 +50,40 @@ const AppBar = () => {
   const navigateTo = (url) => {
     navigate(generatePath(url.path));
   };
+  const session = useSelector((state) => state.session);
+  const dispatch = useDispatch();
+  const menuAnchorRef = useRef(null); // use ref for the menu anchor
+
+  // states
+  const [open, setOpen] = useState(false);
+
+  const logOut = () => {
+    dispatch(logout());
+    setOpen(false);
+    navigate('/login');
+  };
+
+  const handleMenuClose = () => {
+    setOpen(false);
+  };
+
+  // toggle menu open/close
+  const handleMenuClick = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  useEffect(() => {
+    console.log(
+      'session',
+      session,
+      ['google', 'facebook', 'roshoon'].includes(session.authenticationType),
+      session.authenticationType
+    );
+  }, [session]);
 
   return (
     <StyledAppBar>
-      <Toolbar disableGutters>
+      <Toolbar disableGutters className="flex justify-between">
         <LeftBox>
           <HamburgerMenu
             menuOptions={ToolbarmenuOptions}
@@ -71,7 +96,54 @@ const AppBar = () => {
           </RoshoonLogo>
         </LeftBox>
         <RightBox>
-          <SearchBar />
+          <div className="flex gap-4 mr-4">
+            {session?.user &&
+            ['google', 'facebook', 'roshoon'].includes(
+              session.authenticationType
+            ) ? (
+              <div className="flex justify-center items-center gap-2">
+                <h1 className="text-white text-sm">{session.user?.name}</h1>
+                <IconButton
+                  onClick={handleMenuClick}
+                  ref={menuAnchorRef}
+                  aria-controls={open ? 'menu-appbar' : undefined}
+                  aria-haspopup="true"
+                  className="w-10 bg-slate-300"
+                  style={{ backgroundColor: '#fff', padding: 0 }}
+                >
+                  <img
+                    src={session.user?.picture || '/path/to/default-image.jpg'}
+                    alt={'user'}
+                    onError={(e) => {
+                      e.target.src = '/path/to/default-image.jpg';
+                    }}
+                  />
+                </IconButton>
+                <Menu
+                  anchorEl={menuAnchorRef.current}
+                  open={open}
+                  onClose={handleMenuClose}
+                  id="menu-appbar"
+                >
+                  <MenuItem onClick={() => navigate('/profile')}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={logOut}>Logout</MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => navigate('/login')}
+                  className="bg-orange-700 text-white px-4 py-2 rounded"
+                >
+                  Login
+                </button>
+
+                <Login />
+              </>
+            )}
+          </div>
         </RightBox>
       </Toolbar>
     </StyledAppBar>

@@ -5,6 +5,7 @@ import { sessionSlice } from '../features/session';
 import roshoonSlice from '../features/roshoon/roshoonSlice';
 const rootReducer = combineSlices(roshoonApi, roshoonSlice, sessionSlice);
 
+
 export const makeStore = (preloadedState) => {
   const appMiddleWare = [roshoonApi.middleware];
   console.log('redux store created, ', rootReducer);
@@ -15,7 +16,7 @@ export const makeStore = (preloadedState) => {
       const defaultMiddleware = import.meta.env.VITEST
         ? getDefaultMiddleware({
             serializableCheck: false,
-            immutableChcek: false,
+            immutableCheck: false,
           })
         : getDefaultMiddleware({
             immutableCheck: {
