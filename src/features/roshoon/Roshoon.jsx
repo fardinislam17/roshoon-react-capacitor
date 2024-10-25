@@ -1,15 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import SearchBar from 'src/components/SearchBar';
 const Roshoon = () => {
   const roshoon = useSelector((state) => state.roshoon);
-  
-  console.log('search object =>', roshoon);
-  
-  
-  
-  function findMatchedChefs(){
+
+  function findMatchedChefs() {
     return roshoon.filteredChefs?.map((chef) => {
       const searchRegex = new RegExp(roshoon.search, 'i');
       return (
@@ -19,7 +14,7 @@ const Roshoon = () => {
       );
     });
   }
-  
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center w-100 h-60 bg-slate-100">

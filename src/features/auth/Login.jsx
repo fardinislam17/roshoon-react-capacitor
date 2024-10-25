@@ -1,11 +1,11 @@
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser, setAuthenticationType, login, loginFailed } from '../session';
+import { setUser } from '../session';
 import { Button, TextField, Container, Typography } from '@mui/material';
 import { FaGoogle, FaFacebook } from 'react-icons/fa'; // Using react-icons
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -26,11 +26,8 @@ const Login = () => {
     try {
       const response = { user: { name: username }, type: 'user' }; // Mock response
       dispatch(setUser(response.user));
-      dispatch(setAuthenticationType(response.type));
-      dispatch(login(response));
     } catch (err) {
       setError('Login failed. Please try again.');
-      dispatch(loginFailed(err.message));
     }
   }
 
@@ -39,23 +36,21 @@ const Login = () => {
     const decoded = jwtDecode(token);
     authorizeUserLogin('google', decoded);
   }
-  
+
   const handleFacebookCallback = (response) => {
     if (response?.status === 'unknown') {
       console.error('Sorry!', 'Something went wrong with facebook Login.');
       return;
     }
     console.log(response);
-    
-    
-    if(response?.error){
+
+    if (response?.error) {
       console.error('Sorry!', 'Something went wrong with facebook Login.');
       return;
     }
-    
-    
+
     authorizeUserLogin('facebook', response);
-    
+
     // console will print following object for you.
     /* {
           "name": "Syed M Ahmad",
@@ -76,7 +71,7 @@ const Login = () => {
           "data_access_expiration_time": 1719914458
       } */
   };
-  
+
   function errorMessage(error) {
     console.log(error);
   }
@@ -88,18 +83,17 @@ const Login = () => {
 
     if (type === 'google') {
       dispatch(login(data));
-    }else if(type === 'facebook'){
+    } else if (type === 'facebook') {
       data.picture = data.picture.data.url;
       dispatch(login(data));
     }
-    
 
     try {
-        const uid = type === 'google' ? data?.sub : data?.id;
-      
+      const uid = type === 'google' ? data?.sub : data?.id;
+
       const response = await axios.get('/v1/auth/login', {
         params: {
-          apiId: uid, 
+          apiId: uid,
         },
       });
 
@@ -108,8 +102,7 @@ const Login = () => {
       console.error('Login error:', error.response?.data || error.message);
     }
   }
-  
-  
+
   return (
     <>
       <Container className="flex flex-col h-[100%] items-center justify-center ">
@@ -152,7 +145,7 @@ const Login = () => {
             </>
           ) : loginType === 'facebookLogin' ? (
             <>
-              <Typography variant="h4">Login with Facebook</Typography>
+              {/* <Typography variant="h4">Login with Facebook</Typography>
               <Button
                 variant="contained"
                 color="primary"
@@ -169,7 +162,7 @@ const Login = () => {
               </Button>
               <Button onClick={() => setLoginType('')} fullWidth>
                 Back
-              </Button>
+              </Button> */}
             </>
           ) : (
             <div className="flex flex-col justify-center items-center w-full max-w-md">
@@ -183,13 +176,13 @@ const Login = () => {
                   }}
                 />
               </div>
-              <FacebookLogin
+              {/* <FacebookLogin
                 appId={import.meta.env.VITE_FACEBOOK_APP_ID}
                 autoLoad={false}
                 fields="name,email,picture"
                 callback={handleFacebookCallback}
                 scope="public_profile"
-              />
+              /> */}
               <Button
                 variant="contained"
                 fullWidth
