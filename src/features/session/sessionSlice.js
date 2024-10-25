@@ -1,13 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  authenticationType: '', // roshoon, google, facebook 
   user: null,
-  userType: '', // (empty string), 'chef', 'user'
-  error: null, // Added for error handling
+  error: null,
 };
-
-
 
 export const sessionSlice = createSlice({
   name: 'session',
@@ -16,35 +12,10 @@ export const sessionSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    setAuthenticationType: (state, action) => {
-      const authType = action.payload;
-      if (
-        authType === 'roshoon' ||
-        authType === 'google' ||
-        authType === 'facebook'
-      ) {
-        state.authenticationType = authType;
-      } else {
-        state.authenticationType = ''; // Reset to empty if invalid
-      }
-    },
-    setUserType: (state, action) => {
-      const authType = action.payload;
-      if (authType === 'chef' || authType === 'user') {
-        state.userType = authType;
-      } else {
-        state.userType = ''; // Reset to empty if invalid
-      }
-    },
-    login: (state, action) => {
-      // Assume action.payload contains user data on successful login
-      state.user = action.payload; // Set user info from payload
-    },
     logout: (state) => {
       state.user = null;
-      state.authenticationType = '';
     },
-    loginFailed: (state, action) => {
+    setError: (state, action) => {
       state.error = action.payload;
     },
     clearError: (state) => {
@@ -53,14 +24,7 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const {
-  setUser,
-  setAuthenticationType,
-  setUserType,
-  login,
-  logout,
-  loginFailed,
-  clearError,
-} = sessionSlice.actions;
+export const { setUser, logout, setError, clearError } = sessionSlice.actions;
+export const getCurrentUser = (state) => state.user;
 
 export default sessionSlice;
