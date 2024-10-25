@@ -14,30 +14,28 @@ import { useTranslation } from 'react-i18next';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import FacebookLogin from 'react-facebook-login';
-
+import { useSignInWithEmailAndPasswordLazyQuery } from 'src/features/roshoon/roshoonApi';
 import { useGoogleLogin } from '@react-oauth/google';
+import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
+import { useDispatch } from 'react-redux';
+import { setUser } from 'src/features/session/sessionSlice';
 
 const Login = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const facebookButtonRef = useRef(null);
 
+  const [signIn] = useSignInWithEmailAndPasswordLazyQuery();
+
   const loginWithGoogle = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       const { access_token } = tokenResponse;
-      console.log({ access_token });
-      // call backend with success token
     },
     onError: (error) => console.log(error),
   });
-
-  const triggerFacebookLogin = () => {
-    if (facebookButtonRef.current) {
-      facebookButtonRef.current.click();
-    }
-  };
 
   const loginWithFacebook = (response) => {
     window.FB.login(
@@ -58,15 +56,26 @@ const Login = () => {
   };
 
   const handleClose = () => {
+    setEmail('');
+    setPassword('');
     setOpen(false);
   };
 
   // Handle email and password login
-  const handleLogin = () => {
+  const handleLoginWithEmailAndPassword = async () => {
     // Perform email and password login
-    console.log('Email:', email);
-    console.log('Password:', password);
-    handleClose();
+    try {
+      const response = await signIn({ email, password });
+      if (response.data.user) {
+        dispatch(setUser({ ...response.data.user, loggedIn: true }));
+      }
+      if (response.data.message) {
+        notifySuccess(response.data.message);
+      }
+      handleClose();
+    } catch (error) {
+      notifyError(error.message);
+    }
   };
 
   const handleRegistration = () => {
@@ -165,20 +174,23 @@ const Login = () => {
               sx={{ mb: 2 }}
             />
           </Box>
+          <DialogActions>
+            <Button onClick={handleClose} color="secondary">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleLoginWithEmailAndPassword}
+              color="primary"
+              variant="contained"
+            >
+              Login
+            </Button>
+          </DialogActions>
         </DialogContent>
 
         <Button color="secondary" onClick={() => setOpen(false)}>
           {t('common.continueAsGuest')}
         </Button>
-
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleLogin} color="primary" variant="contained">
-            Login
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

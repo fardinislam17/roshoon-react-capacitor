@@ -60,7 +60,6 @@ const AppBar = () => {
   const logOut = () => {
     dispatch(logout());
     setOpen(false);
-    navigate('/login');
   };
 
   const handleMenuClose = () => {
@@ -97,12 +96,11 @@ const AppBar = () => {
         </LeftBox>
         <RightBox>
           <div className="flex gap-4 mr-4">
-            {session?.user &&
-            ['google', 'facebook', 'roshoon'].includes(
-              session.authenticationType
-            ) ? (
+            {session?.user && session.user.loggedIn ? (
               <div className="flex justify-center items-center gap-2">
-                <h1 className="text-white text-sm">{session.user?.name}</h1>
+                <h1 className="text-white text-sm">
+                  {session.user?.name || session.user?.email}
+                </h1>
                 <IconButton
                   onClick={handleMenuClick}
                   ref={menuAnchorRef}
@@ -112,6 +110,8 @@ const AppBar = () => {
                   style={{ backgroundColor: '#fff', padding: 0 }}
                 >
                   <img
+                    width={100}
+                    height={100}
                     src={session.user?.picture || '/path/to/default-image.jpg'}
                     alt={'user'}
                     onError={(e) => {
@@ -132,16 +132,7 @@ const AppBar = () => {
                 </Menu>
               </div>
             ) : (
-              <>
-                <button
-                  onClick={() => navigate('/login')}
-                  className="bg-orange-700 text-white px-4 py-2 rounded"
-                >
-                  Login
-                </button>
-
-                <Login />
-              </>
+              <Login />
             )}
           </div>
         </RightBox>

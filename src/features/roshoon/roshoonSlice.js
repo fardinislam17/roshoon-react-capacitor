@@ -16,34 +16,37 @@ export const initialState = {
       id: 3,
       name: 'John Doe',
       deliveryAreas: ['Toronto', 'Scarborough'],
-    }
-  ], 
-  filteredChefs: [], 
-  search: '', 
+    },
+  ],
+  filteredChefs: [],
+  search: '',
 };
 
 const roshoonSlice = createSlice({
   name: 'roshoon',
   initialState,
   reducers: {
+    setUser(state, action) {
+      state.user = action.payload;
+    },
     setChefs(state, action) {
       state.chefs = action.payload;
-      state.filteredChefs = action.payload; 
+      state.filteredChefs = action.payload;
     },
     searchChefsByAddress(state, action) {
       const address = action.payload.toLowerCase();
-      state.filteredChefs = state.chefs.filter(chef =>
-        chef.deliveryAreas.some(area => area.toLowerCase().includes(address))
+      state.filteredChefs = state.chefs.filter((chef) =>
+        chef.deliveryAreas.some((area) => area.toLowerCase().includes(address))
       );
-      state.search = action.payload; 
+      state.search = action.payload;
     },
-   
     clearSearch(state) {
-      state.filteredChefs = state.chefs; 
-      state.search = ''; 
+      state.filteredChefs = state.chefs;
+      state.search = '';
     },
   },
 });
 
-export const { setChefs, searchChefsByAddress, clearSearch } = roshoonSlice.actions;
+export const { setChefs, searchChefsByAddress, clearSearch } =
+  roshoonSlice.actions;
 export default roshoonSlice;
