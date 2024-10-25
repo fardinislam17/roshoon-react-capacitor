@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Stack,
   styled,
@@ -70,15 +70,6 @@ const AppBar = () => {
   const handleMenuClick = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-
-  useEffect(() => {
-    console.log(
-      'session',
-      session,
-      ['google', 'facebook', 'roshoon'].includes(session.authenticationType),
-      session.authenticationType
-    );
-  }, [session]);
 
   return (
     <StyledAppBar>

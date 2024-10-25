@@ -5,10 +5,8 @@ import { sessionSlice } from '../features/session';
 import roshoonSlice from '../features/roshoon/roshoonSlice';
 const rootReducer = combineSlices(roshoonApi, roshoonSlice, sessionSlice);
 
-
 export const makeStore = (preloadedState) => {
   const appMiddleWare = [roshoonApi.middleware];
-  console.log('redux store created, ', rootReducer);
   const store = configureStore({
     reducer: rootReducer,
 

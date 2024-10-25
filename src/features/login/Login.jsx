@@ -13,7 +13,7 @@ import { LoginOptions } from 'src/app/constants';
 import { useTranslation } from 'react-i18next';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 import { useSignInWithEmailAndPasswordLazyQuery } from 'src/features/roshoon/roshoonApi';
 import { useGoogleLogin } from '@react-oauth/google';
 import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
@@ -124,7 +124,7 @@ const Login = () => {
                 Continue with Google
               </Button>
             )}
-            {LoginOptions.includes('facebookLogin') && (
+            {/* {LoginOptions.includes('facebookLogin') && (
               <>
                 <Button
                   variant="outlined"
@@ -151,7 +151,7 @@ const Login = () => {
                   />
                 </div>
               </>
-            )}
+            )} */}
             <Divider flexItem sx={{ width: '100%', marginTop: '20px' }} />
             <DialogTitle>{t('common.loginWithEmailAndPassword')}</DialogTitle>
 

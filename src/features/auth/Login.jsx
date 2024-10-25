@@ -5,7 +5,7 @@ import { Button, TextField, Container, Typography } from '@mui/material';
 import { FaGoogle, FaFacebook } from 'react-icons/fa'; // Using react-icons
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import FacebookLogin from 'react-facebook-login';
+// import FacebookLogin from 'react-facebook-login';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -145,7 +145,7 @@ const Login = () => {
             </>
           ) : loginType === 'facebookLogin' ? (
             <>
-              <Typography variant="h4">Login with Facebook</Typography>
+              {/* <Typography variant="h4">Login with Facebook</Typography>
               <Button
                 variant="contained"
                 color="primary"
@@ -162,7 +162,7 @@ const Login = () => {
               </Button>
               <Button onClick={() => setLoginType('')} fullWidth>
                 Back
-              </Button>
+              </Button> */}
             </>
           ) : (
             <div className="flex flex-col justify-center items-center w-full max-w-md">
@@ -176,13 +176,13 @@ const Login = () => {
                   }}
                 />
               </div>
-              <FacebookLogin
+              {/* <FacebookLogin
                 appId={import.meta.env.VITE_FACEBOOK_APP_ID}
                 autoLoad={false}
                 fields="name,email,picture"
                 callback={handleFacebookCallback}
                 scope="public_profile"
-              />
+              /> */}
               <Button
                 variant="contained"
                 fullWidth

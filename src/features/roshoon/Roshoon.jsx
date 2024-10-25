@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import SearchBar from 'src/components/SearchBar';
 const Roshoon = () => {
   const roshoon = useSelector((state) => state.roshoon);
