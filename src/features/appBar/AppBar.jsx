@@ -112,11 +112,8 @@ const AppBar = () => {
                   <img
                     width={100}
                     height={100}
-                    src={session.user?.picture || '/path/to/default-image.jpg'}
+                    src={session.user?.picture}
                     alt={'user'}
-                    onError={(e) => {
-                      e.target.src = '/path/to/default-image.jpg';
-                    }}
                   />
                 </IconButton>
                 <Menu
