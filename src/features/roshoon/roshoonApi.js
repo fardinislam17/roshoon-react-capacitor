@@ -33,6 +33,14 @@ export const roshoonApi = createApi({
         credentials: 'include',
       }),
     }),
+    register: builder.query({
+      query: ({ email, password, name }) => ({
+        url: `auth/register`,
+        method: 'POST',
+        body: { email, password, name, roles: ['buyer'] },
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
@@ -42,5 +50,6 @@ export const {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,
     },
+    register: { useLazyQuery: useRegisterLazyQuery },
   },
 } = roshoonApi;

@@ -11,4 +11,11 @@ export const LOGIN_FIELDS = [
   { name: 'password', label: 'Password', type: 'password', required: true },
 ];
 
+export const REGISTRATION_FIELDS = [
+  { name: 'fullName', label: 'Full Name', type: 'text', required: true },
+  { name: 'phone', label: 'Phone Number', type: 'text', required: false },
+  { name: 'email', label: 'Email', type: 'email', required: true },
+  { name: 'password', label: 'Password', type: 'password', required: true },
+];
+
 export const LOGIN_METHODS = ['facebookLogin', 'googleLogin'];
