@@ -8,12 +8,6 @@ import Footer from './features/footer';
 import ErrorBoundary from './features/errorBoundary';
 import EntitledElement from './components/EntitledElement';
 import Roshoon from './features/roshoon';
-import {
-  notifySuccess,
-  notifyInfo,
-  notifyWarning,
-  notifyError,
-} from 'src/features/snackbarProvider/useSnackbar';
 
 import { Login, Register } from './features/auth';
 

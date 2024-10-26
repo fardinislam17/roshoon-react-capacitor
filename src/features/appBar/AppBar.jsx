@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { logout } from '../session';
 import HamburgerMenu from 'src/components/HamburgerMenu';
 import { generatePath } from '../../paths';
-import { ToolbarmenuOptions } from '../../app/constants';
+import { SIDEBAR_MENU_OPTIONS } from '../../app/constants';
 import Login from '../auth/Login';
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
@@ -76,7 +76,7 @@ const AppBar = () => {
       <Toolbar disableGutters className="flex justify-between">
         <LeftBox>
           <HamburgerMenu
-            menuOptions={ToolbarmenuOptions}
+            menuOptions={SIDEBAR_MENU_OPTIONS}
             onMenuClick={navigateTo}
           />
           <RoshoonLogo>

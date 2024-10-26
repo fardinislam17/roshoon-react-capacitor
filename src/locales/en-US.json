@@ -10,8 +10,15 @@
     "email": "Email",
     "userName": "user Name",
     "password": "Password",
+    "cancel": "Cancel",
+    "submit": "Submit",
     "loginWithEmailAndPassword": "Login with email and password",
     "continueAsGuest": "Continue as Guest"
+  },
+  "errors": {
+    "auth": {
+      "enterValidEmail": "Please enter a valid email address"
+    }
   },
   "legal": {
     "disclosure": "Roshoon ....."

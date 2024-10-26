@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Button,
   Dialog,
-  DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
   Box,
   Divider,
 } from '@mui/material';
-import { LoginOptions } from 'src/app/constants';
+import { LOGIN_METHODS } from 'src/app/constants';
 import { useTranslation } from 'react-i18next';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -19,13 +17,17 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'src/features/session/sessionSlice';
+import { CustomForm } from 'src/components/Forms';
+import { useNavigate } from 'react-router-dom';
+import { register, homepage } from 'src/paths';
+import { LOGIN_FIELDS } from 'src/app/constants';
 
 const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
   const facebookButtonRef = useRef(null);
 
   const [signIn] = useSignInWithEmailAndPasswordLazyQuery();
@@ -50,40 +52,39 @@ const Login = () => {
     );
   };
 
-  // Handle opening and closing of the login dialog
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
-    setEmail('');
-    setPassword('');
     setOpen(false);
   };
 
-  // Handle email and password login
-  const handleLoginWithEmailAndPassword = async () => {
-    // Perform email and password login
+  const handleLoginWithEmailAndPassword = async ({ email, password }) => {
     try {
       const response = await signIn({ email, password });
-      if (response.data.user) {
-        dispatch(setUser({ ...response.data.user, loggedIn: true }));
-      }
-      if (response.data.message) {
+      if (response.isSuccess) {
+        if (response.data.user) {
+          dispatch(setUser({ ...response.data.user, loggedIn: true }));
+        }
         notifySuccess(response.data.message);
+        handleClose();
+        navigate(homepage);
+      } else {
+        notifyError(response.error?.data?.message);
       }
-      handleClose();
     } catch (error) {
       notifyError(error.message);
     }
   };
 
   const handleRegistration = () => {
-    console.log('register here');
+    handleClose();
+    navigate(register);
   };
 
   return (
-    <div>
+    <>
       <Button variant="contained" color="primary" onClick={handleClickOpen}>
         {t('common.login')}
       </Button>
@@ -112,7 +113,7 @@ const Login = () => {
             >
               {t('common.signUp')}
             </Button>
-            {LoginOptions.includes('googleLogin') && (
+            {LOGIN_METHODS.includes('googleLogin') && (
               <Button
                 variant="outlined"
                 color="primary"
@@ -124,7 +125,7 @@ const Login = () => {
                 Continue with Google
               </Button>
             )}
-            {LoginOptions.includes('facebookLogin') && (
+            {LOGIN_METHODS.includes('facebookLogin') && (
               <>
                 <Button
                   variant="outlined"
@@ -154,45 +155,19 @@ const Login = () => {
             )}
             <Divider flexItem sx={{ width: '100%', marginTop: '20px' }} />
             <DialogTitle>{t('common.loginWithEmailAndPassword')}</DialogTitle>
-
-            <TextField
-              label="Email"
-              type="email"
-              fullWidth
-              variant="outlined"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              sx={{ mb: 2 }}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              fullWidth
-              variant="outlined"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              sx={{ mb: 2 }}
-            />
           </Box>
-          <DialogActions>
-            <Button onClick={handleClose} color="secondary">
-              Cancel
-            </Button>
-            <Button
-              onClick={handleLoginWithEmailAndPassword}
-              color="primary"
-              variant="contained"
-            >
-              Login
-            </Button>
-          </DialogActions>
+
+          <CustomForm
+            fields={LOGIN_FIELDS}
+            handleClick={handleLoginWithEmailAndPassword}
+          />
         </DialogContent>
 
         <Button color="secondary" onClick={() => setOpen(false)}>
           {t('common.continueAsGuest')}
         </Button>
       </Dialog>
-    </div>
+    </>
   );
 };
 
