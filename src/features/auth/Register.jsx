@@ -57,7 +57,8 @@ const RegistrationPage = () => {
         </Typography>
         <CustomForm
           fields={REGISTRATION_FIELDS}
-          handleClick={handleRegistration}
+          handleSubmit={handleRegistration}
+          handleCancel={() => navigate('/homepage')}
         />
       </Paper>
 

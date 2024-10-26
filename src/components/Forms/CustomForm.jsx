@@ -11,7 +11,7 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
-const CustomForm = ({ fields, handleClick }) => {
+const CustomForm = ({ fields, handleSubmit, handleCancel }) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState({});
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -40,10 +40,10 @@ const CustomForm = ({ fields, handleClick }) => {
     setIsButtonDisabled(!allFieldsFilled || emailError);
   };
 
-  const handleSubmit = (e) => {
+  const onClickSubmit = (e) => {
     e.preventDefault();
     if (!emailError && formData.email && formData.password) {
-      handleClick(formData);
+      handleSubmit(formData);
     }
   };
 
@@ -63,7 +63,7 @@ const CustomForm = ({ fields, handleClick }) => {
   }, [formData, fields]);
 
   return (
-    <FormControl component="form" onSubmit={handleSubmit} fullWidth>
+    <FormControl component="form" onSubmit={onClickSubmit} fullWidth>
       <FormGroup>
         {fields.map((field) => (
           <TextField
@@ -98,7 +98,7 @@ const CustomForm = ({ fields, handleClick }) => {
       </FormGroup>
 
       <DialogActions>
-        <Button onClick={handleClick} color="secondary">
+        <Button onClick={handleCancel} color="secondary">
           {t('common.cancel')}
         </Button>
         <Button

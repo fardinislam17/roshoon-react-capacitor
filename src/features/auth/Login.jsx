@@ -160,7 +160,8 @@ const Login = () => {
 
           <CustomForm
             fields={LOGIN_FIELDS}
-            handleClick={handleLoginWithEmailAndPassword}
+            handleSubmit={handleLoginWithEmailAndPassword}
+            handleCancel={handleClose}
           />
         </DialogContent>
 
