@@ -2,6 +2,7 @@
   "roshoon": "Roshoon",
   "input": "Input",
   "common": {
+    "createAnAccount": "Create an Account",
     "createNew": "Create New",
     "signIn": "Sign In",
     "login": "login",

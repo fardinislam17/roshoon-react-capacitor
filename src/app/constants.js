@@ -19,3 +19,6 @@ export const REGISTRATION_FIELDS = [
 ];
 
 export const LOGIN_METHODS = ['facebookLogin', 'googleLogin'];
+
+export const DEFAULT_ERROR_MESSAGE =
+  'An unexpected error occurred. Please try again.';

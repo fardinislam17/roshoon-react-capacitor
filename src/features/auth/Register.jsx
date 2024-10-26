@@ -8,16 +8,18 @@ import {
 } from '@mui/material';
 import { CustomForm } from 'src/components/Forms';
 import { REGISTRATION_FIELDS } from 'src/app/constants';
-import { useRegisterLazyQuery } from 'src/features/roshoon/roshoonApi';
+import { useRegisterLazyQuery } from 'src/apis/roshoonApi';
 import { useDispatch } from 'react-redux';
-import { setUser } from 'src/features/session/sessionSlice';
+import { setUser } from 'src/slices/sessionSlice';
 import { useNavigate } from 'react-router-dom';
 import {
   notifyError,
   notifySuccess,
 } from 'src/features/snackbarProvider/useSnackbar';
+import { useTranslation } from 'react-i18next';
 
 const RegistrationPage = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterLazyQuery();
@@ -51,7 +53,7 @@ const RegistrationPage = () => {
         }}
       >
         <Typography variant="h5" component="h1" sx={{ mb: 2 }}>
-          Create an Account
+          {t('common.createAnAccount')}
         </Typography>
         <CustomForm
           fields={REGISTRATION_FIELDS}
@@ -62,7 +64,7 @@ const RegistrationPage = () => {
       <Backdrop
         open={isLoading}
         sx={{
-          color: '#fff',
+          color: (theme) => theme.palette.grey[700],
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
       >

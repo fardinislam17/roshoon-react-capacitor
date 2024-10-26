@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  searchChefsByAddress,
-  clearSearch,
-} from '../features/roshoon/roshoonSlice';
+import { searchChefsByAddress, clearSearch } from 'src/slices/roshoonSlice';
 
 const SearchBar = () => {
-  //standard
   const dispatch = useDispatch();
-  
-  //state
   const [searchText, setSearchText] = useState('');
-  
-  //function
   const handleSearch = () => {
     if (searchText.trim() !== '') {
       dispatch(searchChefsByAddress(searchText));

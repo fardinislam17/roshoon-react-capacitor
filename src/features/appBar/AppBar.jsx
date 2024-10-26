@@ -12,10 +12,10 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { logout } from '../session';
+import { logout } from 'src/slices';
 import HamburgerMenu from 'src/components/HamburgerMenu';
-import { generatePath } from '../../paths';
-import { SIDEBAR_MENU_OPTIONS } from '../../app/constants';
+import { generatePath } from 'src/paths';
+import { SIDEBAR_MENU_OPTIONS } from 'src/app/constants';
 import Login from '../auth/Login';
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
@@ -52,9 +52,7 @@ const AppBar = () => {
   };
   const session = useSelector((state) => state.session);
   const dispatch = useDispatch();
-  const menuAnchorRef = useRef(null); // use ref for the menu anchor
-
-  // states
+  const menuAnchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
   const logOut = () => {
@@ -66,7 +64,6 @@ const AppBar = () => {
     setOpen(false);
   };
 
-  // toggle menu open/close
   const handleMenuClick = () => {
     setOpen((prevOpen) => !prevOpen);
   };

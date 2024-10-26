@@ -12,15 +12,16 @@ import { useTranslation } from 'react-i18next';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import FacebookLogin from 'react-facebook-login';
-import { useSignInWithEmailAndPasswordLazyQuery } from 'src/features/roshoon/roshoonApi';
+import { useSignInWithEmailAndPasswordLazyQuery } from 'src/apis/roshoonApi';
 import { useGoogleLogin } from '@react-oauth/google';
 import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
 import { useDispatch } from 'react-redux';
-import { setUser } from 'src/features/session/sessionSlice';
+import { setUser } from 'src/slices/sessionSlice';
 import { CustomForm } from 'src/components/Forms';
 import { useNavigate } from 'react-router-dom';
 import { register, homepage } from 'src/paths';
 import { LOGIN_FIELDS } from 'src/app/constants';
+import { DEFAULT_ERROR_MESSAGE } from 'src/app/constants';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -71,10 +72,10 @@ const Login = () => {
         handleClose();
         navigate(homepage);
       } else {
-        notifyError(response.error?.data?.message);
+        notifyError(response.error?.data?.message || DEFAULT_ERROR_MESSAGE);
       }
     } catch (error) {
-      notifyError(error.message);
+      notifyError(error.message || DEFAULT_ERROR_MESSAGE);
     }
   };
 
