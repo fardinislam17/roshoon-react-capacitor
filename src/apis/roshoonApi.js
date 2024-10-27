@@ -32,6 +32,7 @@ export const roshoonApi = createApi({
         url: `auth/login`,
         method: 'POST',
         body: { email, password },
+        credentials: 'include',
       }),
     }),
     register: builder.query({
@@ -39,6 +40,7 @@ export const roshoonApi = createApi({
         url: `auth/register`,
         method: 'POST',
         body: { email, password, name, roles: ['buyer'] },
+        credentials: 'include',
       }),
     }),
     logout: builder.mutation({
