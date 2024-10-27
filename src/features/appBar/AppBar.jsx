@@ -61,7 +61,6 @@ const AppBar = () => {
   const handleLogout = async () => {
     try {
       const status = await userLogout().unwrap();
-      console.log({ status });
       notifySuccess(status.message);
       dispatch(logout());
       setOpen(false);
@@ -127,9 +126,7 @@ const AppBar = () => {
                 </Menu>
               </div>
             ) : (
-              <>
-                <Login />
-              </>
+              <Login />
             )}
           </div>
         </RightBox>

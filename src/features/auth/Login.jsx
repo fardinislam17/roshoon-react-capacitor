@@ -72,7 +72,11 @@ const Login = () => {
         handleClose();
         navigate(homepage);
       } else {
-        notifyError(response.error?.data?.message || DEFAULT_ERROR_MESSAGE);
+        notifyError(
+          response.error?.data?.message ||
+            response.error?.error ||
+            DEFAULT_ERROR_MESSAGE
+        );
       }
     } catch (error) {
       notifyError(error.message || DEFAULT_ERROR_MESSAGE);

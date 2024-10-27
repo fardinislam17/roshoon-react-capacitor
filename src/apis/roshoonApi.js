@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCookieByName } from 'src/utils';
-import { ROSHOON_AUTH_TOKEN } from 'src/app/constants';
+import { DEFAULT_ERROR_MESSAGE, ROSHOON_AUTH_TOKEN } from 'src/app/constants';
+import { notifyError } from 'src/features/snackbarProvider/useSnackbar';
 
 export const roshoonApi = createApi({
   keepUnusedDataFor: import.meta.env.VITEST ? 0 : 60,
@@ -26,6 +27,14 @@ export const roshoonApi = createApi({
         url: `auth/token-login`,
         credentials: 'include',
       }),
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          sessionStorage.setItem('logout', 'false');
+        } catch (err) {
+          console.log(err.error);
+        }
+      },
     }),
     signInWithEmailAndPassword: builder.query({
       query: ({ email, password }) => ({
@@ -34,6 +43,14 @@ export const roshoonApi = createApi({
         body: { email, password },
         credentials: 'include',
       }),
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          sessionStorage.setItem('logout', 'false');
+        } catch (err) {
+          console.log(err.error);
+        }
+      },
     }),
     register: builder.query({
       query: ({ email, password, name }) => ({
@@ -42,6 +59,14 @@ export const roshoonApi = createApi({
         body: { email, password, name, roles: ['buyer'] },
         credentials: 'include',
       }),
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          sessionStorage.setItem('logout', 'false');
+        } catch (err) {
+          console.log(err.error);
+        }
+      },
     }),
     logout: builder.mutation({
       query: () => ({
@@ -49,6 +74,14 @@ export const roshoonApi = createApi({
         method: 'POST',
         credentials: 'include',
       }),
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          sessionStorage.setItem('logout', 'true');
+        } catch (err) {
+          console.log(err.error);
+        }
+      },
     }),
   }),
 });
