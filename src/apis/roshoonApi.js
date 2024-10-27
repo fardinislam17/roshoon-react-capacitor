@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCookieByName } from 'src/utils';
+import { ROSHOON_AUTH_TOKEN } from 'src/app/constants';
 
 export const roshoonApi = createApi({
   keepUnusedDataFor: import.meta.env.VITEST ? 0 : 60,
@@ -11,7 +12,7 @@ export const roshoonApi = createApi({
       if (import.meta.env.VITEST) {
         return headers;
       }
-      const accessToken = getCookieByName('roshoon_auth_token');
+      const accessToken = getCookieByName(ROSHOON_AUTH_TOKEN);
       if (accessToken) {
         headers.set('ACCESS_TOKEN', accessToken);
       }
@@ -40,11 +41,19 @@ export const roshoonApi = createApi({
         body: { email, password, name, roles: ['buyer'] },
       }),
     }),
+    logout: builder.mutation({
+      query: () => ({
+        url: `auth/logout`,
+        method: 'POST',
+        credentials: 'include',
+      }),
+    }),
   }),
 });
 
 export const {
   useSignInWithExistingCookieQuery,
+  useLogoutMutation,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,

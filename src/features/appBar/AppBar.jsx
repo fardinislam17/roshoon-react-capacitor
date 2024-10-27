@@ -9,14 +9,16 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { logout, getCurrentUser } from 'src/slices';
 import HamburgerMenu from 'src/components/HamburgerMenu';
 import { generatePath } from 'src/paths';
 import { SIDEBAR_MENU_OPTIONS } from 'src/app/constants';
-import Login from '../auth/Login';
+import { useLogoutMutation } from 'src/apis';
+import Login from 'src/features/auth/Login';
+import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
   height: 80,
@@ -48,16 +50,24 @@ const AppBar = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentUser = useSelector(getCurrentUser);
+  const menuAnchorRef = useRef(null);
+  const [userLogout, { isLoading, isSuccess, isError }] = useLogoutMutation();
+  const [open, setOpen] = useState(false);
   const navigateTo = (url) => {
     navigate(generatePath(url.path));
   };
-  const currentUser = useSelector(getCurrentUser);
-  const menuAnchorRef = useRef(null);
-  const [open, setOpen] = useState(false);
 
-  const logOut = () => {
-    setOpen(false);
-    dispatch(logout());
+  const handleLogout = async () => {
+    try {
+      const status = await userLogout().unwrap();
+      console.log({ status });
+      notifySuccess(status.message);
+      dispatch(logout());
+      setOpen(false);
+    } catch (error) {
+      notifyError(error.message);
+    }
   };
 
   const handleMenuClose = () => {
@@ -113,7 +123,7 @@ const AppBar = () => {
                   <MenuItem onClick={() => navigate('/profile')}>
                     Profile
                   </MenuItem>
-                  <MenuItem onClick={logOut}>Logout</MenuItem>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
             ) : (

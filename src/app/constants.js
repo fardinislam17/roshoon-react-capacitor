@@ -22,3 +22,5 @@ export const LOGIN_METHODS = ['facebookLogin', 'googleLogin'];
 
 export const DEFAULT_ERROR_MESSAGE =
   'An unexpected error occurred. Please try again.';
+
+export const ROSHOON_AUTH_TOKEN = 'roshoon_auth_token';
