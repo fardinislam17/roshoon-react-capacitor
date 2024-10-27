@@ -8,11 +8,12 @@ import {
   IconButton,
   Toolbar,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { logout, getCurrentUser } from 'src/slices';
+import { getCurrentUser } from 'src/slices';
 import HamburgerMenu from 'src/components/HamburgerMenu';
 import { generatePath } from 'src/paths';
 import { SIDEBAR_MENU_OPTIONS } from 'src/app/constants';
@@ -62,7 +63,6 @@ const AppBar = () => {
     try {
       const status = await userLogout().unwrap();
       notifySuccess(status.message);
-      dispatch(logout());
       setOpen(false);
     } catch (error) {
       notifyError(error.message);
@@ -125,6 +125,8 @@ const AppBar = () => {
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 </Menu>
               </div>
+            ) : isLoading ? (
+              <CircularProgress size={20} />
             ) : (
               <Login />
             )}

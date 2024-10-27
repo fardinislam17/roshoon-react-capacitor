@@ -31,9 +31,6 @@ const RegistrationPage = () => {
     try {
       const response = await register({ email, password, name });
       if (response.isSuccess) {
-        if (response.data.user) {
-          dispatch(setUser({ ...response.data.user, loggedIn: true }));
-        }
         notifySuccess(response.data.message);
         navigate(paths.homepage);
       } else {

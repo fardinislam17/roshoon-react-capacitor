@@ -6,6 +6,7 @@ import {
   DialogTitle,
   Box,
   Divider,
+  LinearProgress,
 } from '@mui/material';
 import { LOGIN_METHODS } from 'src/app/constants';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +17,6 @@ import { useSignInWithEmailAndPasswordLazyQuery } from 'src/apis/roshoonApi';
 import { useGoogleLogin } from '@react-oauth/google';
 import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
 import { useDispatch } from 'react-redux';
-import { setUser } from 'src/slices/sessionSlice';
 import { CustomForm } from 'src/components/Forms';
 import { useNavigate } from 'react-router-dom';
 import { register, homepage } from 'src/paths';
@@ -28,10 +28,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
   const facebookButtonRef = useRef(null);
-
-  const [signIn] = useSignInWithEmailAndPasswordLazyQuery();
+  const [signIn, { isFetching }] = useSignInWithEmailAndPasswordLazyQuery();
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: (tokenResponse) => {
@@ -65,9 +63,6 @@ const Login = () => {
     try {
       const response = await signIn({ email, password });
       if (response.isSuccess) {
-        if (response.data.user) {
-          dispatch(setUser({ ...response.data.user, loggedIn: true }));
-        }
         notifySuccess(response.data.message);
         handleClose();
         navigate(homepage);
@@ -172,6 +167,7 @@ const Login = () => {
         <Button color="secondary" onClick={() => setOpen(false)}>
           {t('common.continueAsGuest')}
         </Button>
+        {isFetching && <LinearProgress />}
       </Dialog>
     </>
   );

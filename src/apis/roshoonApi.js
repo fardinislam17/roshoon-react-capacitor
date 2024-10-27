@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCookieByName } from 'src/utils';
-import { DEFAULT_ERROR_MESSAGE, ROSHOON_AUTH_TOKEN } from 'src/app/constants';
-import { notifyError } from 'src/features/snackbarProvider/useSnackbar';
+import { ROSHOON_AUTH_TOKEN } from 'src/app/constants';
+import { logout, setUser } from 'src/slices';
 
 export const roshoonApi = createApi({
   keepUnusedDataFor: import.meta.env.VITEST ? 0 : 60,
@@ -43,9 +43,14 @@ export const roshoonApi = createApi({
         body: { email, password },
         credentials: 'include',
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled;
+          const {
+            data: { user },
+          } = await queryFulfilled;
+          if (user) {
+            dispatch(setUser({ ...user, loggedIn: true }));
+          }
           sessionStorage.setItem('logout', 'false');
         } catch (err) {
           console.log(err.error);
@@ -59,9 +64,15 @@ export const roshoonApi = createApi({
         body: { email, password, name, roles: ['buyer'] },
         credentials: 'include',
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
+          const {
+            data: { user },
+          } = await queryFulfilled;
+          if (user) {
+            dispatch(setUser({ ...user, loggedIn: true }));
+          }
           sessionStorage.setItem('logout', 'false');
         } catch (err) {
           console.log(err.error);
@@ -74,9 +85,10 @@ export const roshoonApi = createApi({
         method: 'POST',
         credentials: 'include',
       }),
-      async onQueryStarted(arg, { queryFulfilled }) {
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
+          dispatch(logout());
           sessionStorage.setItem('logout', 'true');
         } catch (err) {
           console.log(err.error);
