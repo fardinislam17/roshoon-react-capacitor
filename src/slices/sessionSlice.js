@@ -25,6 +25,6 @@ export const sessionSlice = createSlice({
 });
 
 export const { setUser, logout, setError, clearError } = sessionSlice.actions;
-export const getCurrentUser = (state) => state.user;
+export const getCurrentUser = (state) => state.session.user;
 
 export default sessionSlice;

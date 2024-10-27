@@ -20,9 +20,10 @@ export const roshoonApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getRoles: builder.query({
+    signInWithExistingCookie: builder.query({
       query: () => ({
-        url: `${window.location.origin}/me/roles`,
+        url: `auth/token-login`,
+        credentials: 'include',
       }),
     }),
     signInWithEmailAndPassword: builder.query({
@@ -30,7 +31,6 @@ export const roshoonApi = createApi({
         url: `auth/login`,
         method: 'POST',
         body: { email, password },
-        credentials: 'include',
       }),
     }),
     register: builder.query({
@@ -38,14 +38,13 @@ export const roshoonApi = createApi({
         url: `auth/register`,
         method: 'POST',
         body: { email, password, name, roles: ['buyer'] },
-        credentials: 'include',
       }),
     }),
   }),
 });
 
 export const {
-  useGetRolesQuery,
+  useSignInWithExistingCookieQuery,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,

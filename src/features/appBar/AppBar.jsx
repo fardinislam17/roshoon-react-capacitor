@@ -9,10 +9,10 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { logout } from 'src/slices';
+import { logout, getCurrentUser } from 'src/slices';
 import HamburgerMenu from 'src/components/HamburgerMenu';
 import { generatePath } from 'src/paths';
 import { SIDEBAR_MENU_OPTIONS } from 'src/app/constants';
@@ -46,18 +46,18 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 
 const AppBar = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const navigateTo = (url) => {
     navigate(generatePath(url.path));
   };
-  const session = useSelector((state) => state.session);
-  const dispatch = useDispatch();
+  const currentUser = useSelector(getCurrentUser);
   const menuAnchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
   const logOut = () => {
-    dispatch(logout());
     setOpen(false);
+    dispatch(logout());
   };
 
   const handleMenuClose = () => {
@@ -84,10 +84,10 @@ const AppBar = () => {
         </LeftBox>
         <RightBox>
           <div className="flex gap-4 mr-4">
-            {session?.user && session.user.loggedIn ? (
+            {currentUser?.loggedIn ? (
               <div className="flex justify-center items-center gap-2">
                 <h1 className="text-white text-sm">
-                  {session.user?.name || session.user?.email}
+                  {currentUser.name || currentUser.email}
                 </h1>
                 <IconButton
                   onClick={handleMenuClick}
@@ -100,7 +100,7 @@ const AppBar = () => {
                   <img
                     width={100}
                     height={100}
-                    src={session.user?.picture}
+                    src={currentUser.picture}
                     alt={'user'}
                   />
                 </IconButton>

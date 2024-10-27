@@ -8,8 +8,7 @@ import Footer from './features/footer';
 import ErrorBoundary from './features/errorBoundary';
 import EntitledElement from './components/EntitledElement';
 import Roshoon from './features/roshoon';
-
-import { Login, Register } from './features/auth';
+import { Register } from './features/auth';
 
 const AppRoot = styled(Box)(() => ({
   display: 'flex',
@@ -44,17 +43,9 @@ const App = () => {
             path={paths.homepage}
             element={
               <ErrorBoundary>
-                <EntitledElement role={'dev'} fallback={<RoshoonSkeleton />}>
+                <EntitledElement fallback={<RoshoonSkeleton />}>
                   <Roshoon />
                 </EntitledElement>
-              </ErrorBoundary>
-            }
-          />
-          <Route
-            path={paths.login}
-            element={
-              <ErrorBoundary>
-                <Login />
               </ErrorBoundary>
             }
           />
@@ -62,7 +53,9 @@ const App = () => {
             path={paths.register}
             element={
               <ErrorBoundary>
-                <Register />
+                <EntitledElement fallback={<RoshoonSkeleton />}>
+                  <Register />
+                </EntitledElement>
               </ErrorBoundary>
             }
           />

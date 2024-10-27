@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -10,19 +10,22 @@ import { CustomForm } from 'src/components/Forms';
 import { REGISTRATION_FIELDS } from 'src/app/constants';
 import { useRegisterLazyQuery } from 'src/apis/roshoonApi';
 import { useDispatch } from 'react-redux';
-import { setUser } from 'src/slices/sessionSlice';
+import { getCurrentUser, setUser } from 'src/slices/sessionSlice';
 import { useNavigate } from 'react-router-dom';
+import * as paths from 'src/paths';
 import {
   notifyError,
   notifySuccess,
 } from 'src/features/snackbarProvider/useSnackbar';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 const RegistrationPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [register, { isLoading }] = useRegisterLazyQuery();
+  const currentUser = useSelector(getCurrentUser);
 
   const handleRegistration = async ({ email, password, fullName: name }) => {
     try {
@@ -32,7 +35,7 @@ const RegistrationPage = () => {
           dispatch(setUser({ ...response.data.user, loggedIn: true }));
         }
         notifySuccess(response.data.message);
-        navigate('/homepage');
+        navigate(paths.homepage);
       } else {
         notifyError(response.error?.data?.message);
       }
@@ -40,6 +43,12 @@ const RegistrationPage = () => {
       notifyError(error.message);
     }
   };
+
+  useEffect(() => {
+    if (currentUser?.loggedIn) {
+      navigate(paths.homepage);
+    }
+  }, [currentUser, navigate]);
 
   return (
     <Container component="main" maxWidth="xs">
