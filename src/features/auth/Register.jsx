@@ -27,9 +27,14 @@ const RegistrationPage = () => {
   const [register, { isLoading }] = useRegisterLazyQuery();
   const currentUser = useSelector(getCurrentUser);
 
-  const handleRegistration = async ({ email, password, fullName: name }) => {
+  const handleRegistration = async ({
+    email,
+    password,
+    fullName: name,
+    phone,
+  }) => {
     try {
-      const response = await register({ email, password, name });
+      const response = await register({ email, password, name, phone });
       if (response.isSuccess) {
         notifySuccess(response.data.message);
         navigate(paths.homepage);

@@ -58,10 +58,10 @@ export const roshoonApi = createApi({
       },
     }),
     register: builder.query({
-      query: ({ email, password, name }) => ({
+      query: ({ email, password, name, phone }) => ({
         url: `auth/register`,
         method: 'POST',
-        body: { email, password, name, roles: ['buyer'] },
+        body: { email, password, name, phone, roles: ['buyer'] },
         credentials: 'include',
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
