@@ -24,3 +24,4 @@ export const DEFAULT_ERROR_MESSAGE =
   'An unexpected error occurred. Please try again.';
 
 export const ROSHOON_AUTH_TOKEN = 'roshoon_auth_token';
+export const ROSHOON_ACCESS_TOKEN = 'roshoon_access_token';

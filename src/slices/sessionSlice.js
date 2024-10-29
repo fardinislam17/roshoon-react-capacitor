@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { ROSHOON_ACCESS_TOKEN } from 'src/app/constants';
 
 const initialState = {
   user: null,
@@ -14,6 +15,7 @@ export const sessionSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
+      localStorage.removeItem(ROSHOON_ACCESS_TOKEN);
     },
     setError: (state, action) => {
       state.error = action.payload;

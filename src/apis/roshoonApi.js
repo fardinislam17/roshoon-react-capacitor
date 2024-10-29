@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCookieByName } from 'src/utils';
-import { ROSHOON_AUTH_TOKEN } from 'src/app/constants';
+import { ROSHOON_ACCESS_TOKEN, ROSHOON_AUTH_TOKEN } from 'src/app/constants';
 import { logout, setUser } from 'src/slices';
 
 export const roshoonApi = createApi({
@@ -9,13 +9,16 @@ export const roshoonApi = createApi({
   tagTypes: [],
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
-    prepareHeaders: async (headers) => {
-      if (import.meta.env.VITEST) {
-        return headers;
+    prepareHeaders: async (headers, { endpoint }) => {
+      if (endpoint === 'signInWithExistingCookie') {
+        const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
+        if (authToken) {
+          headers.set(ROSHOON_AUTH_TOKEN, authToken);
+        }
       }
-      const accessToken = getCookieByName(ROSHOON_AUTH_TOKEN);
+      const accessToken = localStorage.getItem(ROSHOON_ACCESS_TOKEN);
       if (accessToken) {
-        headers.set('ACCESS_TOKEN', accessToken);
+        headers.set('Authorization', `Bearer ${accessToken}`);
       }
       return headers;
     },
@@ -29,8 +32,10 @@ export const roshoonApi = createApi({
       }),
       async onQueryStarted(arg, { queryFulfilled }) {
         try {
-          await queryFulfilled;
-          sessionStorage.setItem('logout', 'false');
+          const {
+            data: { accessToken },
+          } = await queryFulfilled;
+          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
         } catch (err) {
           console.log(err.error);
         }
@@ -46,12 +51,12 @@ export const roshoonApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const {
-            data: { user },
+            data: { accessToken, user },
           } = await queryFulfilled;
           if (user) {
             dispatch(setUser({ ...user, loggedIn: true }));
           }
-          sessionStorage.setItem('logout', 'false');
+          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
         } catch (err) {
           console.log(err.error);
         }
@@ -68,12 +73,12 @@ export const roshoonApi = createApi({
         try {
           await queryFulfilled;
           const {
-            data: { user },
+            data: { accessToken, user },
           } = await queryFulfilled;
           if (user) {
             dispatch(setUser({ ...user, loggedIn: true }));
           }
-          sessionStorage.setItem('logout', 'false');
+          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
         } catch (err) {
           console.log(err.error);
         }
@@ -89,7 +94,6 @@ export const roshoonApi = createApi({
         try {
           await queryFulfilled;
           dispatch(logout());
-          sessionStorage.setItem('logout', 'true');
         } catch (err) {
           console.log(err.error);
         }

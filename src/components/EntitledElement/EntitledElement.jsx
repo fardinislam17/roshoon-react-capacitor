@@ -4,11 +4,12 @@ import { skipToken } from '@reduxjs/toolkit/query/react';
 import { useSignInWithExistingCookieQuery } from 'src/apis';
 import { setUser, getCurrentUser } from 'src/slices';
 import { useDispatch, useSelector } from 'react-redux';
+import { ROSHOON_ACCESS_TOKEN } from 'src/app/constants';
 
 const EntitledElement = (props) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser);
-  const shouldSkip = sessionStorage.getItem('logout') === 'true';
+  const shouldSkip = !localStorage.getItem(ROSHOON_ACCESS_TOKEN);
   const { data, isFetching } = useSignInWithExistingCookieQuery(
     shouldSkip ? skipToken : undefined
   );
