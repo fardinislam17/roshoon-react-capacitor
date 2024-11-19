@@ -9,8 +9,6 @@ dist/
 
 # Dependency directories
 pnpm-lock.yaml
-package-lock.json
-yarn.lock
 
 # Environment files
 .env
