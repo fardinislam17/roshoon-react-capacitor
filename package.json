@@ -63,6 +63,9 @@
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.27.3"
   },
+  "resolutions": {
+    "@rollup/native": "@rollup/rollup-linux-x64-gnu"
+  },
   "msw": {
     "workerDirectory": [
       "public"
