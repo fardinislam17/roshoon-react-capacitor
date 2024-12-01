@@ -85,8 +85,22 @@ const Login = () => {
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        {t('common.login')}
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={handleClickOpen}
+        sx={{
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          textTransform: 'none',
+          border: 'none',
+          '&:hover': {
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+          },
+        }}
+      >
+        {t('common.logIn')}
       </Button>
 
       <Dialog
