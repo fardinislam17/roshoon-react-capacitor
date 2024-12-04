@@ -14,6 +14,7 @@ export default {
         primary: '#ff5722', // Orange
         secondary: '#4caf50', // Green
         roshoonBackground: '#ffffff', // White
+        footerText: '#bbd6b8',
         text: {
           primary: '#000000', // Black
         },

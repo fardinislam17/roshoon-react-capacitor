@@ -39,7 +39,7 @@ const Footer = () => {
       <div className="flex justify-between flex-col-reverse gap-10 lg:flex-row">
         <div className="flex flex-col lg:flex-col xl:flex-row justify-between w-full mb-3 relative px-8 lg:mt-24 lg:mb-16 lg:ml-0 2xl:mt-32 2xl:ml-32">
           <div className="space-y-5 mb-0 lg:mb-5 xl:mb-0">
-            <h3 className="footer-text-color tracking-tight font-lato text-base lg:text-xl font-medium uppercase">
+            <h3 className="text-footerText tracking-tight font-lato text-base lg:text-xl font-medium uppercase">
               {t('footer.signUpForNewsLetter')}
             </h3>
             <form onSubmit={handleSubmit} className="flex">
@@ -53,7 +53,7 @@ const Footer = () => {
                 <img src={arrow} alt="" />
               </button>
             </form>
-            <h4 className="footer-text-color hidden absolute bottom-0 lg:flex gap-1 tracking-tighter font-lato text-xl font-medium">
+            <h4 className="text-footerText hidden absolute bottom-0 lg:flex gap-1 tracking-tighter font-lato text-xl font-medium">
               {t('footer.needSomeHelp')}
               <Link to="" className="border-b border-secondary">
                 {t('footer.getInTouch')}
@@ -68,7 +68,7 @@ const Footer = () => {
                     <Link
                       key={index}
                       to={element.path}
-                      className="underline footer-text-color text-lg font-medium font-lato border-secondary"
+                      className="underline text-footerText text-lg font-medium font-lato border-secondary"
                     >
                       {t(element.name)}
                     </Link>
@@ -79,7 +79,7 @@ const Footer = () => {
                     <Link
                       key={index}
                       to={element.path}
-                      className="underline footer-text-color text-lg font-medium font-lato border-secondary"
+                      className="underline text-footerText text-lg font-medium font-lato border-secondary"
                     >
                       {t(element.name)}
                     </Link>
@@ -103,7 +103,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <h4 className="footer-text-color flex justify-center mt-14 md:mt-10 lg:hidden gap-1 tracking-tighter font-lato text-xl font-medium">
+          <h4 className="text-footerText flex justify-center mt-14 md:mt-10 lg:hidden gap-1 tracking-tighter font-lato text-xl font-medium">
             {t('footer.needSomeHelp')}
             <Link to="" className="border-b border-secondary">
               {t('footer.getInTouch')}
@@ -117,7 +117,7 @@ const Footer = () => {
             transition: 'background-image 1s ease-in',
           }}
         >
-          <h4 className="text-primary bg-roshoon-background absolute bottom-10 left-10 w-40 px-5 py-2 rounded-full text-2xl font-medium font-inter">
+          <h4 className="text-primary bg-roshoonBackground absolute bottom-10 left-10 w-40 px-5 py-2 rounded-full text-2xl font-medium font-inter">
             @Roshoon
           </h4>
         </div>
