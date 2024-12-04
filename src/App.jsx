@@ -61,7 +61,6 @@ const App = () => {
           />
           <Route path="*" element={<UnknownRoute />} />
         </Routes>
-        
       </MainContent>
       <Footer />
     </AppRoot>

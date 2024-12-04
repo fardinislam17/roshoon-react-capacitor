@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import RoshoonLogo from 'src/assets/roshoon.png';
 import {
   Stack,
   styled,
@@ -14,9 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getCurrentUser } from 'src/slices';
-import HamburgerMenu from 'src/components/HamburgerMenu';
 import { generatePath } from 'src/paths';
-import { SIDEBAR_MENU_OPTIONS } from 'src/app/constants';
 import { useLogoutMutation } from 'src/apis';
 import Login from 'src/features/auth/Login';
 import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
@@ -24,6 +23,7 @@ import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
   height: 80,
   padding: 4,
+  background: theme.palette.background.default,
 }));
 
 const LeftBox = styled(Stack)(({ theme }) => ({
@@ -39,12 +39,8 @@ const RightBox = styled(Stack)(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-const RoshoonLogo = styled(Stack)(({ theme }) => ({
+const RoshoonLogoContainer = styled(Stack)(({ theme }) => ({
   color: theme.palette.common.white,
-}));
-
-const StyledTypography = styled(Typography)(({ theme }) => ({
-  color: theme.palette.logo.primary,
 }));
 
 const AppBar = () => {
@@ -81,15 +77,15 @@ const AppBar = () => {
     <StyledAppBar>
       <Toolbar disableGutters className="flex justify-between">
         <LeftBox>
-          <HamburgerMenu
-            menuOptions={SIDEBAR_MENU_OPTIONS}
-            onMenuClick={navigateTo}
-          />
-          <RoshoonLogo>
+          <RoshoonLogoContainer>
             <Link to="/" underline="none">
-              <StyledTypography variant="h4">Roshoon</StyledTypography>
+              <img
+                src={RoshoonLogo}
+                alt="Roshoon Logo"
+                style={{ height: 'auto', width: '150px' }}
+              />
             </Link>
-          </RoshoonLogo>
+          </RoshoonLogoContainer>
         </LeftBox>
         <RightBox>
           <div className="flex gap-4 mr-4">

@@ -66,8 +66,12 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     background: {
-      footer: '#50704C',
+      footer: {
+        primary: '#50704C',
+        secondary: ''
+      },
     },
+
     logo: {
       primary: 'white',
     },
