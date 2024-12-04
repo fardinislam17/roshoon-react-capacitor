@@ -21,6 +21,11 @@
       "enterValidEmail": "Please enter a valid email address"
     }
   },
+  "footer":{
+    "signUpForNewsLetter": "Sign Up For News Letter",
+    "needSomeHelp" : "Need Some Help?",
+    "getInTouch": "Get In Touch"
+  },
   "legal": {
     "disclosure": "Roshoon ....."
   },
