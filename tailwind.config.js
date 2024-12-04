@@ -7,6 +7,8 @@ export default {
     extend: {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
+        lato: ['Lato', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       colors: {
         primary: '#ff5722', // Orange
@@ -14,6 +16,9 @@ export default {
         roshoonBackground: '#ffffff', // White
         text: {
           primary: '#000000', // Black
+        },
+        icon: {
+          primary: '#B2D99A',
         },
       },
       typography: {
