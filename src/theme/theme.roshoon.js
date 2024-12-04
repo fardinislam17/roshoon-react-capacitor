@@ -68,7 +68,7 @@ const theme = createTheme({
     background: {
       footer: {
         primary: '#50704C',
-        secondary: ''
+        secondary: '',
       },
     },
 

@@ -1,4 +1,3 @@
-
 export const SIDEBAR_MENU_OPTIONS = [
   { label: 'Our Story', path: 'ourStory' },
   { label: 'Become a shef', path: 'becomeAShef' },
@@ -19,17 +18,16 @@ export const REGISTRATION_FIELDS = [
   { name: 'password', label: 'Password', type: 'password', required: true },
 ];
 
-
 export const FOOTER_ELEMENT_L = [
   { name: 'Our Services', path: '' },
   { name: 'Become chef', path: '' },
   { name: 'FAQ', path: '' },
-]
+];
 export const FOOTER_ELEMENT_R = [
   { name: 'Account', path: '' },
   { name: 'Terms of Service', path: '' },
-  { name: 'Privacy Policy', path: '' }
-]
+  { name: 'Privacy Policy', path: '' },
+];
 
 export const LOGIN_METHODS = ['facebookLogin', 'googleLogin'];
 
