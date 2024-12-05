@@ -4,10 +4,8 @@ import { slides } from 'src/data/Slides';
 
 const Roshoon = () => {
   return (
-    <div className="flex flex-col">
-      <div className="p-4">
-        <Carousel slides={slides} autoSlide={true} slideDuration={5} />
-      </div>
+    <div className="w-full flex flex-col">
+      <Carousel slides={slides} autoSlide={true} slideDuration={5} />
     </div>
   );
 };

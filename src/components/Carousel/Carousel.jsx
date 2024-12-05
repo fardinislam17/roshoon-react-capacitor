@@ -5,7 +5,7 @@ const Carousel = ({
   slides,
   autoSlide = false,
   slideDuration = 4,
-  carouselHeight = '500px',
+  carouselHeight = '750px',
   carouselWidth = '100%',
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -49,7 +49,7 @@ const Carousel = ({
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-[5px] h-[5px] rounded-full ${
-              index === currentSlide ? 'bg-[#54722D]' : 'bg-[#D9D9D9]'
+              index === currentSlide ? 'bg-green-olive' : 'bg-gray-light'
             }`}
             aria-label={`Slide ${index + 1}`}
           />
