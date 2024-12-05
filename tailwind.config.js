@@ -23,9 +23,6 @@ export default {
         icon: {
           primary: '#B2D99A',
         },
-        icon: {
-          primary: '#B2D99A',
-        },
       },
       typography: {
         DEFAULT: {
