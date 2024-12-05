@@ -1,24 +1,23 @@
-import React, { useEffect } from 'react';
 import {
-  Container,
-  Typography,
-  Paper,
   Backdrop,
   CircularProgress,
+  Container,
+  Paper,
+  Typography,
 } from '@mui/material';
-import { CustomForm } from 'src/components/Forms';
-import { REGISTRATION_FIELDS } from 'src/app/constants';
-import { useRegisterLazyQuery } from 'src/apis/roshoonApi';
-import { useDispatch } from 'react-redux';
-import { getCurrentUser, setUser } from 'src/slices/sessionSlice';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import * as paths from 'src/paths';
+import { useRegisterLazyQuery } from 'src/apis/roshoonApi';
+import { REGISTRATION_FIELDS } from 'src/app/constants';
+import { CustomForm } from 'src/components/Forms';
 import {
   notifyError,
   notifySuccess,
 } from 'src/features/snackbarProvider/useSnackbar';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import * as paths from 'src/paths';
+import { getCurrentUser } from 'src/slices/sessionSlice';
 
 const RegistrationPage = () => {
   const { t } = useTranslation();
@@ -53,7 +52,7 @@ const RegistrationPage = () => {
   }, [currentUser, navigate]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="py-20 ">
       <Paper
         elevation={3}
         sx={{
