@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom';
+
 const CarouselItem = ({ slide, isActive, height }) => {
-  const { image, header, title, subHeader } = slide;
+  const { image, header, title, path } = slide;
   const carouselImageHeight = `${parseInt(height, 10) - 160}px`;
 
   return (
@@ -13,11 +15,18 @@ const CarouselItem = ({ slide, isActive, height }) => {
       />
       {isActive && (
         <div className="absolute -bottom-32 left-1/2 transform -translate-x-1/2 p-4 text-black text-center">
-          {/* <h3 className="text-black">{subHeader}</h3> */}
-          <h2 className="font-julius text-2xl mb-7">{header}</h2>
-          <h4 className="py-[9px] font-lato tracking-[0.66px] font-semibold text-[11px] leading-[14px] text-center  border border-black uppercase">
+          <h2
+            className="font-julius text-2xl mb-7 whitespace-nowrap"
+            title={header}
+          >
+            {header}
+          </h2>
+          <Link
+            to={path}
+            className="px-4 py-[9px] font-lato tracking-[0.66px] font-semibold text-[11px] leading-[14px] text-center border border-black uppercase inline-block"
+          >
             {title}
-          </h4>
+          </Link>
         </div>
       )}
     </div>
