@@ -37,7 +37,7 @@ const App = () => {
   return (
     <AppRoot>
       <AppBar />
-      <MainContent disableGutters>
+      <MainContent disableGutters maxWidth={false}>
         <Routes>
           <Route
             path={paths.homepage}
