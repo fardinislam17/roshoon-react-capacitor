@@ -15,11 +15,13 @@ export default {
         secondary: '#4caf50', // Green
         roshoonBackground: '#ffffff', // White
         footerText: '#bbd6b8',
-
         text: {
           primary: '#000000', // Black
           footerMention: '#195908',
           footerEmail: '#50704C',
+        },
+        icon: {
+          primary: '#B2D99A',
         },
         icon: {
           primary: '#B2D99A',
