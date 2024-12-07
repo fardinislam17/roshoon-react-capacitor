@@ -7,13 +7,24 @@ export default {
     extend: {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        lato: ['Lato', 'sans-serif'],
+        julius: ['"Julius Sans One"', 'sans-serif'],
       },
       colors: {
         primary: '#ff5722', // Orange
         secondary: '#4caf50', // Green
         roshoonBackground: '#ffffff', // White
+        'green-olive': '#54722D',
+        'gray-light': '#D9D9D9',
+        footerText: '#bbd6b8',
         text: {
           primary: '#000000', // Black
+          footerMention: '#195908',
+          footerEmail: '#50704C',
+        },
+        icon: {
+          primary: '#B2D99A',
         },
       },
       typography: {
