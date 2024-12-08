@@ -45,7 +45,7 @@ const Footer = () => {
             <form onSubmit={handleSubmit} className="flex">
               <input
                 name="email"
-                className="bg-roshoon-background placeholder:text-text-footerEmail font-normal focus:outline-none pl-7 font-lato text-base w-full lg:text-2xl text-text-footerEmail"
+                className="bg-roshoon-background placeholder:text-primaryGreen font-normal focus:outline-none pl-7 font-lato text-base w-full lg:text-2xl text-primaryGreen"
                 placeholder="Email address"
                 type="text"
               />

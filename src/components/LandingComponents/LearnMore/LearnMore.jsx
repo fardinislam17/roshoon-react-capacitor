@@ -1,11 +1,14 @@
 import React from 'react';
-import img1 from '../../../assets/LandingImg/learn-more-house-1.png';
-import img3 from '../../../assets/LandingImg/learn-more-leaf-3.png';
-import img4 from '../../../assets/LandingImg/learn-more-tropical-leaves-4.png';
-import img2 from '../../../assets/LandingImg/learn-more-whisk-2.png';
-import CommonBtn from '../../CommonBtn';
+import { useTranslation } from 'react-i18next';
+import img1 from 'src/assets/images/learn-more-house-1.png';
+import img3 from 'src/assets/images/learn-more-leaf-3.png';
+import img4 from 'src/assets/images/learn-more-tropical-leaves-4.png';
+import img2 from 'src/assets/images/learn-more-whisk-2.png';
+import CommonButton from 'src/components/CommonButton';
 
 const LearnMore = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-[#E6E4C6] xl:pb-[143px] py-10 xl:py-0 xl:pt-[120px] w-full my-20 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-0">
       <h2 className="text-[18px] md:text-2xl xl:text-[36px] text-center text-[#195908] uppercase font-julius">
@@ -52,7 +55,7 @@ const LearnMore = () => {
       </p>
 
       <div className="flex justify-center mt-10 xl:mt-20">
-        <CommonBtn> Learn MORE about us</CommonBtn>
+        <CommonButton>{t('common.learnMoreAboutUs')}</CommonButton>
       </div>
     </div>
   );
