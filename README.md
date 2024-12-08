@@ -28,7 +28,7 @@ To run the development server, execute the following command:
 npm start
 ```
 
-The project will be running on [localhost:4000](http://localhost:4000).
+The project will be running on [localhost:3333](http://localhost:3333).
 
 ---
 
@@ -37,9 +37,9 @@ The project will be running on [localhost:4000](http://localhost:4000).
 When creating a new branch, please follow these guidelines:
 
 - **Feature Branch**: `feature/[Jira-ticket-Number]`
-  - Example: `feature/IVIS-12345`
+  - Example: `feature/RPD-12345`
 - **Bugfix Branch**: `bug/[Jira-ticket-Number]`
-  - Example: `bug/IVIS-12345`
+  - Example: `bug/RPD-12345`
 
 The Jira ticket number should always be included to track the relevant task.
 
@@ -54,7 +54,7 @@ Each commit message must follow this structure to maintain consistency across th
   **Example:**
 
   ```bash
-  [IVIS-12345]: Add the header component to the homepage
+  [RPD-12345]: Add the header component to the homepage
   ```
 
 This helps in tracking commits related to specific tasks and issues.
@@ -79,7 +79,7 @@ Please follow this template when creating a pull request:
 ```markdown
 ## Jira Ticket
 
-- [IVIS-12345]
+- [RPD-12345]
 
 ## Description
 
