@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   IconButton,
   Menu,
@@ -11,6 +10,7 @@ import {
 } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CiLocationOn } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from 'src/apis';
@@ -88,42 +88,26 @@ const AppBar = () => {
           </RoshoonLogoContainer>
         </LeftBox>
         <RightBox>
-          <div className="flex gap-4 mr-4">
-            <Link to={paths.register}>
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{
-                  backgroundColor: 'transparent',
-                  boxShadow: 'none',
-                  textTransform: 'none',
-                  border: 'none',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
-                  },
-                }}
-              >
-                {t('Become a chef')}
-              </Button>
+          <div className="flex gap-10 mr-5 items-center">
+            <div className=" flex items-center gap-[10px] p-[10px]">
+              <button className="text-[#272727] text-xl">
+                <CiLocationOn />
+              </button>
+              <Link to="#" className="text-[#272727] font-lato font-medium">
+                {t('Locate me')}
+              </Link>
+            </div>
+            <Link
+              to={paths.login}
+              className="text-[#272727] font-lato font-medium p-[10px]"
+            >
+              {t('Become a Chef')}
             </Link>
-            <Link to={paths.register}>
-              <Button
-                variant="contained"
-                color="secondary"
-                sx={{
-                  backgroundColor: 'transparent',
-                  boxShadow: 'none',
-                  textTransform: 'none',
-                  border: 'none',
-                  '&:hover': {
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
-                  },
-                }}
-              >
-                {t('Sign Up')}
-              </Button>
+            <Link
+              to={paths.register}
+              className="text-[#272727] font-lato font-medium p-[10px]"
+            >
+              {t('Sign Up')}
             </Link>
             {currentUser?.loggedIn ? (
               <div className="flex justify-center items-center gap-2">
@@ -160,24 +144,11 @@ const AppBar = () => {
             ) : isLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <Link to={paths.login}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  // onClick={handleClickOpen}
-                  sx={{
-                    backgroundColor: 'transparent',
-                    boxShadow: 'none',
-                    textTransform: 'none',
-                    border: 'none',
-                    '&:hover': {
-                      backgroundColor: 'transparent',
-                      boxShadow: 'none',
-                    },
-                  }}
-                >
-                  {t('common.logIn')}
-                </Button>
+              <Link
+                to={paths.login}
+                className="text-[#272727] font-lato font-medium p-[10px]"
+              >
+                {t('common.logIn')}
               </Link>
             )}
           </div>
