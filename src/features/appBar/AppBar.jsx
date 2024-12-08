@@ -1,23 +1,23 @@
-import React, { useState, useRef } from 'react';
-import RoshoonLogo from 'src/assets/roshoon.png';
 import {
-  Stack,
-  styled,
-  AppBar as MuiAppBar,
+  Button,
+  CircularProgress,
+  IconButton,
   Menu,
   MenuItem,
-  IconButton,
+  AppBar as MuiAppBar,
+  Stack,
+  styled,
   Toolbar,
-  Typography,
-  CircularProgress,
 } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getCurrentUser } from 'src/slices';
-import { generatePath } from 'src/paths';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from 'src/apis';
-import Login from 'src/features/auth/Login';
+import RoshoonLogo from 'src/assets/roshoon.png';
+import { generatePath } from 'src/paths';
+import { getCurrentUser } from 'src/slices';
+import * as paths from '../../paths.js';
 import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
 
 const StyledAppBar = styled(MuiAppBar)(({ theme }) => ({
@@ -89,6 +89,42 @@ const AppBar = () => {
         </LeftBox>
         <RightBox>
           <div className="flex gap-4 mr-4">
+            <Link to={paths.register}>
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{
+                  backgroundColor: 'transparent',
+                  boxShadow: 'none',
+                  textTransform: 'none',
+                  border: 'none',
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                  },
+                }}
+              >
+                {t('Become a chef')}
+              </Button>
+            </Link>
+            <Link to={paths.register}>
+              <Button
+                variant="contained"
+                color="secondary"
+                sx={{
+                  backgroundColor: 'transparent',
+                  boxShadow: 'none',
+                  textTransform: 'none',
+                  border: 'none',
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                  },
+                }}
+              >
+                {t('Sign Up')}
+              </Button>
+            </Link>
             {currentUser?.loggedIn ? (
               <div className="flex justify-center items-center gap-2">
                 <h1 className="text-white text-sm">
@@ -124,7 +160,25 @@ const AppBar = () => {
             ) : isLoading ? (
               <CircularProgress size={20} />
             ) : (
-              <Login />
+              <Link to={paths.login}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  // onClick={handleClickOpen}
+                  sx={{
+                    backgroundColor: 'transparent',
+                    boxShadow: 'none',
+                    textTransform: 'none',
+                    border: 'none',
+                    '&:hover': {
+                      backgroundColor: 'transparent',
+                      boxShadow: 'none',
+                    },
+                  }}
+                >
+                  {t('common.logIn')}
+                </Button>
+              </Link>
             )}
           </div>
         </RightBox>
