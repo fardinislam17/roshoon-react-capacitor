@@ -17,11 +17,12 @@ export default {
         roshoonBackground: '#ffffff', // White
         'green-olive': '#54722D',
         'gray-light': '#D9D9D9',
+        primaryGreen: '#50704C',
+        secondaryGreen: '#ADCFA9',
         footerText: '#bbd6b8',
         text: {
           primary: '#000000', // Black
           footerMention: '#195908',
-          footerEmail: '#50704C',
         },
         icon: {
           primary: '#B2D99A',
