@@ -6,6 +6,7 @@
     "createNew": "Create New",
     "signIn": "Sign In",
     "logIn": "Log In",
+    "logOut": "Log Out",
     "signUp": "Sign Up",
     "name": "Name",
     "email": "Email",
@@ -14,7 +15,10 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "loginWithEmailAndPassword": "Login with email and password",
-    "continueAsGuest": "Continue as Guest"
+    "continueAsGuest": "Continue as Guest",
+    "becomeChefForLogin": "Become a Chef",
+    "locateMe": "Locate me",
+    "profile": "Profile"
   },
   "errors": {
     "auth": {
