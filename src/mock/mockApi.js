@@ -1,27 +1,26 @@
 import { http, HttpResponse, delay } from 'msw';
 
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 export const handlers = [
-  // Mock a GET request to /user
-  http.get(`/me/roles`, async () => {
+  http.post(`${baseUrl}/auth/login`, async (req) => {
     await delay(500);
-    return HttpResponse.json(['developer', 'chef'], { status: 200 });
-  }),
+    console.log('FINAL', req);
 
-  http.get('/v1/auth/login', async (req) => {
-    await delay(500);
-    console.log('FINAL' , req);
-    const apiId = req.request?.url?.search || {}; // Fallback to an empty object if req.query is undefined
-
-    if (!apiId) {
-      return HttpResponse.json({ message: 'apiId is required' }, { status: 400 });
-    }
-
-    // Simulating a successful response with the apiId
-    return HttpResponse.json({ message : 'found user', user: 'RoshoonAdmin', uid: apiId }, { status: 200 });
+    const response = {
+      success: true,
+      message: 'Logged in successfully',
+      user: {
+        id: 1,
+        name: 'test name',
+        email: 'test1@example.com',
+        roles: ['buyer', 'chef'],
+      },
+      accessToken: 'eyJhbGciOiJIUzI1NiI4WbRskRpP_FMPWLPfkxrmXUrmTwXM',
+    };
+    return HttpResponse.json(response, { status: 200 });
   }),
 ];
-
-
 
 export const enableMockApi = async () => {
   const { setupWorker } = await import('msw/browser');

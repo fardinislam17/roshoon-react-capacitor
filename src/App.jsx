@@ -1,14 +1,15 @@
-import { styled, Stack, Box, Container, Button } from '@mui/material';
-import RoshoonSkeleton from './RoshoonSkeleton';
-import { useNavigate, Route, Routes } from 'react-router-dom';
+import { Box, Container, styled } from '@mui/material';
 import { useEffect } from 'react';
-import * as paths from './paths';
-import AppBar from './features/appBar/AppBar';
-import Footer from './features/footer';
-import ErrorBoundary from './features/errorBoundary';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import EntitledElement from './components/EntitledElement';
+import AppBar from './features/appBar/AppBar';
+import { Login, Register } from './features/auth';
+import ErrorBoundary from './features/errorBoundary';
+import Footer from './features/footer';
 import Roshoon from './features/roshoon';
 import { Register, SignUp } from './features/auth';
+import * as paths from './paths';
+import RoshoonSkeleton from './RoshoonSkeleton';
 
 const AppRoot = styled(Box)(() => ({
   display: 'flex',
@@ -56,6 +57,16 @@ const App = () => {
                 <EntitledElement fallback={<RoshoonSkeleton />}>
                   {/* <Register /> */}
                   <SignUp />
+                </EntitledElement>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path={paths.login}
+            element={
+              <ErrorBoundary>
+                <EntitledElement fallback={<RoshoonSkeleton />}>
+                  <Login />
                 </EntitledElement>
               </ErrorBoundary>
             }
