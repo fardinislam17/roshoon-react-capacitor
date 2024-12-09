@@ -94,7 +94,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     key={index}
                   >
-                    <button className="bg-icon-primary text-text-secondary p-2 sm:p-3 md:p-4 rounded-full">
+                    <button className="bg-icon-primary text-text-footerMention p-2 sm:p-3 md:p-4 rounded-full">
                       <media.icon className={`${media.className}`} />
                     </button>
                   </a>

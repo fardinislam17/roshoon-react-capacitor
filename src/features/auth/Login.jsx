@@ -17,7 +17,10 @@ import FacebookLogin from 'react-facebook-login';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignInWithEmailAndPasswordLazyQuery } from 'src/apis/roshoonApi';
+import {
+  useLoginWithGoogleMutation,
+  useSignInWithEmailAndPasswordLazyQuery,
+} from 'src/apis/roshoonApi';
 import {
   DEFAULT_ERROR_MESSAGE,
   LOGIN_FIELDS,
@@ -33,11 +36,18 @@ const Login = () => {
   const navigate = useNavigate();
   const facebookButtonRef = useRef(null);
   const [signIn, { isFetching }] = useSignInWithEmailAndPasswordLazyQuery();
+  const [googleLogin] = useLoginWithGoogleMutation();
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      notifySuccess('Logged in with Google successfully');
-      navigate(homepage);
+      try {
+        const access_token = tokenResponse.access_token;
+        const response = await googleLogin({ access_token });
+        notifySuccess(response.data.message);
+        navigate(homepage);
+      } catch (error) {
+        notifyError(error.message || DEFAULT_ERROR_MESSAGE);
+      }
     },
     onError: (error) => console.log(error),
   });
