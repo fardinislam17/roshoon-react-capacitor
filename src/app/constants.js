@@ -15,7 +15,12 @@ export const SIDEBAR_MENU_OPTIONS = [
 ];
 
 export const LOGIN_FIELDS = [
-  { name: 'email', label: 'Email', type: 'email', required: true },
+  {
+    name: 'email',
+    label: 'User name or email address',
+    type: 'email',
+    required: true,
+  },
   { name: 'password', label: 'Password', type: 'password', required: true },
 ];
 

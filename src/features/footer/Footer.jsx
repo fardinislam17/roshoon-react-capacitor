@@ -88,14 +88,13 @@ const Footer = () => {
               </div>
               <div className="flex flex-row lg:flex-row xl:flex-col lg:mb-10 xl:mb-0 gap-5">
                 {SOCIAL_MEDIA_LINKS.map((media, index) => (
-                  /// Link doesn't support external navigation //
                   <a
                     href={media.path}
                     target="_blank"
                     rel="noopener noreferrer"
                     key={index}
                   >
-                    <button className="bg-icon-primary text-text-footerMention p-2 sm:p-3 md:p-4 rounded-full">
+                    <button className="bg-icon-primary text-text-secondary p-2 sm:p-3 md:p-4 rounded-full">
                       <media.icon className={`${media.className}`} />
                     </button>
                   </a>
@@ -117,7 +116,7 @@ const Footer = () => {
             transition: 'background-image 1s ease-in',
           }}
         >
-          <h4 className="text-text-footerMention bg-roshoonBackground absolute bottom-10 left-10 w-40 px-5 py-2 rounded-full text-2xl font-medium font-inter">
+          <h4 className="text-secondary bg-roshoonBackground absolute bottom-10 left-10 w-40 px-5 py-2 rounded-full text-2xl font-medium font-inter">
             @Roshoon
           </h4>
         </div>

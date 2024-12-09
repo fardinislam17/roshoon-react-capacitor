@@ -75,7 +75,7 @@ const AppBar = () => {
 
   return (
     <StyledAppBar>
-      <Toolbar disableGutters className="flex justify-between">
+      <Toolbar disableGutters className="flex justify-between shadow-none">
         <LeftBox>
           <RoshoonLogoContainer>
             <Link to="/" underline="none">
