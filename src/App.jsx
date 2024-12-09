@@ -8,7 +8,7 @@ import Footer from './features/footer';
 import ErrorBoundary from './features/errorBoundary';
 import EntitledElement from './components/EntitledElement';
 import Roshoon from './features/roshoon';
-import { Register } from './features/auth';
+import { Register, SignUp } from './features/auth';
 
 const AppRoot = styled(Box)(() => ({
   display: 'flex',
@@ -54,7 +54,8 @@ const App = () => {
             element={
               <ErrorBoundary>
                 <EntitledElement fallback={<RoshoonSkeleton />}>
-                  <Register />
+                  {/* <Register /> */}
+                  <SignUp />
                 </EntitledElement>
               </ErrorBoundary>
             }
