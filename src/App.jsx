@@ -3,11 +3,10 @@ import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import EntitledElement from './components/EntitledElement';
 import AppBar from './features/appBar/AppBar';
-import { Login, Register } from './features/auth';
 import ErrorBoundary from './features/errorBoundary';
 import Footer from './features/footer';
 import Roshoon from './features/roshoon';
-import { Register, SignUp } from './features/auth';
+import { Register, Login, SignUp } from './features/auth';
 import * as paths from './paths';
 import RoshoonSkeleton from './RoshoonSkeleton';
 

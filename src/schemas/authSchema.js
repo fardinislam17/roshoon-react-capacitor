@@ -12,15 +12,15 @@ const phoneEmailSchema = z
 
 export const signUpSchema = z
   .object({
-    phone_email: phoneEmailSchema,
-    first_name: z.string().nonempty('First name is required'),
-    last_name: z.string().optional(),
+    phoneOrEmail: phoneEmailSchema,
+    firstName: z.string().nonempty('First name is required'),
+    lastName: z.string().optional(),
     password: z.string().min(6, 'Password must be at least 6 characters long'),
-    repeat_password: z
+    repeatPassword: z
       .string()
       .min(6, 'Repeat Password must be at least 6 characters long'),
   })
-  .refine((data) => data.password === data.repeat_password, {
+  .refine((data) => data.password === data.repeatPassword, {
     message: 'Passwords must match',
     path: ['repeat_password'],
   });

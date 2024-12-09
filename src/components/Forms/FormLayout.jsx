@@ -1,9 +1,10 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormInput from './FormInput';
 
 const Formlayout = ({ fields, schema, onSubmit, buttonLabel = 'Submit' }) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -15,13 +16,13 @@ const Formlayout = ({ fields, schema, onSubmit, buttonLabel = 'Submit' }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col justify-center items-center space-y-6"
+      className="w-full flex flex-col justify-center items-center space-y-4"
     >
-      {fields.map(({ name, label, type, required }) => (
+      {fields.map(({ name, type, required }) => (
         <FormInput
           key={name}
           name={name}
-          label={label}
+          label={t(`common.${name}`)}
           type={type}
           required={required}
           register={register}
@@ -30,7 +31,7 @@ const Formlayout = ({ fields, schema, onSubmit, buttonLabel = 'Submit' }) => {
       ))}
       <button
         type="submit"
-        className=" bg-[#195908] text-white font-lato text-lg py-4 px-10 shadow-md"
+        className="bg-darkGreen text-white font-lato text-lg py-4 px-10 "
       >
         {buttonLabel}
       </button>

@@ -67,19 +67,9 @@ export const ROSHOON_AUTH_TOKEN = 'roshoon_auth_token';
 export const ROSHOON_ACCESS_TOKEN = 'roshoon_access_token';
 
 export const SIGN_UP_FIELDS = [
-  {
-    name: 'phone_email',
-    label: 'Email or Phone',
-    type: 'text',
-    required: true,
-  },
-  { name: 'first_name', label: 'First name', type: 'text', required: true },
-  { name: 'last_name', label: 'Last name', type: 'text', required: false },
-  { name: 'password', label: 'Password', type: 'password', required: true },
-  {
-    name: 'repeat_password',
-    label: 'Repeat Password',
-    type: 'password',
-    required: true,
-  },
+  { name: 'phoneOrEmail', type: 'text', required: true },
+  { name: 'firstName', type: 'text', required: true },
+  { name: 'lastName', type: 'text', required: false },
+  { name: 'password', type: 'password', required: true },
+  { name: 'repeatPassword', type: 'password', required: true },
 ];

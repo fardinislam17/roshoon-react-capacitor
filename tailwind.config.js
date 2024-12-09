@@ -19,10 +19,12 @@ export default {
         'gray-light': '#D9D9D9',
         primaryGreen: '#50704C',
         secondaryGreen: '#ADCFA9',
+        darkGreen: '#195908',
+        darkGray: '#3C4242',
+        lightGray: '#807D7E',
         footerText: '#bbd6b8',
         text: {
           primary: '#000000', // Black
-          footerMention: '#195908',
         },
         icon: {
           primary: '#B2D99A',
