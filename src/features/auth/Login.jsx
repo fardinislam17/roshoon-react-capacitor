@@ -1,11 +1,10 @@
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
-import loginImage from '../../assets/login.png';
-import roshoon from '../../assets/roshoon.png';
+import loginImage from 'src/assets/images/login.png';
+import roshoon from 'src/assets/images/roshoon.png';
 import * as paths from '../../paths';
 import {
   Button,
-  Container,
   Divider,
   LinearProgress,
   Paper,
@@ -129,7 +128,7 @@ const Login = () => {
           {LOGIN_METHODS.includes('facebookLogin') && (
             <>
               <Button
-                color="secondary"
+                color="info"
                 startIcon={<FacebookIcon />}
                 fullWidth
                 fontSize="18"
