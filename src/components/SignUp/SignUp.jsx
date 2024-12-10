@@ -8,7 +8,7 @@ import { signUpSchema } from 'src/schemas/authSchema';
 import {
   notifyError,
   notifySuccess,
-} from 'src/features/snackbarProvider/useSnackbar';
+} from 'src/components/SnackbarProvider/useSnackbar';
 
 export default function SignUp() {
   const { t } = useTranslation();
@@ -54,7 +54,7 @@ export default function SignUp() {
       />
       <div className="flex flex-col justify-center items-center mx-6 my-4">
         <h5 className="font-lato font-bold text-4xl mb-8">
-          {t('common.signUp')}
+          {asChef ? t('common.becomeAChef') : t('common.signUp')}
         </h5>
         <FormLayout
           fields={SIGN_UP_FIELDS}
