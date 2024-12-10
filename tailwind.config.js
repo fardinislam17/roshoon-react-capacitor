@@ -14,6 +14,7 @@ export default {
       colors: {
         primary: '#ff5722', // Orange
         secondary: '#4caf50', // Green
+        neutral: rgba(0, 0, 0, 0.6),
         roshoonBackground: '#ffffff', // White
         'green-olive': '#54722D',
         'gray-light': '#D9D9D9',
