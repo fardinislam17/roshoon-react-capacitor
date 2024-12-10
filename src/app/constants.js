@@ -70,3 +70,11 @@ export const DEFAULT_ERROR_MESSAGE =
 
 export const ROSHOON_AUTH_TOKEN = 'roshoon_auth_token';
 export const ROSHOON_ACCESS_TOKEN = 'roshoon_access_token';
+
+export const SIGN_UP_FIELDS = [
+  { name: 'phoneOrEmail', type: 'text', required: true },
+  { name: 'firstName', type: 'text', required: true },
+  { name: 'lastName', type: 'text', required: false },
+  { name: 'password', type: 'password', required: true },
+  { name: 'repeatPassword', type: 'password', required: true },
+];
