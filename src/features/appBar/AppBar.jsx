@@ -14,7 +14,7 @@ import { CiLocationOn } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from 'src/apis';
-import RoshoonLogo from 'src/assets/roshoon.png';
+import RoshoonLogo from 'src/assets/images/roshoon.png';
 import { generatePath } from 'src/paths';
 import { getCurrentUser } from 'src/slices';
 import { Constant } from 'src/utils/constant.js';
@@ -46,33 +46,16 @@ const RoshoonLogoContainer = styled(Stack)(({ theme }) => ({
 
 const AppBar = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const currentUser = useSelector(getCurrentUser);
-  const menuAnchorRef = useRef(null);
   const [userLogout, { isLoading, isSuccess, isError }] = useLogoutMutation();
-  const [open, setOpen] = useState(false);
-  const navigateTo = (url) => {
-    navigate(generatePath(url.path));
-  };
   const user = useSelector(getCurrentUser);
-
   const handleLogout = async () => {
     try {
       const status = await userLogout().unwrap();
       notifySuccess(status.message);
-      setOpen(false);
     } catch (error) {
       notifyError(error.message);
     }
-  };
-
-  const handleMenuClose = () => {
-    setOpen(false);
-  };
-
-  const handleMenuClick = () => {
-    setOpen((prevOpen) => !prevOpen);
   };
 
   return (
@@ -101,7 +84,7 @@ const AppBar = () => {
             </div>
             {!user?.roles?.includes(Constant.CHEF) && (
               <Link
-                to={paths.login}
+                to={`${paths.register}?asChef=true`}
                 className="text-[#272727] font-lato font-medium p-[10px]"
               >
                 {t('common.becomeChefForLogin')}
@@ -110,38 +93,12 @@ const AppBar = () => {
 
             {currentUser?.loggedIn ? (
               <div className="flex justify-center items-center gap-2">
-                <h1 className="text-white text-sm">
-                  {currentUser.name || currentUser.email}
-                </h1>
-                <IconButton
-                  onClick={handleMenuClick}
-                  ref={menuAnchorRef}
-                  aria-controls={open ? 'menu-appbar' : undefined}
-                  aria-haspopup="true"
-                  className="w-10 bg-slate-300"
-                  style={{ backgroundColor: '#fff', padding: 0 }}
+                <button
+                  className="text-[#272727] font-lato font-medium p-[10px]"
+                  onClick={handleLogout}
                 >
-                  <img
-                    width={100}
-                    height={100}
-                    src={currentUser.picture}
-                    alt={'user'}
-                  />
-                </IconButton>
-                <Menu
-                  anchorEl={menuAnchorRef.current}
-                  open={open}
-                  onClose={handleMenuClose}
-                  id="menu-appbar"
-                >
-                  <MenuItem onClick={() => navigate('/profile')}>
-                    {t('common.profile')}
-                  </MenuItem>
-                  <MenuItem onClick={handleLogout}>
-                    {' '}
-                    {t('common.logOut')}
-                  </MenuItem>
-                </Menu>
+                  {t('common.logOut')}
+                </button>
               </div>
             ) : isLoading ? (
               <CircularProgress size={20} />

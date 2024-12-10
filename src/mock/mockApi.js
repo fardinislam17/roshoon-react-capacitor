@@ -5,7 +5,6 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 export const handlers = [
   http.post(`${baseUrl}/auth/login`, async (req) => {
     await delay(500);
-    console.log('FINAL', req);
 
     const response = {
       success: true,
@@ -17,6 +16,44 @@ export const handlers = [
         roles: ['buyer', 'chef'],
       },
       accessToken: 'eyJhbGciOiJIUzI1NiI4WbRskRpP_FMPWLPfkxrmXUrmTwXM',
+    };
+    return HttpResponse.json(response, { status: 200 });
+  }),
+  http.post(`${baseUrl}/auth/google-login`, async (req) => {
+    await delay(500);
+    const response = {
+      success: true,
+      message: 'Logged in with google successful',
+      user: {
+        id: 1,
+        firstName: 'test name',
+        email: 'test1@example.com',
+        roles: ['buyer'],
+      },
+      accessToken: 'eyJhbGciOiJIUzI1NiI4WbRskRpP_FMPWLPfkxrmXUrmTwXM',
+    };
+    return HttpResponse.json(response, { status: 200 });
+  }),
+  http.post(`${baseUrl}/auth/register`, async (req) => {
+    await delay(500);
+    const response = {
+      success: true,
+      message: 'Registration in successful',
+      user: {
+        id: 3,
+        firstName: 'test name',
+        email: 'test1@example.com',
+        roles: ['buyer'],
+      },
+      accessToken: 'eyJhbGciOiJIUzI1NiI4WbRskRpP_FMPWLPfkxrmXUrmTwXM',
+    };
+    return HttpResponse.json(response, { status: 200 });
+  }),
+  http.post(`${baseUrl}/auth/logout`, async (req) => {
+    await delay(500);
+    const response = {
+      success: true,
+      message: 'Logout successful',
     };
     return HttpResponse.json(response, { status: 200 });
   }),
