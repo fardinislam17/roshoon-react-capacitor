@@ -1,6 +1,6 @@
 import { http, HttpResponse, delay } from 'msw';
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+const baseUrl = `${import.meta.env.BASE_URL}api`;
 
 export const handlers = [
   http.post(`${baseUrl}/auth/login`, async (req) => {
