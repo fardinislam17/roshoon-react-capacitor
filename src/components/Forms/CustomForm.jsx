@@ -1,12 +1,4 @@
-import { useState, useEffect } from 'react';
-import {
-  Button,
-  DialogActions,
-  FormControl,
-  FormGroup,
-  TextField,
-  Typography,
-} from '@mui/material';
+import React, { useState } from 'react';
 import hidePass from 'src/assets/svgs/hidepass.svg';
 import { Visibility } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -24,20 +16,26 @@ const CustomForm = ({ fields, handleSubmit }) => {
     return emailRegex.test(email);
   };
   const validatePhoneNumber = (phoneNumber) => {
-    const phoneRegex = /^[+]?[\d\s()-]{7,15}$/;
+    const phoneRegex = /^[+]?[\d\s()-]{10,11}$/;
     return phoneRegex.test(phoneNumber);
   };
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (name, errorMessage, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => {
       if (name === 'email') {
         return {
           ...prev,
-          email:
+          [name]:
             !validateEmail(value) && !validatePhoneNumber(value)
-              ? t('Please enter a valid phone number or email address')
+              ? t(errorMessage)
               : '',
+        };
+      }
+      if (name === 'password') {
+        return {
+          ...prev,
+          [name]: value.length < 6 ? t(errorMessage) : '',
         };
       }
       return prev;
@@ -57,111 +55,79 @@ const CustomForm = ({ fields, handleSubmit }) => {
     setShowPassword((prev) => !prev);
   };
 
-  useEffect(() => {
-    const allFieldsFilled = fields.every((field) => {
-      return (
-        !field.required ||
-        (formData[field.name] && formData[field.name].trim() !== '')
-      );
-    });
-    const isValidEmail = validateEmail(formData.email);
-    const isValidNumber = validatePhoneNumber(formData.phone);
-  }, [formData, fields]);
-
   return (
-    <FormControl component="form" onSubmit={onClickSubmit} fullWidth>
-      <FormGroup>
+    <form className="w-full" onSubmit={onClickSubmit}>
+      <div className="flex flex-col gap-4">
         {fields.map((field) => (
-          <>
-            {' '}
+          <div key={field.label}>
             <div className="flex items-center justify-between mb-2">
-              <Typography
-                fontSize={18}
-                fontFamily={'lato'}
-                fontWeight={400}
-                align="left"
-                sx={{ color: '#3C4242' }}
-              >
+              <label className="text-lg font-lato font-medium text-darkGray">
                 {t(field.label)}
-              </Typography>
+                {field.required && <span className="text-red-500">*</span>}
+              </label>
               {field.name === 'password' && (
                 <button
-                  className="text-lg text-[#807D7E] font-roboto flex items-center gap-3 "
+                  className="text-sm text-lightGray font-roboto flex items-center gap-2"
                   onClick={handleTogglePasswordVisibility}
                 >
                   {showPassword ? (
                     <>
-                      <img className="h-5" src={hidePass} alt="" />
+                      <img className="h-5" src={hidePass} alt="Hide" />
                       Hide
                     </>
                   ) : (
                     <>
-                      <Visibility className="text-[#807D7E]" />
+                      <Visibility className="text-lightGray h-5 w-5" />
                       Show
                     </>
                   )}
                 </button>
               )}
             </div>
-            <TextField
+            <input
               key={field.name}
               type={
-                field.name === 'password' && !showPassword ? 'password' : 'text'
+                field.type === 'password' && !showPassword ? 'password' : 'text'
               }
-              fullWidth
               value={formData[field.name] || ''}
-              onChange={(e) => handleInputChange(field.name, e.target.value)}
+              onChange={(e) =>
+                handleInputChange(
+                  field.name,
+                  field.errorMessage,
+                  e.target.value
+                )
+              }
               required={field.required}
-              error={Boolean(errors[field.name])}
-              helperText={errors[field.name] || ''}
-              sx={{
-                mb: fields.length === 2 && field.name === 'password' ? 1 : 2,
-              }}
+              className={`w-full h-14 text-lg px-4 py-2 border border-darkGray focus:border-2 focus:border-secondary focus:outline-none ${
+                errors[field.name] ? 'border-red-500' : ''
+              }`}
+              placeholder={field.placeholder ? t(field.label) : ''}
             />
-          </>
+            {errors[field.name] && (
+              <p className="text-red-500 text-sm mt-1">{errors[field.name]}</p>
+            )}
+          </div>
         ))}
-      </FormGroup>
-      <div className="flex justify-end">
-        {pathname === '/login' && (
-          <Button
-            variant="text"
-            color="secondary"
-            sx={{
-              fontSize: 14,
-              color: '#3C4242',
-              fontWeight: 400,
-              textTransform: 'none',
-              textDecoration: 'underline',
-              padding: 0,
-            }}
+      </div>
+      {pathname === '/login' && (
+        <div className="mt-4 text-right">
+          <button
+            type="button"
+            className="text-sm underline text-darkGray hover:text-black"
           >
             Forget your password
-          </Button>
-        )}
-      </div>
-      <DialogActions>
-        <Button
+          </button>
+        </div>
+      )}
+      <div className="flex justify-center mt-6 mb-4">
+        <button
           type="submit"
-          variant="contained"
-          sx={{
-            fontFamily: 'lato',
-            fontSize: 18,
-            backgroundColor: '#195908',
-            textTransform: 'none',
-            fontWeight: 400,
-            paddingY: 1,
-            paddingX: 6,
-            borderRadius: 0,
-            margin: 'auto',
-            boxShadow: 'none',
-            marginTop: { xs: 3, sm: 0, md: 0, lg: 0 },
-            marginBottom: { xs: 1, sm: 0, md: 0, lg: 0 },
-          }}
+          className="bg-darkGreen text-white font-lato text-lg py-4 px-10 "
         >
           {t('common.logIn')}
-        </Button>
-      </DialogActions>
-    </FormControl>
+        </button>
+      </div>
+    </form>
   );
 };
 

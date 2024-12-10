@@ -1,26 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState = {
-  chefs: [
-    {
-      id: 1,
-      name: 'Sam houdini',
-      deliveryAreas: ['Toronto', 'Mississauga'],
-    },
-    {
-      id: 2,
-      name: 'Ahmad bin ladin',
-      deliveryAreas: ['Toronto', 'Brampton'],
-    },
-    {
-      id: 3,
-      name: 'John Doe',
-      deliveryAreas: ['Toronto', 'Scarborough'],
-    },
-  ],
-  filteredChefs: [],
-  search: '',
-};
+export const initialState = {};
 
 const roshoonSlice = createSlice({
   name: 'roshoon',

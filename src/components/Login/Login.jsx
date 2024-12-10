@@ -2,13 +2,11 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import loginImage from 'src/assets/images/login.png';
 import roshoon from 'src/assets/images/roshoon.png';
-import * as paths from '../../paths';
 import { Button, Divider, LinearProgress, Typography } from '@mui/material';
 import { useGoogleLogin } from '@react-oauth/google';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   useLoginWithGoogleMutation,
@@ -20,12 +18,14 @@ import {
   LOGIN_METHODS,
 } from 'src/app/constants';
 import { CustomForm } from 'src/components/Forms';
-import { homepage, register } from 'src/paths';
-import { notifyError, notifySuccess } from '../snackbarProvider/useSnackbar';
+import { homepagePath, registerPath } from 'src/paths';
+import {
+  notifyError,
+  notifySuccess,
+} from 'src/components/SnackbarProvider/useSnackbar';
 
 const Login = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const facebookButtonRef = useRef(null);
   const [signIn, { isFetching }] = useSignInWithEmailAndPasswordLazyQuery();
@@ -37,7 +37,7 @@ const Login = () => {
         const access_token = tokenResponse.access_token;
         const response = await googleLogin({ access_token });
         notifySuccess(response.data.message);
-        navigate(homepage);
+        navigate(homepagePath);
       } catch (error) {
         notifyError(error.message || DEFAULT_ERROR_MESSAGE);
       }
@@ -64,7 +64,7 @@ const Login = () => {
       if (response.isSuccess) {
         notifySuccess(response.data.message);
 
-        navigate(homepage);
+        navigate(homepagePath);
       } else {
         notifyError(
           response.error?.data?.message ||
@@ -178,7 +178,7 @@ const Login = () => {
           />
           <h3 className="flex justify-center items-center gap-1 font-lato  text-[#3C4242]">
             {t('login.doNotHaveAnAccount')}?{' '}
-            <Link to={paths.register} className="underline underline-offset-4">
+            <Link to={registerPath} className="underline underline-offset-4">
               {t('common.signUp')}
             </Link>
           </h3>
