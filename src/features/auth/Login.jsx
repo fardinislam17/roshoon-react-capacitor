@@ -3,13 +3,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import loginImage from 'src/assets/images/login.png';
 import roshoon from 'src/assets/images/roshoon.png';
 import * as paths from '../../paths';
-import {
-  Button,
-  Divider,
-  LinearProgress,
-  Paper,
-  Typography,
-} from '@mui/material';
+import { Button, Divider, LinearProgress, Typography } from '@mui/material';
 import { useGoogleLogin } from '@react-oauth/google';
 import React, { useRef, useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
