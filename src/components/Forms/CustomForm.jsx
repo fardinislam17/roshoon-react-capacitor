@@ -5,8 +5,6 @@ import {
   FormControl,
   FormGroup,
   TextField,
-  InputAdornment,
-  IconButton,
   Typography,
 } from '@mui/material';
 import hidePass from '../../assets/svgs/hidepass.svg';
