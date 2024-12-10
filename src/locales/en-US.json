@@ -26,6 +26,9 @@
       "enterValidEmail": "Please enter a valid email address"
     }
   },
+  "login": {
+    "doNotHaveAnAccount": "Don’t have an account"
+  },
   "footer": {
     "signUpForNewsLetter": "Sign Up For News Letter",
     "needSomeHelp": "Need Some Help?",

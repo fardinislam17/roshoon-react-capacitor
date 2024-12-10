@@ -14,7 +14,7 @@ import { CiLocationOn } from 'react-icons/ci';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLogoutMutation } from 'src/apis';
-import RoshoonLogo from 'src/assets/roshoon.png';
+import RoshoonLogo from 'src/assets/images/roshoon.png';
 import { generatePath } from 'src/paths';
 import { getCurrentUser } from 'src/slices';
 import { Constant } from 'src/utils/constant.js';

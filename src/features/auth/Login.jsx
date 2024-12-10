@@ -1,8 +1,10 @@
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
+import loginImage from 'src/assets/images/login.png';
+import roshoon from 'src/assets/images/roshoon.png';
+import * as paths from '../../paths';
 import {
   Button,
-  Container,
   Divider,
   LinearProgress,
   Paper,
@@ -13,8 +15,11 @@ import React, { useRef, useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useSignInWithEmailAndPasswordLazyQuery } from 'src/apis/roshoonApi';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  useLoginWithGoogleMutation,
+  useSignInWithEmailAndPasswordLazyQuery,
+} from 'src/apis/roshoonApi';
 import {
   DEFAULT_ERROR_MESSAGE,
   LOGIN_FIELDS,
@@ -28,13 +33,20 @@ const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const facebookButtonRef = useRef(null);
   const [signIn, { isFetching }] = useSignInWithEmailAndPasswordLazyQuery();
+  const [googleLogin] = useLoginWithGoogleMutation();
 
   const loginWithGoogle = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      const { access_token } = tokenResponse;
+    onSuccess: async (tokenResponse) => {
+      try {
+        const access_token = tokenResponse.access_token;
+        const response = await googleLogin({ access_token });
+        notifySuccess(response.data.message);
+        navigate(homepage);
+      } catch (error) {
+        notifyError(error.message || DEFAULT_ERROR_MESSAGE);
+      }
     },
     onError: (error) => console.log(error),
   });
@@ -52,20 +64,12 @@ const Login = () => {
     );
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleLoginWithEmailAndPassword = async ({ email, password }) => {
     try {
       const response = await signIn({ email, password });
       if (response.isSuccess) {
         notifySuccess(response.data.message);
-        handleClose();
+
         navigate(homepage);
       } else {
         notifyError(
@@ -79,65 +83,68 @@ const Login = () => {
     }
   };
 
-  const handleRegistration = () => {
-    handleClose();
-    navigate(register);
-  };
-
   return (
     <>
-      <Container component="main" maxWidth="xs" className="py-20 ">
-        <Paper
-          elevation={3}
-          sx={{
-            padding: 3,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+      <div className="flex flex-col lg:flex-row w-full mb-10 lg:mb-0">
+        <div className="h-full">
+          <img
+            className="lg:flex hidden h-full object-cover"
+            src={loginImage}
+            alt=""
+          />
+        </div>
+        <img className="lg:hidden flex w-3/4 mx-auto" src={roshoon} alt="" />
+        <div className="py-0  lg:py-24 mx-auto px-8 w-full lg:w-1/2  2xl:w-[35%]">
           <Typography
-            className="py-5"
-            variant="h5"
-            component="h1"
-            sx={{ mb: 2 }}
+            fontSize={34}
+            fontFamily={'lato'}
+            fontWeight={700}
+            align="center"
+            sx={{ mb: 5 }}
           >
-            {t('Please Log In')}
+            {t('Log In')}
           </Typography>
-
-          <Button
-            variant="outlined"
-            color="primary"
-            fullWidth
-            onClick={handleRegistration}
-            sx={{ mb: 2 }}
-          >
-            {t('common.signUp')}
-          </Button>
 
           {LOGIN_METHODS.includes('googleLogin') && (
             <Button
-              variant="outlined"
-              color="primary"
+              color="secondary"
               startIcon={<GoogleIcon />}
               fullWidth
               onClick={loginWithGoogle}
-              sx={{ mb: 2, justifyContent: 'center' }}
+              sx={{
+                mb: 3,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 0,
+                fontSize: 18,
+                fontFamily: 'lato',
+                textTransform: 'none',
+                border: '1px solid #3C4242',
+              }}
             >
-              Continue with Google
+              Login with Google
             </Button>
           )}
           {LOGIN_METHODS.includes('facebookLogin') && (
             <>
               <Button
-                variant="outlined"
-                color="primary"
+                color="info"
                 startIcon={<FacebookIcon />}
                 fullWidth
+                fontSize="18"
                 onClick={loginWithFacebook}
-                sx={{ mb: 2, justifyContent: 'center' }}
+                sx={{
+                  mb: 2,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 0,
+                  fontSize: 18,
+                  fontFamily: 'lato',
+                  textTransform: 'none',
+                  border: '1px solid #3C4242',
+                }}
               >
-                Continue with Facebook
+                Login with Facebook
               </Button>
               <div
                 style={{
@@ -155,21 +162,35 @@ const Login = () => {
               </div>
             </>
           )}
-          <Divider flexItem sx={{ width: '100%', marginTop: '20px' }} />
-          <Typography variant="h5" component="h1" sx={{ mb: 2 }}>
-            {t('common.loginWithEmailAndPassword')}
-          </Typography>
+          <Divider
+            className="text-lg text-[#666666] font-sans"
+            sx={{
+              '&.MuiDivider-root': {
+                '&::before': {
+                  border: `1px solid #66666640`,
+                },
+                '&::after': {
+                  border: `1px solid #66666640`,
+                },
+                marginBottom: 1,
+              },
+            }}
+          >
+            OR
+          </Divider>
           <CustomForm
             fields={LOGIN_FIELDS}
             handleSubmit={handleLoginWithEmailAndPassword}
-            handleCancel={handleClose}
           />
-          <Button color="secondary" onClick={() => setOpen(false)}>
-            {t('common.continueAsGuest')}
-          </Button>
-          {isFetching && <LinearProgress />}
-        </Paper>
-      </Container>
+          <h3 className="flex justify-center items-center gap-1 font-lato  text-[#3C4242]">
+            {t('login.doNotHaveAnAccount')}?{' '}
+            <Link to={paths.register} className="underline underline-offset-4">
+              {t('common.signUp')}
+            </Link>
+          </h3>
+        </div>
+        {isFetching && <LinearProgress />}
+      </div>
     </>
   );
 };
