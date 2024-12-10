@@ -7,8 +7,8 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import hidePass from '../../assets/svgs/hidepass.svg';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import hidePass from 'src/assets/svgs/hidepass.svg';
+import { Visibility } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
@@ -16,32 +16,38 @@ const CustomForm = ({ fields, handleSubmit }) => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const [formData, setFormData] = useState({});
-  const [emailError, setEmailError] = useState(false);
+  const [errors, setErrors] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^[+]?[\d\s()-]{7,15}$/;
+    return phoneRegex.test(phoneNumber);
+  };
 
   const handleInputChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (name === 'email') {
-      const isValidEmail = validateEmail(value);
-      setEmailError(!isValidEmail);
-    }
-
-    const allFieldsFilled = fields.every((field) => {
-      return (
-        !field.required ||
-        (formData[field.name] && formData[field.name].trim() !== '')
-      );
+    setErrors((prev) => {
+      if (name === 'email') {
+        return {
+          ...prev,
+          email:
+            !validateEmail(value) && !validatePhoneNumber(value)
+              ? t('Please enter a valid phone number or email address')
+              : '',
+        };
+      }
+      return prev;
     });
   };
 
   const onClickSubmit = (e) => {
     e.preventDefault();
-    if (!emailError && formData.email && formData.password) {
+    const hasErrors = Object.values(errors).some((error) => error !== '');
+    if (!hasErrors) {
       handleSubmit(formData);
     }
   };
@@ -59,6 +65,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
       );
     });
     const isValidEmail = validateEmail(formData.email);
+    const isValidNumber = validatePhoneNumber(formData.phone);
   }, [formData, fields]);
 
   return (
@@ -105,12 +112,8 @@ const CustomForm = ({ fields, handleSubmit }) => {
               value={formData[field.name] || ''}
               onChange={(e) => handleInputChange(field.name, e.target.value)}
               required={field.required}
-              error={field.name === 'email' && emailError}
-              helperText={
-                field.name === 'email' && emailError
-                  ? t('errors.auth.enterValidEmail')
-                  : ''
-              }
+              error={Boolean(errors[field.name])}
+              helperText={errors[field.name] || ''}
               sx={{
                 mb: fields.length === 2 && field.name === 'password' ? 1 : 2,
               }}

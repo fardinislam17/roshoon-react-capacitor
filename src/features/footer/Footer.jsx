@@ -2,10 +2,10 @@ import { Stack, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import arrow from '../../assets/svgs/arrow.svg';
-import footerImage1 from '../../assets/footer1.png';
-import footerImage2 from '../../assets/footer2.jpg';
-import footerImage3 from '../../assets/footer3.jpg';
+import arrow from 'src/assets/svgs/arrow.svg';
+import footerImage1 from 'src/assets/images/footer1.png';
+import footerImage2 from 'src/assets/images/footer2.jpg';
+import footerImage3 from 'src/assets/images/footer3.jpg';
 import {
   FOOTER_ELEMENT_L,
   FOOTER_ELEMENT_R,
@@ -45,7 +45,7 @@ const Footer = () => {
             <form onSubmit={handleSubmit} className="flex">
               <input
                 name="email"
-                className="bg-roshoon-background placeholder:text-text-footerEmail font-normal focus:outline-none pl-7 font-lato text-base w-full lg:text-2xl text-text-footerEmail"
+                className="bg-roshoon-background placeholder:text-primaryGreen font-normal focus:outline-none pl-7 font-lato text-base w-full lg:text-2xl text-primaryGreen"
                 placeholder="Email address"
                 type="text"
               />
@@ -94,7 +94,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     key={index}
                   >
-                    <button className="bg-icon-primary text-text-secondary p-2 sm:p-3 md:p-4 rounded-full">
+                    <button className="bg-icon-primary text-text-footerMention p-2 sm:p-3 md:p-4 rounded-full">
                       <media.icon className={`${media.className}`} />
                     </button>
                   </a>

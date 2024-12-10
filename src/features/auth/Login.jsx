@@ -1,11 +1,10 @@
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
-import loginImage from '../../assets/login.png';
-import roshoon from '../../assets/roshoon.png';
+import loginImage from 'src/assets/images/login.png';
+import roshoon from 'src/assets/images/roshoon.png';
 import * as paths from '../../paths';
 import {
   Button,
-  Container,
   Divider,
   LinearProgress,
   Paper,
@@ -17,7 +16,10 @@ import FacebookLogin from 'react-facebook-login';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSignInWithEmailAndPasswordLazyQuery } from 'src/apis/roshoonApi';
+import {
+  useLoginWithGoogleMutation,
+  useSignInWithEmailAndPasswordLazyQuery,
+} from 'src/apis/roshoonApi';
 import {
   DEFAULT_ERROR_MESSAGE,
   LOGIN_FIELDS,
@@ -33,11 +35,18 @@ const Login = () => {
   const navigate = useNavigate();
   const facebookButtonRef = useRef(null);
   const [signIn, { isFetching }] = useSignInWithEmailAndPasswordLazyQuery();
+  const [googleLogin] = useLoginWithGoogleMutation();
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
-      notifySuccess('Logged in with Google successfully');
-      navigate(homepage);
+      try {
+        const access_token = tokenResponse.access_token;
+        const response = await googleLogin({ access_token });
+        notifySuccess(response.data.message);
+        navigate(homepage);
+      } catch (error) {
+        notifyError(error.message || DEFAULT_ERROR_MESSAGE);
+      }
     },
     onError: (error) => console.log(error),
   });
@@ -119,7 +128,7 @@ const Login = () => {
           {LOGIN_METHODS.includes('facebookLogin') && (
             <>
               <Button
-                color="secondary"
+                color="info"
                 startIcon={<FacebookIcon />}
                 fullWidth
                 fontSize="18"
