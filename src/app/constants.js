@@ -19,10 +19,17 @@ export const LOGIN_FIELDS = [
   {
     name: 'email',
     label: 'Phone number or email address',
+    errorMessage: 'errors.auth.enterValidPhoneOrEmail',
     type: 'text',
     required: true,
   },
-  { name: 'password', label: 'Password', type: 'password', required: true },
+  {
+    name: 'password',
+    label: 'Password',
+    errorMessage: 'errors.auth.passwordMustBeSixCharacters',
+    type: 'password',
+    required: true,
+  },
 ];
 
 export const REGISTRATION_FIELDS = [

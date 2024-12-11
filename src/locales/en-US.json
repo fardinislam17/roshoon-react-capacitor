@@ -17,7 +17,7 @@
     "submit": "Submit",
     "loginWithEmailAndPassword": "Login with email and password",
     "continueAsGuest": "Continue as Guest",
-    "becomeChefForLogin": "Become a Chef",
+    "becomeAChef": "Become a Chef",
     "locateMe": "Locate me",
     "learnMoreAboutUs": "Learn More About Us",
     "profile": "Profile",
@@ -31,12 +31,13 @@
     "state": "State",
     "zipCode": "Zip Code",
     "country": "Country",
-    "verifyMe": "Verify Me",
-    "addressInformation": "Address Information"
+    "verifyMe": "Verify Me"
   },
   "errors": {
     "auth": {
-      "enterValidEmail": "Please enter a valid email address"
+      "enterValidEmail": "Please enter a valid email address",
+      "enterValidPhoneOrEmail": "Please enter a valid phone number or email address",
+      "passwordMustBeSixCharacters": "  Password must be at least 6 characters long"
     }
   },
   "login": {

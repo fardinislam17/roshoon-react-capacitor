@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as paths from 'src/paths';
@@ -8,8 +9,7 @@ import { addressSchema, signUpSchema } from 'src/schemas/authSchema';
 import {
   notifyError,
   notifySuccess,
-} from 'src/features/snackbarProvider/useSnackbar';
-import { useState } from 'react';
+} from 'src/components/SnackbarProvider/useSnackbar';
 
 export default function SignUp() {
   const { t } = useTranslation();
@@ -81,9 +81,7 @@ export default function SignUp() {
       />
       <div className="flex flex-col justify-center items-center mx-6 my-4">
         <h5 className="font-lato font-bold text-4xl mb-8">
-          {currentStep === 'address'
-            ? t('common.addressInformation')
-            : t('common.signUp')}
+          {asChef ? t('common.becomeAChef') : t('common.signUp')}
         </h5>
         {currentStep === 'signUp' ? (
           <FormLayout
