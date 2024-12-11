@@ -22,17 +22,19 @@ const OrderNow = () => {
         backgroundImage: `url(${images[currentImage]})`,
         transition: 'background-image 1s ease-in',
       }}
-      className="py-36 lg:py-0 mb-10 bg-cover bg-center lg:h-[1074px] flex flex-col justify-center items-center space-y-8"
+      className="py-36 bg-fixed lg:py-0 mb-10 bg-cover bg-center lg:h-[1074px] flex flex-col justify-center items-center space-y-8"
     >
-      <h2 className="text-2xl lg:text-6xl text-white text-center font-julius">
+      <h2 className="text-2xl z-10 sticky lg:text-6xl text-white text-center font-julius">
         Home-Cooked <br /> Goodness
       </h2>
-      <p className="font-lato text-center w-[80%] md:w-3/4 lg:w-1/2 text-base lg:text-lg text-white">
+      <p className="font-lato z-10 sticky text-center w-[80%] md:w-3/4 lg:w-1/2 text-base lg:text-lg text-white">
         At Roshoon, we believe that home-cooked food is more than just a meal -
         it's a taste of warmth, comfort, and love. Fulfill your craving for the
         flavors of home!
       </p>
-      <CommonButton>{t('common.orderNow')}</CommonButton>
+      <div className="sticky z-10">
+        <CommonButton>{t('common.orderNow')}</CommonButton>
+      </div>
     </div>
   );
 };
