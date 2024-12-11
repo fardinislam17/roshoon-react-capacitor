@@ -6,20 +6,20 @@ import ChefTestimonial from './ChefTestimonial';
 
 const EveryoneChefSection = () => {
   return (
-    <div className="container px-5 md:px-10 2xl:px-0 mx-auto mb-10">
-      <div className=" grid grid-cols-1 lg:grid-cols-2 gap-6 2xl:gap-16">
-        <div className="">
+    <div className="container px-5  mx-auto mb-10">
+      <div className=" flex flex-col lg:flex-row gap-6 2xl:gap-16">
+        <div className="w-full lg:w-[45%] text-center lg:text-left">
           <CommonTitle>Everyone can be a chef in their own kitchen</CommonTitle>
           <CommonDescription className={'text-neutral pt-4'}>
             Indulge in the flavors of home, support local talent, and become
             part of a community that values the love and care that goes into
             every homemade meal.
           </CommonDescription>
-          <div className="mt-[60px]">
+          <div className="mt-[60px] flex justify-center lg:justify-start">
             <CommonButton>Become a Chefs</CommonButton>
           </div>
         </div>
-        <div className=" ">
+        <div className="w-full lg:w-[55%] ">
           <ChefTestimonial />
         </div>
       </div>
