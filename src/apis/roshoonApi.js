@@ -8,8 +8,8 @@ export const roshoonApi = createApi({
 
   tagTypes: [],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.BASE_URL}api`,
-    // baseUrl: import.meta.env.VITE_API_BASE_URL,
+    // baseUrl: `${import.meta.env.BASE_URL}api`,
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: async (headers, { endpoint }) => {
       if (endpoint === 'signInWithExistingCookie') {
         const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
@@ -121,6 +121,20 @@ export const roshoonApi = createApi({
         }
       },
     }),
+    createVerificationSession: builder.mutation({
+      query: (userId) => ({
+        url: 'identity/create-verification-session',
+        method: 'POST',
+        body: { userId },
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+        } catch (err) {
+          console.error('Error creating verification session:', err);
+        }
+      },
+    }),
   }),
 });
 
@@ -128,6 +142,7 @@ export const {
   useSignInWithExistingCookieQuery,
   useLogoutMutation,
   useLoginWithGoogleMutation,
+  useCreateVerificationSessionMutation,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,

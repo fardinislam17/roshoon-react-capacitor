@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as paths from 'src/paths';
-import { useRegisterLazyQuery } from 'src/apis';
+import {
+  useCreateVerificationSessionMutation,
+  useRegisterLazyQuery,
+} from 'src/apis';
 import { ADDRESS_FIELDS, SIGN_UP_FIELDS } from 'src/app/constants';
 import { FormLayout } from 'src/components/Forms';
 import { addressSchema, signUpSchema } from 'src/schemas/authSchema';
@@ -10,6 +13,7 @@ import {
   notifyError,
   notifySuccess,
 } from 'src/components/SnackbarProvider/useSnackbar';
+import { EmbeddedVerification } from '../Stripe';
 
 export default function SignUp() {
   const { t } = useTranslation();
@@ -17,10 +21,13 @@ export default function SignUp() {
   const params = new URLSearchParams(window.location.search);
   const asChef = params.get('asChef') === 'true';
 
-  const [currentStep, setCurrentStep] = useState('address'); // Track the current form step
+  const [clientSecret, setClientSecret] = useState(null);
+  const [currentStep, setCurrentStep] = useState('signUp'); // Track the current form step
   const [isVerified, setIsVerified] = useState(false); // Track Stripe verification
 
   const [register, { isLoading }] = useRegisterLazyQuery();
+  const [createVerificationSession, { isLoading: isStripeLoading }] =
+    useCreateVerificationSessionMutation();
 
   const handleSignUp = async ({
     phoneOrEmail: email,
@@ -38,7 +45,7 @@ export default function SignUp() {
       if (isSuccess) {
         notifySuccess(data.message);
         if (asChef) {
-          setCurrentStep('address'); // Switch to address form after successful sign-up
+          setCurrentStep('address');
         } else navigate(paths.homepage);
       } else {
         notifyError(error?.data?.message);
@@ -56,19 +63,14 @@ export default function SignUp() {
     notifySuccess(t('common.addressSaved'));
     // Navigate or handle completion
   };
-
-  const handleVerify = async () => {
+  const handleVerification = async () => {
     try {
-      // Simulate Stripe verification
-      const isVerificationSuccessful = true; // Replace with actual verification logic
-      if (isVerificationSuccessful) {
-        setIsVerified(true);
-        notifySuccess(t('common.verificationSuccessful'));
-      } else {
-        notifyError(t('common.verificationFailed'));
-      }
+      const { data } = await createVerificationSession('user123');
+      console.log({ data });
+      setClientSecret(data.data.verificationSession.client_secret);
     } catch (error) {
-      notifyError(error.message);
+      console.error('Error starting verification:', error);
+      notifyError('Failed to start verification.');
     }
   };
 
@@ -99,14 +101,19 @@ export default function SignUp() {
             renderExtraButton={() => (
               <button
                 type="button"
-                onClick={handleVerify}
+                onClick={handleVerification}
                 className="bg-blue-500 text-white font-lato py-2 px-4 rounded cursor-pointer"
                 disabled={isVerified}
               >
-                {t('common.verifyMe')}
+                {isStripeLoading ? 'Loading...' : t('common.verifyMe')}
               </button>
             )}
           />
+        )}
+        {!!clientSecret ? (
+          <EmbeddedVerification clientSecret={clientSecret} />
+        ) : (
+          <></>
         )}
       </div>
     </div>
