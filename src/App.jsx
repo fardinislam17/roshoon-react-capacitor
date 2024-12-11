@@ -1,13 +1,14 @@
-import { Box, Container, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import EntitledElement from './components/EntitledElement';
+import EntitledElement from 'src/components/EntitledElement';
 import AppBar from './features/appBar/AppBar';
-import { Login, Register } from './features/auth';
-import ErrorBoundary from './features/errorBoundary';
+import ErrorBoundary from 'src/components/ErrorBoundary';
 import Footer from './features/footer';
-import Roshoon from './features/roshoon';
-import * as paths from './paths';
+import LandingPageContent from './features/landingPageContent';
+import Login from 'src/components/Login';
+import SignUp from 'src/components/SignUp';
+import { loginPath, registerPath, homepagePath } from 'src/paths';
 import RoshoonSkeleton from './RoshoonSkeleton';
 
 const AppRoot = styled(Box)(() => ({
@@ -18,17 +19,10 @@ const AppRoot = styled(Box)(() => ({
   minHeight: 500,
 }));
 
-const MainContent = styled(Container)(({ theme }) => ({
-  flex: '1 1 auto',
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: 80,
-}));
-
 const UnknownRoute = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    navigate(paths.homepage);
+    navigate(homepagePath);
   }, [navigate]);
   return null;
 };
@@ -37,41 +31,47 @@ const App = () => {
   return (
     <AppRoot>
       <AppBar />
-      <MainContent disableGutters maxWidth={false}>
-        <Routes>
-          <Route
-            path={paths.homepage}
-            element={
-              <ErrorBoundary>
-                <EntitledElement fallback={<RoshoonSkeleton />}>
-                  <Roshoon />
-                </EntitledElement>
-              </ErrorBoundary>
-            }
-          />
-          <Route
-            path={paths.register}
-            element={
-              <ErrorBoundary>
-                <EntitledElement fallback={<RoshoonSkeleton />}>
-                  <Register />
-                </EntitledElement>
-              </ErrorBoundary>
-            }
-          />
-          <Route
-            path={paths.login}
-            element={
-              <ErrorBoundary>
-                <EntitledElement fallback={<RoshoonSkeleton />}>
-                  <Login />
-                </EntitledElement>
-              </ErrorBoundary>
-            }
-          />
-          <Route path="*" element={<UnknownRoute />} />
-        </Routes>
-      </MainContent>
+      <Routes>
+        <Route
+          path={homepagePath}
+          element={
+            <ErrorBoundary>
+              <EntitledElement fallback={<RoshoonSkeleton />}>
+                <LandingPageContent />
+              </EntitledElement>
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path={loginPath}
+          element={
+            <ErrorBoundary>
+              <EntitledElement
+                fallback={<RoshoonSkeleton />}
+                redirectIfLoggedIn
+                redirectTo={homepagePath}
+              >
+                <Login />
+              </EntitledElement>
+            </ErrorBoundary>
+          }
+        />
+        <Route
+          path={registerPath}
+          element={
+            <ErrorBoundary>
+              <EntitledElement
+                fallback={<RoshoonSkeleton />}
+                redirectIfLoggedIn
+                redirectTo={homepagePath}
+              >
+                <SignUp />
+              </EntitledElement>
+            </ErrorBoundary>
+          }
+        />
+        <Route path="*" element={<UnknownRoute />} />
+      </Routes>
       <Footer />
     </AppRoot>
   );

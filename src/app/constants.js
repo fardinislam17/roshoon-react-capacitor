@@ -15,8 +15,20 @@ export const SIDEBAR_MENU_OPTIONS = [
 ];
 
 export const LOGIN_FIELDS = [
-  { name: 'email', label: 'Email', type: 'email', required: true },
-  { name: 'password', label: 'Password', type: 'password', required: true },
+  {
+    name: 'email',
+    label: 'Phone number or email address',
+    errorMessage: 'errors.auth.enterValidPhoneOrEmail',
+    type: 'text',
+    required: true,
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    errorMessage: 'errors.auth.passwordMustBeSixCharacters',
+    type: 'password',
+    required: true,
+  },
 ];
 
 export const REGISTRATION_FIELDS = [
@@ -65,3 +77,11 @@ export const DEFAULT_ERROR_MESSAGE =
 
 export const ROSHOON_AUTH_TOKEN = 'roshoon_auth_token';
 export const ROSHOON_ACCESS_TOKEN = 'roshoon_access_token';
+
+export const SIGN_UP_FIELDS = [
+  { name: 'phoneOrEmail', type: 'text', required: true },
+  { name: 'firstName', type: 'text', required: true },
+  { name: 'lastName', type: 'text', required: false },
+  { name: 'password', type: 'password', required: true },
+  { name: 'repeatPassword', type: 'password', required: true },
+];

@@ -10,21 +10,31 @@
     "signUp": "Sign Up",
     "name": "Name",
     "email": "Email",
-    "userName": "user Name",
+    "userName": "User Name",
     "password": "Password",
+    "repeatPassword": "Repeat Password",
     "cancel": "Cancel",
     "submit": "Submit",
     "loginWithEmailAndPassword": "Login with email and password",
     "continueAsGuest": "Continue as Guest",
-    "becomeChefForLogin": "Become a Chef",
+    "becomeAChef": "Become a Chef",
     "locateMe": "Locate me",
     "learnMoreAboutUs": "Learn More About Us",
-    "profile": "Profile"
+    "profile": "Profile",
+    "continue": "Continue",
+    "phoneOrEmail": "Email or Phone",
+    "firstName": "First Name",
+    "lastName": "Last Name"
   },
   "errors": {
     "auth": {
-      "enterValidEmail": "Please enter a valid email address"
+      "enterValidEmail": "Please enter a valid email address",
+      "enterValidPhoneOrEmail": "Please enter a valid phone number or email address",
+      "passwordMustBeSixCharacters": "  Password must be at least 6 characters long"
     }
+  },
+  "login": {
+    "doNotHaveAnAccount": "Don’t have an account"
   },
   "footer": {
     "signUpForNewsLetter": "Sign Up For News Letter",

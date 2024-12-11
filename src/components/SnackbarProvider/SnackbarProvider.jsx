@@ -1,4 +1,3 @@
-// CustomSnackbarProvider.js
 import React, { useMemo } from 'react';
 import {
   SnackbarProvider as CustomSnackbarProvider,

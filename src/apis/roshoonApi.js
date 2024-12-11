@@ -8,7 +8,8 @@ export const roshoonApi = createApi({
 
   tagTypes: [],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_BASE_URL,
+    baseUrl: `${import.meta.env.BASE_URL}api`,
+    // baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: async (headers, { endpoint }) => {
       if (endpoint === 'signInWithExistingCookie') {
         const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
@@ -63,10 +64,10 @@ export const roshoonApi = createApi({
       },
     }),
     register: builder.query({
-      query: ({ email, password, name, phone }) => ({
+      query: ({ email, firstName, lastName, password, phone }) => ({
         url: `auth/register`,
         method: 'POST',
-        body: { email, password, name, phone, roles: ['buyer'] },
+        body: { email, password, firstName, lastName, phone },
         credentials: 'include',
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -99,12 +100,34 @@ export const roshoonApi = createApi({
         }
       },
     }),
+    loginWithGoogle: builder.mutation({
+      query: ({ access_token }) => ({
+        url: `auth/google-login`,
+        method: 'POST',
+        body: { access_token },
+        credentials: 'include',
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const {
+            data: { accessToken, user },
+          } = await queryFulfilled;
+          if (user) {
+            dispatch(setUser({ ...user, loggedIn: true }));
+          }
+          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
+        } catch (err) {
+          console.error(err.error);
+        }
+      },
+    }),
   }),
 });
 
 export const {
   useSignInWithExistingCookieQuery,
   useLogoutMutation,
+  useLoginWithGoogleMutation,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,

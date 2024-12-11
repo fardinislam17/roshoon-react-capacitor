@@ -1,116 +1,133 @@
-import { useState, useEffect } from 'react';
-import {
-  Button,
-  DialogActions,
-  FormControl,
-  FormGroup,
-  TextField,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState } from 'react';
+import hidePass from 'src/assets/svgs/hidepass.svg';
+import { Visibility } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
-const CustomForm = ({ fields, handleSubmit, handleCancel }) => {
+const CustomForm = ({ fields, handleSubmit }) => {
   const { t } = useTranslation();
+  const { pathname } = useLocation();
   const [formData, setFormData] = useState({});
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [emailError, setEmailError] = useState(false);
+  const [errors, setErrors] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^[+]?[\d\s()-]{10,11}$/;
+    return phoneRegex.test(phoneNumber);
+  };
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = (name, errorMessage, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (name === 'email') {
-      const isValidEmail = validateEmail(value);
-      setEmailError(!isValidEmail);
-    }
-
-    const allFieldsFilled = fields.every((field) => {
-      return (
-        !field.required ||
-        (formData[field.name] && formData[field.name].trim() !== '')
-      );
+    setErrors((prev) => {
+      if (name === 'email') {
+        return {
+          ...prev,
+          [name]:
+            !validateEmail(value) && !validatePhoneNumber(value)
+              ? t(errorMessage)
+              : '',
+        };
+      }
+      if (name === 'password') {
+        return {
+          ...prev,
+          [name]: value.length < 6 ? t(errorMessage) : '',
+        };
+      }
+      return prev;
     });
-
-    setIsButtonDisabled(!allFieldsFilled || emailError);
   };
 
   const onClickSubmit = (e) => {
     e.preventDefault();
-    if (!emailError && formData.email && formData.password) {
+    const hasErrors = Object.values(errors).some((error) => error !== '');
+    if (!hasErrors) {
       handleSubmit(formData);
     }
   };
 
-  const handleTogglePasswordVisibility = () => {
+  const handleTogglePasswordVisibility = (e) => {
+    e.preventDefault();
     setShowPassword((prev) => !prev);
   };
 
-  useEffect(() => {
-    const allFieldsFilled = fields.every((field) => {
-      return (
-        !field.required ||
-        (formData[field.name] && formData[field.name].trim() !== '')
-      );
-    });
-    const isValidEmail = validateEmail(formData.email);
-    setIsButtonDisabled(!allFieldsFilled || !isValidEmail);
-  }, [formData, fields]);
-
   return (
-    <FormControl component="form" onSubmit={onClickSubmit} fullWidth>
-      <FormGroup>
+    <form className="w-full" onSubmit={onClickSubmit}>
+      <div className="flex flex-col gap-4">
         {fields.map((field) => (
-          <TextField
-            key={field.name}
-            label={field.label}
-            type={
-              field.name === 'password' && !showPassword ? 'password' : 'text'
-            }
-            fullWidth
-            variant="outlined"
-            value={formData[field.name] || ''}
-            onChange={(e) => handleInputChange(field.name, e.target.value)}
-            required={field.required}
-            error={field.name === 'email' && emailError}
-            helperText={
-              field.name === 'email' && emailError
-                ? t('errors.auth.enterValidEmail')
-                : ''
-            }
-            sx={{ mb: 2 }}
-            InputProps={{
-              endAdornment: field.name === 'password' && (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleTogglePasswordVisibility}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <div key={field.label}>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-lg font-lato font-medium text-darkGray">
+                {t(field.label)}
+                {field.required && <span className="text-red-500">*</span>}
+              </label>
+              {field.name === 'password' && (
+                <button
+                  className="text-sm text-lightGray font-roboto flex items-center gap-2"
+                  onClick={handleTogglePasswordVisibility}
+                >
+                  {showPassword ? (
+                    <>
+                      <img className="h-5" src={hidePass} alt="Hide" />
+                      Hide
+                    </>
+                  ) : (
+                    <>
+                      <Visibility className="text-lightGray h-5 w-5" />
+                      Show
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+            <input
+              key={field.name}
+              type={
+                field.type === 'password' && !showPassword ? 'password' : 'text'
+              }
+              value={formData[field.name] || ''}
+              onChange={(e) =>
+                handleInputChange(
+                  field.name,
+                  field.errorMessage,
+                  e.target.value
+                )
+              }
+              required={field.required}
+              className={`w-full h-14 text-lg px-4 py-2 border border-darkGray focus:border-2 focus:border-secondary focus:outline-none ${
+                errors[field.name] ? 'border-red-500' : ''
+              }`}
+              placeholder={field.placeholder ? t(field.label) : ''}
+            />
+            {errors[field.name] && (
+              <p className="text-red-500 text-sm mt-1">{errors[field.name]}</p>
+            )}
+          </div>
         ))}
-      </FormGroup>
-
-      <DialogActions>
-        <Button onClick={handleCancel} color="secondary">
-          {t('common.cancel')}
-        </Button>
-        <Button
+      </div>
+      {pathname === '/login' && (
+        <div className="mt-4 text-right">
+          <button
+            type="button"
+            className="text-sm underline text-darkGray hover:text-black"
+          >
+            Forget your password
+          </button>
+        </div>
+      )}
+      <div className="flex justify-center mt-6 mb-4">
+        <button
           type="submit"
-          color="primary"
-          variant="contained"
-          disabled={isButtonDisabled}
+          className="bg-darkGreen text-white font-lato text-lg py-4 px-10 "
         >
-          {t('common.submit')}
-        </Button>
-      </DialogActions>
-    </FormControl>
+          {t('common.logIn')}
+        </button>
+      </div>
+    </form>
   );
 };
 

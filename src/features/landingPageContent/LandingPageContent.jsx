@@ -5,14 +5,14 @@ import EveryoneChefSection from 'src/components/LandingComponents/EveryoneChefSe
 import LearnMore from 'src/components/LandingComponents/LearnMore';
 import { slides } from 'src/data/Slides';
 
-const Roshoon = () => {
+const LandingPageContent = () => {
   return (
     <div className="w-full flex flex-col">
-      <Carousel slides={slides} autoSlide={true} slideDuration={5} />
+      <Carousel slides={slides} autoSlide={true} slideDuration={3} />
       <LearnMore />
       <EveryoneChefSection />
     </div>
   );
 };
 
-export default Roshoon;
+export default LandingPageContent;
