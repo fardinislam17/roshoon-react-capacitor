@@ -2,19 +2,23 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as paths from 'src/paths';
 import { useRegisterLazyQuery } from 'src/apis';
-import { SIGN_UP_FIELDS } from 'src/app/constants';
+import { ADDRESS_FIELDS, SIGN_UP_FIELDS } from 'src/app/constants';
 import { FormLayout } from 'src/components/Forms';
-import { signUpSchema } from 'src/schemas/authSchema';
+import { addressSchema, signUpSchema } from 'src/schemas/authSchema';
 import {
   notifyError,
   notifySuccess,
 } from 'src/features/snackbarProvider/useSnackbar';
+import { useState } from 'react';
 
 export default function SignUp() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const asChef = params.get('asChef') === 'true';
+
+  const [currentStep, setCurrentStep] = useState('address'); // Track the current form step
+  const [isVerified, setIsVerified] = useState(false); // Track Stripe verification
 
   const [register, { isLoading }] = useRegisterLazyQuery();
 
@@ -33,12 +37,35 @@ export default function SignUp() {
       });
       if (isSuccess) {
         notifySuccess(data.message);
-        navigate(paths.homepage);
+        if (asChef) {
+          setCurrentStep('address'); // Switch to address form after successful sign-up
+        } else navigate(paths.homepage);
       } else {
         notifyError(error?.data?.message);
         if (error?.data?.message === 'Email already exists') {
           navigate(paths.login);
         }
+      }
+    } catch (error) {
+      notifyError(error.message);
+    }
+  };
+
+  const handleAddressSubmit = (data) => {
+    console.log('Address Data:', data);
+    notifySuccess(t('common.addressSaved'));
+    // Navigate or handle completion
+  };
+
+  const handleVerify = async () => {
+    try {
+      // Simulate Stripe verification
+      const isVerificationSuccessful = true; // Replace with actual verification logic
+      if (isVerificationSuccessful) {
+        setIsVerified(true);
+        notifySuccess(t('common.verificationSuccessful'));
+      } else {
+        notifyError(t('common.verificationFailed'));
       }
     } catch (error) {
       notifyError(error.message);
@@ -54,14 +81,35 @@ export default function SignUp() {
       />
       <div className="flex flex-col justify-center items-center mx-6 my-4">
         <h5 className="font-lato font-bold text-4xl mb-8">
-          {t('common.signUp')}
+          {currentStep === 'address'
+            ? t('common.addressInformation')
+            : t('common.signUp')}
         </h5>
-        <FormLayout
-          fields={SIGN_UP_FIELDS}
-          onSubmit={handleSignUp}
-          schema={signUpSchema}
-          buttonLabel={asChef ? t('common.continue') : t('common.signUp')}
-        />
+        {currentStep === 'signUp' ? (
+          <FormLayout
+            fields={SIGN_UP_FIELDS}
+            onSubmit={handleSignUp}
+            schema={signUpSchema}
+            buttonLabel={asChef ? t('common.continue') : t('common.signUp')}
+          />
+        ) : (
+          <FormLayout
+            fields={ADDRESS_FIELDS}
+            onSubmit={handleAddressSubmit}
+            schema={addressSchema}
+            buttonLabel={t('common.submit')}
+            renderExtraButton={() => (
+              <button
+                type="button"
+                onClick={handleVerify}
+                className="bg-blue-500 text-white font-lato py-2 px-4 rounded cursor-pointer"
+                disabled={isVerified}
+              >
+                {t('common.verifyMe')}
+              </button>
+            )}
+          />
+        )}
       </div>
     </div>
   );

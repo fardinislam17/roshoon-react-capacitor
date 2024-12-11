@@ -5,6 +5,7 @@ import {
   Facebook,
 } from '@mui/icons-material';
 import { FaTiktok } from 'react-icons/fa';
+import { fetchCities, fetchStates } from 'src/utils/statesAndCities';
 
 export const SIDEBAR_MENU_OPTIONS = [
   { label: 'Our Story', path: 'ourStory' },
@@ -77,4 +78,33 @@ export const SIGN_UP_FIELDS = [
   { name: 'lastName', type: 'text', required: false },
   { name: 'password', type: 'password', required: true },
   { name: 'repeatPassword', type: 'password', required: true },
+];
+
+export const ADDRESS_FIELDS = [
+  { name: 'street', type: 'text', required: true },
+  { name: 'buildingNo', type: 'text', required: true },
+  {
+    name: 'state',
+    type: 'dropdown',
+    required: true,
+    loadOptions: fetchStates,
+    onChange: async (value, setDependentOptions) => {
+      const cities = await fetchCities(value);
+      setDependentOptions('city', cities);
+    },
+  },
+  {
+    name: 'city',
+    type: 'dropdown',
+    required: true,
+    loadOptions: () => [], // Initially empty until state is selected
+  },
+  { name: 'zipCode', type: 'text', required: true },
+  {
+    name: 'country',
+    type: 'text',
+    required: true,
+    readonly: true,
+    defaultValue: 'United States',
+  },
 ];
