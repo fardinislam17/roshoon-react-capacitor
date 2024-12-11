@@ -24,9 +24,4 @@ export default defineConfig({
     setupFiles: 'src/setupTests',
     mockReset: true,
   },
-  resolve: {
-    alias: {
-      '@hookform/resolvers': '/node_modules/@hookform/resolvers',
-    },
-  },
 });
