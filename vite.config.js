@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import { fileURLToPath, URL } from 'url';
 import path from 'path';
+import { fileURLToPath, URL } from 'url';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   base: '/',
@@ -23,5 +23,10 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: 'src/setupTests',
     mockReset: true,
+  },
+  resolve: {
+    alias: {
+      '@hookform/resolvers': '/node_modules/@hookform/resolvers',
+    },
   },
 });

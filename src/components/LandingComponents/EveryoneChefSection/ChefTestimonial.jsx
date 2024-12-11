@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import img1 from '../../../assets/images/chef-1.jpg';
-import img2 from '../../../assets/images/chef-2.jpg';
-import img3 from '../../../assets/images/chef-3.jpg';
+import img1 from 'src/assets/images/chef-1.jpg';
+import img2 from 'src/assets/images/chef-2.jpg';
+import img3 from 'src/assets/images/chef-3.jpg';
 
 const data = [
   {
