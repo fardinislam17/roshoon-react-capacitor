@@ -26,13 +26,10 @@ export default {
         footerText: '#bbd6b8',
         text: {
           primary: '#000000', // Black
-<<<<<<< HEAD
           footerMention: '#195908',
           // neutral: rgba(0, 0, 0, 0.6),
           primaryGreen: '#50704C',
           lightGreen: '#54722D',
-=======
->>>>>>> cf995d8b57cb5bbb049cfe1077f45b356472fe38
         },
         icon: {
           primary: '#B2D99A',
