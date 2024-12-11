@@ -78,12 +78,17 @@ const ChefTestimonial = () => {
             style={{ width: '100%' }}
           >
             {/* Left Image Container */}
-            <div className="w-full h-[483px]">
+            <div className="w-full h-[483px] relative">
               <img
                 src={item.img}
                 alt={`chef-${item.id}`}
                 className="h-full w-full object-cover "
               />
+
+              <button className="absolute left-5 bottom-3 bg-primaryGreen text-white rounded-full py-1 px-3 font-semibold">
+                {' '}
+                @ {item.name}{' '}
+              </button>
             </div>
 
             {/* Right Text Content */}
