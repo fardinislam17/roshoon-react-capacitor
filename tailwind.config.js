@@ -14,7 +14,7 @@ export default {
       colors: {
         primary: '#ff5722', // Orange
         secondary: '#4caf50', // Green
-        neutral: rgba(0, 0, 0, 0.6),
+        lightShade: '#E6E4C6',
         roshoonBackground: '#ffffff', // White
         'green-olive': '#54722D',
         'gray-light': '#D9D9D9',
@@ -24,6 +24,9 @@ export default {
         text: {
           primary: '#000000', // Black
           footerMention: '#195908',
+          // neutral: rgba(0, 0, 0, 0.6),
+          primaryGreen: '#50704C',
+          lightGreen: '#54722D',
         },
         icon: {
           primary: '#B2D99A',
@@ -83,6 +86,7 @@ export default {
           },
         },
       },
+     
     },
   },
   plugins: [typography],
