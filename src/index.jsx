@@ -8,7 +8,7 @@ import './index.css';
 import './i18n';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-import SnackbarProvider from './features/snackbarProvider';
+import SnackbarProvider from './components/SnackbarProvider';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme/theme.roshoon';
 

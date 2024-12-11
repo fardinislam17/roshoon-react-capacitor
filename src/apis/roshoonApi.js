@@ -8,7 +8,8 @@ export const roshoonApi = createApi({
 
   tagTypes: [],
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_BASE_URL,
+    baseUrl: `${import.meta.env.BASE_URL}api`,
+    // baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: async (headers, { endpoint }) => {
       if (endpoint === 'signInWithExistingCookie') {
         const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
