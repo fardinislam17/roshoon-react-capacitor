@@ -110,6 +110,12 @@ const CustomForm = ({ fields, handleSubmit }) => {
               }
               fullWidth
               value={formData[field.name] || ''}
+              InputProps={{
+                sx: {
+                  borderRadius: 0,
+                  border: '1px solid #3C4242',
+                },
+              }}
               onChange={(e) => handleInputChange(field.name, e.target.value)}
               required={field.required}
               error={Boolean(errors[field.name])}

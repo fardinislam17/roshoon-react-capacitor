@@ -24,7 +24,8 @@
     "continue": "Continue",
     "phoneOrEmail": "Email or Phone",
     "firstName": "First Name",
-    "lastName": "Last Name"
+    "lastName": "Last Name",
+    "orderNow": "Order Now"
   },
   "errors": {
     "auth": {
