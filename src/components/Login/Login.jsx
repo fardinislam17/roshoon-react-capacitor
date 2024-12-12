@@ -46,16 +46,18 @@ const Login = () => {
   });
 
   const loginWithFacebook = (response) => {
-    window.FB.login(
-      function (response) {
-        if (response.authResponse) {
-          console.log('Logged in:', response);
-        } else {
-          console.log('User cancelled login or did not fully authorize.');
-        }
-      },
-      { scope: 'public_profile' }
-    );
+    notifySuccess('Login Successful');
+    navigate(homepagePath);
+    // window.FB.login(
+    //   function (response) {
+    //     if (response.authResponse) {
+    //       console.log('Logged in:', response);
+    //     } else {
+    //       console.log('User cancelled login or did not fully authorize.');
+    //     }
+    //   },
+    //   { scope: 'public_profile' }
+    // );
   };
 
   const handleLoginWithEmailAndPassword = async ({ email, password }) => {
