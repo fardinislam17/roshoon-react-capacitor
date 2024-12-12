@@ -14,7 +14,7 @@ const LearnMore = () => {
       <h2 className="text-[18px] md:text-2xl xl:text-[36px] text-center text-[#195908] uppercase font-julius">
         Roshoon Provides
       </h2>
-      <p className="max-w-[1171px] uppercase mt-[30px] md:mt-16 xl:mt-[94px] mx-auto text-sm sm:text-base md:text-2xl xl:text-[60px] text-[#50704C] text-center font-julius xl:leading-[96px] traking-tight  xl:tracking-[-6px] whitespace-nowrap">
+      <p className="max-w-[1171px] uppercase mt-[30px] md:mt-16 xl:mt-[94px] mx-auto text-sm sm:text-base md:text-2xl xl:text-[60px] text-[#50704C] text-center font-julius xl:leading-[96px] tracking-tight  xl:tracking-[-6px] whitespace-nowrap">
         we connect you with passionate home
       </p>
       <p className="max-w-[1171px] uppercase  mx-auto text-base md:text-2xl xl:text-[60px] text-[#50704C] text-center  font-julius xl:leading-[96px]  xl:tracking-[-6px]">
