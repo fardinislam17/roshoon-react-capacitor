@@ -34,10 +34,9 @@ const ChefTestimonial = () => {
   const [index, setIndex] = useState(1);
   const transitionRef = useRef(null);
 
-  const slides = [data[data.length - 1], ...data, data[0]]; // Clone first and last items
+  const slides = [data[data.length - 1], ...data, data[0]];
 
   const handleTransitionEnd = () => {
-    // Reset position for seamless looping
     if (index === 0) {
       setIndex(data.length);
       transitionRef.current.style.transition = 'none';
@@ -86,8 +85,7 @@ const ChefTestimonial = () => {
               />
 
               <button className="absolute left-5 bottom-3 bg-primaryGreen text-white rounded-full py-1 px-3 font-semibold">
-                {' '}
-                @ {item.name}{' '}
+                @ {item.name}
               </button>
             </div>
 
