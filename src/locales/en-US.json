@@ -25,7 +25,9 @@
     "phoneOrEmail": "Email or Phone",
     "firstName": "First Name",
     "lastName": "Last Name",
-    "orderNow": "Order Now"
+    "orderNow": "Order Now",
+    "everyoneChefTitle": "Everyone can be a chef in their own kitchen",
+    "everyoneChefDescription": "Indulge in the flavors of home, support local talent, and become part of a community that values the love and care that goes into every homemade meal."
   },
   "errors": {
     "auth": {

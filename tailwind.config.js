@@ -15,7 +15,7 @@ export default {
         primary: '#ff5722', // Orange
         secondary: '#4caf50', // Green
         lightShade: '#E6E4C6',
-        roshoonBackground: '#ffffff', // White
+        roshoonBackground: '#ffffff',
         'green-olive': '#54722D',
         'gray-light': '#D9D9D9',
         primaryGreen: '#50704C',
@@ -25,9 +25,9 @@ export default {
         lightGray: '#807D7E',
         footerText: '#bbd6b8',
         text: {
-          primary: '#000000', // Black
+          primary: '#000000',
+          neutral: '#00000099',
           footerMention: '#195908',
-          // neutral: rgba(0, 0, 0, 0.6),
           primaryGreen: '#50704C',
           lightGreen: '#54722D',
         },
@@ -89,7 +89,6 @@ export default {
           },
         },
       },
-     
     },
   },
   plugins: [typography],

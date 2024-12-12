@@ -1,8 +1,8 @@
 import React from 'react';
-import EveryoneChefSection from 'src/components/LandingComponents/EveryoneChefSection';
-import OrderNow from 'src/components/LandingComponents/OrderNow';
 import Carousel from 'src/components/LandingPageComponents/Carousel';
+import EveryoneChefSection from 'src/components/LandingPageComponents/EveryoneChefSection';
 import LearnMore from 'src/components/LandingPageComponents/LearnMore';
+import OrderNow from 'src/components/LandingPageComponents/OrderNow';
 import { slides } from 'src/data/Slides';
 
 const LandingPageContent = () => {
