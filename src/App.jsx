@@ -5,8 +5,9 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import Login from 'src/components/Login';
 import SignUp from 'src/components/SignUp';
 import { homepagePath, loginPath, registerPath } from 'src/paths';
-import EntitledElement from './components/EntitledElement';
-import ErrorBoundary from './components/ErrorBoundary';
+
+import EntitledElement from 'src/components/EntitledElement';
+import ErrorBoundary from 'src/components/ErrorBoundary';
 import AppBar from './features/appBar/AppBar';
 import Footer from './features/footer';
 import LandingPageContent from './features/landingPageContent';

@@ -6,8 +6,8 @@ const CommonButton = ({ className, title, onClick, children }) => {
       onClick={onClick}
       className={`
     relative overflow-hidden 
-    font-lato px-6 h-[62px] flex items-center justify-center text-white 
-    text-sm uppercase bg-primaryGreen
+    font-lato px-6 h-[32px] md:h-[62px] flex items-center justify-center text-white 
+    text-sm  bg-primaryGreen
     tracking-[.66px] transition-all duration-500
     ${className ? className : ''}
     before:content-[''] before:absolute before:inset-0 before:bg-secondaryGreen 
