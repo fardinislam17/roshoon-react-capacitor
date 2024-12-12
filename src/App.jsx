@@ -1,14 +1,15 @@
 import { Box, styled } from '@mui/material';
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import EntitledElement from 'src/components/EntitledElement';
-import AppBar from './features/appBar/AppBar';
-import ErrorBoundary from 'src/components/ErrorBoundary';
-import Footer from './features/footer';
-import LandingPageContent from './features/landingPageContent';
+
 import Login from 'src/components/Login';
 import SignUp from 'src/components/SignUp';
-import { loginPath, registerPath, homepagePath } from 'src/paths';
+import { homepagePath, loginPath, registerPath } from 'src/paths';
+import EntitledElement from './components/EntitledElement';
+import ErrorBoundary from './components/ErrorBoundary';
+import AppBar from './features/appBar/AppBar';
+import Footer from './features/footer';
+import LandingPageContent from './features/landingPageContent';
 import RoshoonSkeleton from './RoshoonSkeleton';
 
 const AppRoot = styled(Box)(() => ({

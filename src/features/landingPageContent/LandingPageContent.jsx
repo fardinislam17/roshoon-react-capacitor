@@ -1,7 +1,8 @@
 import React from 'react';
-import OrderNow from 'src/components/LandingComponents/OrderNow';
 import Carousel from 'src/components/LandingPageComponents/Carousel';
+import EveryoneChefSection from 'src/components/LandingPageComponents/EveryoneChefSection';
 import LearnMore from 'src/components/LandingPageComponents/LearnMore';
+import OrderNow from 'src/components/LandingPageComponents/OrderNow';
 import { slides } from 'src/data/Slides';
 
 const LandingPageContent = () => {
@@ -10,6 +11,7 @@ const LandingPageContent = () => {
       <OrderNow />
       <Carousel slides={slides} autoSlide={true} slideDuration={5} />
       <LearnMore />
+      <EveryoneChefSection />
     </div>
   );
 };

@@ -22,7 +22,7 @@ const OrderNow = () => {
         backgroundImage: `url(${images[currentImage]})`,
         transition: 'background-image 1s ease-in',
       }}
-      className="py-36 bg-fixed lg:py-0 mb-10 bg-cover bg-center lg:h-[1074px] flex flex-col justify-center items-center space-y-8"
+      className="py-36 bg-fixed mb-20 lg:py-0 bg-cover bg-center lg:h-[1074px] flex flex-col justify-center items-center space-y-8"
     >
       <h2 className="text-2xl z-10 sticky lg:text-6xl text-white text-center font-julius">
         Home-Cooked <br /> Goodness
