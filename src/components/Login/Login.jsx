@@ -105,7 +105,7 @@ const Login = () => {
             align="center"
             sx={{ mb: 5 }}
           >
-            {t('Log In')}
+            {t('common.logIn')}
           </Typography>
 
           {LOGIN_METHODS.includes('googleLogin') && (
@@ -116,6 +116,7 @@ const Login = () => {
               onClick={loginWithGoogle}
               sx={{
                 mb: 3,
+                p: 1.5,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 0,
@@ -138,6 +139,7 @@ const Login = () => {
                 onClick={loginWithFacebook}
                 sx={{
                   mb: 2,
+                  p: 1.5,
                   justifyContent: 'center',
                   alignItems: 'center',
                   borderRadius: 0,

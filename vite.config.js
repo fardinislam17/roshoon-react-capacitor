@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import { fileURLToPath, URL } from 'url';
 import path from 'path';
+import { fileURLToPath, URL } from 'url';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   base: '/',
