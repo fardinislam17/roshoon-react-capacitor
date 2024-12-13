@@ -60,6 +60,19 @@ const handlers = [
     );
   }),
 
+  http.post(`${baseUrl}/auth/facebook-login`, async () => {
+    await delay(500);
+    return HttpResponse.json(
+      createUserResponse(undefined, 'Login Successful'),
+      {
+        status: 200,
+        headers: {
+          'Set-Cookie': `${AUTH_TOKEN_COOKIE}=${MOCK_ACCESS_TOKEN}; Path=/; HttpOnly`,
+        },
+      }
+    );
+  }),
+
   http.post(`${baseUrl}/auth/register`, async () => {
     await delay(500);
     return HttpResponse.json(
