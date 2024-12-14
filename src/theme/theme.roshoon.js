@@ -59,7 +59,7 @@ const theme = createTheme({
       fontSize: '0.875rem',
       letterSpacing: '0.15px',
     },
-    roshoonBackground: {
+    white: {
       main: common.white,
     },
   },

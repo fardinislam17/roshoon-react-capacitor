@@ -8,7 +8,7 @@ import { slides } from 'src/data/Slides';
 
 const LandingPageContent = () => {
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col pt-[80px]">
       <OrderNow />
       <Carousel slides={slides} autoSlide={true} slideDuration={5} />
       <LearnMore />

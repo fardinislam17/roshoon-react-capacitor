@@ -9,7 +9,7 @@ const EveryoneChefSection = () => {
   const { t } = useTranslation();
   return (
     <div className="py-20 px-5">
-      <div className=" flex flex-col lg:mb-10 lg:px-10 2xl:px-24 lg:flex-row lg:justify-between gap-10">
+      <div className=" flex flex-col lg:mb-10 lg:flex-row lg:justify-between gap-10">
         <div className="w-full lg:w-[45%] text-center lg:text-left sm:px-10 lg:px-0 ">
           <CommonTitle
             className={

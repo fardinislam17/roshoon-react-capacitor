@@ -31,7 +31,7 @@ const Formlayout = ({ fields, schema, onSubmit, buttonLabel = 'Submit' }) => {
       ))}
       <button
         type="submit"
-        className="bg-darkGreen text-white font-lato text-lg py-4 px-10 "
+        className="bg-greenDark text-white font-lato text-lg py-4 px-10 "
       >
         {buttonLabel}
       </button>

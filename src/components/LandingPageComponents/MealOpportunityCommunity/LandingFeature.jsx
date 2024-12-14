@@ -33,7 +33,7 @@ const LandingFeature = () => {
   ];
 
   return (
-    <div className="px-5 lg:px-24 2xl:px-48 mx-auto">
+    <div className="px-5 mx-auto">
       <div className="space-y-10 sm:space-y-16 px-4 py-10 lg:py-20">
         {cards.map((card) => (
           <SectionImageCard key={card?.id} {...card} />

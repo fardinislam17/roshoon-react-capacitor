@@ -67,7 +67,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
               </label>
               {field.name === 'password' && (
                 <button
-                  className="text-sm text-lightGray font-roboto flex items-center gap-2"
+                  className="text-sm text-grayLight font-roboto flex items-center gap-2"
                   onClick={handleTogglePasswordVisibility}
                 >
                   {showPassword ? (
@@ -77,7 +77,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
                     </>
                   ) : (
                     <>
-                      <Visibility className="text-lightGray h-5 w-5" />
+                      <Visibility className="text-grayLight h-5 w-5" />
                       Show
                     </>
                   )}
@@ -122,7 +122,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
       <div className="flex justify-center mt-6 mb-4">
         <button
           type="submit"
-          className="bg-darkGreen text-white font-lato text-lg py-4 px-10 "
+          className="bg-greenDark text-white font-lato text-lg py-4 px-10 "
         >
           {t('common.logIn')}
         </button>
