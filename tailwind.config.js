@@ -108,7 +108,7 @@ export default {
       zIndex: {
         min: '100',
         mid: '500',
-        max: '9999',
+        max: '999',
       },
     },
   },
