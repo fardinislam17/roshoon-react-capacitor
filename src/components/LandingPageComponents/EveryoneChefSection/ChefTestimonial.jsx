@@ -53,7 +53,7 @@ const ChefTestimonial = () => {
         >
           <div className="absolute inset-0 flex items-end p-5">
             <button
-              className="bg-primaryGreen text-white text-sm rounded-full py-1 px-3 font-semibold"
+              className="bg-greenPrimary text-white text-sm rounded-full py-1 px-3 font-semibold"
               style={{ transition: 'background-image 1s ease-in' }}
             >
               @{data[index].name}
@@ -62,28 +62,28 @@ const ChefTestimonial = () => {
         </div>
 
         {/* Right Text Content */}
-        <div className="w-full flex flex-col pt-10 md:pt-[66px] pb-10 md:pb-12 px-5 md:px-10 lg:px-5 2xl:px-10 bg-lightShade h-full col-span-7">
+        <div className="w-full flex flex-col pt-10 md:pt-[66px] pb-10 md:pb-12 px-5 md:px-10 lg:px-5 2xl:px-10 bg-light h-full col-span-7">
           <p
-            className="font-lato text-primaryGreen leading-[40px] tracking-[-1px] text-xl"
+            className="font-lato text-greenPrimary leading-[40px] tracking-[-1px] text-xl"
             style={{ transition: 'background-image 1s ease-in' }}
           >
             {data[index].description}
           </p>
           <div className="flex flex-col justify-end h-full">
             <p
-              className="text-sm text-primaryGreen font-medium"
+              className="text-sm text-greenPrimary font-medium"
               style={{ transition: 'background-image 1s ease-in' }}
             >
               {data[index].name}
             </p>
             <p
-              className="text-sm text-text-lightGreen uppercase py-3"
+              className="text-sm text-text-greenOlive uppercase py-3"
               style={{ transition: 'background-image 1s ease-in' }}
             >
               {data[index].role}
             </p>
             <p
-              className="text-sm text-primaryGreen"
+              className="text-sm text-greenPrimary"
               style={{ transition: 'background-image 1s ease-in' }}
             >
               {data[index].designation}

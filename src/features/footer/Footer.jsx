@@ -11,10 +11,10 @@ import {
   FOOTER_ELEMENT_R,
   SOCIAL_MEDIA_LINKS,
 } from 'src/app/constants';
+
 const FooterBox = styled(Stack)(({ theme }) => ({
   width: '100%',
   zIndex: 100,
-  background: theme.palette.background.footer.primary,
 }));
 
 const Footer = () => {
@@ -35,9 +35,9 @@ const Footer = () => {
   };
 
   return (
-    <FooterBox>
-      <div className="flex justify-between flex-col-reverse gap-10 lg:flex-row">
-        <div className="flex flex-col lg:flex-col xl:flex-row justify-between w-full mb-3 relative px-8 lg:mt-24 lg:mb-16 lg:ml-0 2xl:mt-32 2xl:ml-32">
+    <FooterBox className="bg-greenPrimary">
+      <div className="container flex justify-between flex-col-reverse gap-10 lg:flex-row">
+        <div className="flex flex-col lg:flex-col xl:flex-row justify-between w-full mb-3 relative p-5 lg:mt-24 lg:mb-16 lg:ml-0 2xl:mt-32">
           <div className="space-y-5 mb-0 lg:mb-5 xl:mb-0">
             <h3 className="text-footerText tracking-tight font-lato text-base lg:text-xl font-medium uppercase">
               {t('footer.signUpForNewsLetter')}
@@ -45,7 +45,7 @@ const Footer = () => {
             <form onSubmit={handleSubmit} className="flex">
               <input
                 name="email"
-                className="bg-roshoon-background placeholder:text-primaryGreen font-normal focus:outline-none pl-7 font-lato text-base w-full lg:text-2xl text-primaryGreen"
+                className="bg-roshoon-background placeholder:text-greenPrimary font-normal focus:outline-none pl-7 font-lato text-base w-full lg:text-2xl text-greenPrimary"
                 placeholder="Email address"
                 type="text"
               />
@@ -116,7 +116,7 @@ const Footer = () => {
             transition: 'background-image 1s ease-in',
           }}
         >
-          <h4 className="text-darkGreen bg-roshoonBackground absolute bottom-10 left-10 w-40 px-5 py-2 rounded-full text-2xl font-medium font-inter">
+          <h4 className="text-darkGreen bg-white absolute bottom-10 left-10 w-40 px-5 py-2 rounded-full text-2xl font-medium font-inter">
             @Roshoon
           </h4>
         </div>

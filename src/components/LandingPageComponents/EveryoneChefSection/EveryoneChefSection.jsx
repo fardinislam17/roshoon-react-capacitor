@@ -9,9 +9,13 @@ const EveryoneChefSection = () => {
   const { t } = useTranslation();
   return (
     <div className="py-20 px-5">
-      <div className=" flex flex-col lg:mb-10 lg:px-10 2xl:px-28 lg:flex-row lg:justify-between">
-        <div className="w-full lg:w-[45%] text-center lg:text-left sm:px-10 lg:px-0">
-          <CommonTitle className={'text-center lg:text-left'}>
+      <div className=" flex flex-col lg:mb-10 lg:flex-row lg:justify-between gap-10">
+        <div className="w-full lg:w-[45%] text-center lg:text-left sm:px-10 lg:px-0 ">
+          <CommonTitle
+            className={
+              'text-center lg:text-left tracking-tight md:tracking-[-3px]'
+            }
+          >
             {t('common.everyoneChefTitle')}
           </CommonTitle>
           <CommonDescription className={'text-neutral pt-4 '}>
@@ -21,7 +25,7 @@ const EveryoneChefSection = () => {
             <CommonButton>{t('common.becomeAChef')}</CommonButton>
           </div>
         </div>
-        <div className="w-full lg:w-[45%]">
+        <div className="w-full lg:w-[50%]">
           <ChefTestimonial />
         </div>
       </div>

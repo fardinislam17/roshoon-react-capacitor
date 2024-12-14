@@ -32,47 +32,49 @@ const App = () => {
   return (
     <AppRoot>
       <AppBar />
-      <Routes>
-        <Route
-          path={homepagePath}
-          element={
-            <ErrorBoundary>
-              <EntitledElement fallback={<RoshoonSkeleton />}>
-                <LandingPageContent />
-              </EntitledElement>
-            </ErrorBoundary>
-          }
-        />
-        <Route
-          path={loginPath}
-          element={
-            <ErrorBoundary>
-              <EntitledElement
-                fallback={<RoshoonSkeleton />}
-                redirectIfLoggedIn
-                redirectTo={homepagePath}
-              >
-                <Login />
-              </EntitledElement>
-            </ErrorBoundary>
-          }
-        />
-        <Route
-          path={registerPath}
-          element={
-            <ErrorBoundary>
-              <EntitledElement
-                fallback={<RoshoonSkeleton />}
-                redirectIfLoggedIn
-                redirectTo={homepagePath}
-              >
-                <SignUp />
-              </EntitledElement>
-            </ErrorBoundary>
-          }
-        />
-        <Route path="*" element={<UnknownRoute />} />
-      </Routes>
+      <div className="container">
+        <Routes>
+          <Route
+            path={homepagePath}
+            element={
+              <ErrorBoundary>
+                <EntitledElement fallback={<RoshoonSkeleton />}>
+                  <LandingPageContent />
+                </EntitledElement>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path={loginPath}
+            element={
+              <ErrorBoundary>
+                <EntitledElement
+                  fallback={<RoshoonSkeleton />}
+                  redirectIfLoggedIn
+                  redirectTo={homepagePath}
+                >
+                  <Login />
+                </EntitledElement>
+              </ErrorBoundary>
+            }
+          />
+          <Route
+            path={registerPath}
+            element={
+              <ErrorBoundary>
+                <EntitledElement
+                  fallback={<RoshoonSkeleton />}
+                  redirectIfLoggedIn
+                  redirectTo={homepagePath}
+                >
+                  <SignUp />
+                </EntitledElement>
+              </ErrorBoundary>
+            }
+          />
+          <Route path="*" element={<UnknownRoute />} />
+        </Routes>
+      </div>
       <Footer />
     </AppRoot>
   );

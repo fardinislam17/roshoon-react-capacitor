@@ -14,23 +14,33 @@ export default {
       colors: {
         primary: '#ff5722', // Orange
         secondary: '#4caf50', // Green
-        lightShade: '#E6E4C6',
-        roshoonBackground: '#ffffff',
-        'green-olive': '#54722D',
-        'gray-light': '#D9D9D9',
-        primaryGreen: '#50704C',
-        secondaryGreen: '#ADCFA9',
-        darkGreen: '#195908',
-        darkGray: '#3C4242',
-        lightGray: '#807D7E',
+
+        // Shades
+        light: '#E6E4C6', // Light Shade
+        white: '#ffffff', // Background (Roshoon)
+        grayLight: '#D9D9D9',
+        grayDark: '#3C4242',
+        grayNeutral: '#807D7E',
+
+        // Greens
+        greenPrimary: '#50704C',
+        greenSecondary: '#ADCFA9',
+        greenDark: '#195908',
+        greenOlive: '#54722D',
+
+        // Footer
         footerText: '#bbd6b8',
+
+        // Text Colors
         text: {
-          primary: '#000000',
-          neutral: '#00000099',
-          footerMention: '#195908',
-          primaryGreen: '#50704C',
-          lightGreen: '#54722D',
+          primary: '#000000', // Black
+          neutral: '#00000099', // Black with transparency
+          footerMention: '#195908', // Dark Green
+          greenPrimary: '#50704C',
+          greenOlive: '#54722D',
         },
+
+        // Icon Colors
         icon: {
           primary: '#B2D99A',
         },
@@ -88,6 +98,17 @@ export default {
             },
           },
         },
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '0',
+        },
+      },
+      zIndex: {
+        min: '100',
+        mid: '500',
+        max: '999',
       },
     },
   },

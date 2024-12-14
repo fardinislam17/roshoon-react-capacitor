@@ -18,6 +18,7 @@ const StyledSnackbarProvider = styled(CustomSnackbarProvider)(({ theme }) => ({
   fontWeight: 500,
   lineHeight: theme.spacing(2),
   letterSpacing: 1,
+  zIndex: 1000,
 
   '&.notistack-MuiContent-error': {
     backgroundColor: red[50],
