@@ -26,10 +26,12 @@ export const signUpSchema = z
   });
 
 export const addressSchema = z.object({
+  shopName: z.string().min(1, 'Store name is required'),
   street: z.string().min(1, 'Street is required'),
   buildingNo: z.string().min(1, 'Building number is required'),
   state: z.string().min(1, 'State is required'),
-  city: z.number().min(1, 'City is required'),
+  city: z.string().min(1, 'City is required'),
   zipCode: z.string().min(1, 'ZIP Code is required'),
+  ssn: z.string().min(1, 'SSN is required'),
   country: z.string().default('United States'),
 });

@@ -4,20 +4,20 @@ export const fetchStates = () => {
   return new Promise((resolve) => {
     const states = data.states.map((state) => ({
       label: state.name,
-      value: state.state_code,
+      value: state.name,
     }));
     resolve(states);
   });
 };
 
-export const fetchCities = (stateCode) => {
+export const fetchCities = (stateName) => {
   return new Promise((resolve) => {
-    const state = data.states.find((state) => state.state_code === stateCode);
+    const state = data.states.find((state) => state.name === stateName);
 
     if (state) {
       const cities = state.cities.map((city) => ({
         label: city.name,
-        value: city.id,
+        value: city.name,
       }));
       resolve(cities);
     } else {

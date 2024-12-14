@@ -7,7 +7,8 @@ const EmbeddedVerification = ({ clientSecret }) => {
       const stripe = await loadStripe(
         import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || ''
       );
-      await stripe.verifyIdentity(clientSecret);
+      const { data, error } = await stripe.verifyIdentity(clientSecret);
+      console.log({ data, error });
     };
     if (clientSecret) startVerification();
   }, [clientSecret]);

@@ -25,11 +25,13 @@
     "phoneOrEmail": "Email or Phone",
     "firstName": "First Name",
     "lastName": "Last Name",
+    "shopName": "Shop Name",
     "street": "Street",
     "buildingNo": "Building No",
     "city": "City",
     "state": "State",
     "zipCode": "Zip Code",
+    "ssn": "SSN",
     "country": "Country",
     "verifyMe": "Verify Me"
   },

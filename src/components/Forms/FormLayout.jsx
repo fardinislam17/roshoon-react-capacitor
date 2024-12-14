@@ -2,17 +2,11 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormInput from './FormInput';
 import { cn } from 'src/utils/cn';
+import FormInput from './FormInput';
 import { fetchCities } from 'src/utils/statesAndCities';
 
-const FormLayout = ({
-  fields,
-  schema,
-  onSubmit,
-  renderExtraButton,
-  buttonLabel = 'Submit',
-}) => {
+const FormLayout = ({ fields, schema, onSubmit, buttonLabel = 'Submit' }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -80,20 +74,17 @@ const FormLayout = ({
           onChange={(value) => handleFieldChange(name, value)}
         />
       ))}
-      <div className="space-y-4">
-        {renderExtraButton && <div>{renderExtraButton()}</div>}
-        <div className="w-full flex justify-center">
-          <button
-            type="submit"
-            disabled={!isValid}
-            className={cn(
-              'w-fit bg-darkGreen text-white font-lato text-lg py-3 px-8 rounded ',
-              { 'bg-darkGray cursor-not-allowed': !isValid }
-            )}
-          >
-            {buttonLabel}
-          </button>
-        </div>
+      <div className="w-full flex justify-center">
+        <button
+          type="submit"
+          disabled={!isValid}
+          className={cn(
+            'w-fit bg-darkGreen text-white font-lato text-lg py-3 px-8 rounded ',
+            { 'bg-darkGray cursor-not-allowed': !isValid }
+          )}
+        >
+          {buttonLabel}
+        </button>
       </div>
     </form>
   );

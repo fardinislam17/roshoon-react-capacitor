@@ -88,6 +88,7 @@ export const SIGN_UP_FIELDS = [
 ];
 
 export const ADDRESS_FIELDS = [
+  { name: 'shopName', type: 'text', required: true },
   { name: 'street', type: 'text', required: true },
   { name: 'buildingNo', type: 'text', required: true },
   {
@@ -107,10 +108,10 @@ export const ADDRESS_FIELDS = [
     loadOptions: () => [], // Initially empty until state is selected
   },
   { name: 'zipCode', type: 'text', required: true },
+  { name: 'ssn', type: 'password', required: true },
   {
     name: 'country',
     type: 'text',
-    required: true,
     readonly: true,
     defaultValue: 'United States',
   },

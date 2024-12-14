@@ -1,7 +1,24 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getCookieByName } from 'src/utils';
-import { ROSHOON_ACCESS_TOKEN, ROSHOON_AUTH_TOKEN } from 'src/app/constants';
 import { logout, setUser } from 'src/slices';
+import { ROSHOON_ACCESS_TOKEN, ROSHOON_AUTH_TOKEN } from 'src/app/constants';
+
+// Helper function to set the access token in local storage
+const setAccessToken = (accessToken) => {
+  if (accessToken) localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
+};
+
+// Helper function to handle user data after a successful login/registration
+const handleUserLogin = (dispatch, queryFulfilled) => {
+  queryFulfilled
+    .then(({ data: { accessToken, user } }) => {
+      if (user) {
+        dispatch(setUser({ ...user, loggedIn: true }));
+      }
+      setAccessToken(accessToken);
+    })
+    .catch((err) => console.error(err.error));
+};
 
 export const roshoonApi = createApi({
   keepUnusedDataFor: import.meta.env.VITEST ? 0 : 60,
@@ -13,125 +30,91 @@ export const roshoonApi = createApi({
     prepareHeaders: async (headers, { endpoint }) => {
       if (endpoint === 'signInWithExistingCookie') {
         const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
-        if (authToken) {
-          headers.set(ROSHOON_AUTH_TOKEN, authToken);
-        }
+        if (authToken) headers.set(ROSHOON_AUTH_TOKEN, authToken);
       }
       const accessToken = localStorage.getItem(ROSHOON_ACCESS_TOKEN);
-      if (accessToken) {
-        headers.set('Authorization', `Bearer ${accessToken}`);
-      }
+      if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
       return headers;
     },
   }),
 
   endpoints: (builder) => ({
     signInWithExistingCookie: builder.query({
-      query: () => ({
-        url: `auth/token-login`,
-        credentials: 'include',
-      }),
-      async onQueryStarted(arg, { queryFulfilled }) {
-        try {
-          const {
-            data: { accessToken },
-          } = await queryFulfilled;
-          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
-        } catch (err) {
-          console.log(err.error);
-        }
-      },
+      query: () => ({ url: 'auth/token-login', credentials: 'include' }),
+      onQueryStarted: handleUserLogin,
     }),
     signInWithEmailAndPassword: builder.query({
       query: ({ email, password }) => ({
-        url: `auth/login`,
+        url: 'auth/login',
         method: 'POST',
         body: { email, password },
         credentials: 'include',
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const {
-            data: { accessToken, user },
-          } = await queryFulfilled;
-          if (user) {
-            dispatch(setUser({ ...user, loggedIn: true }));
-          }
-          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
-        } catch (err) {
-          console.log(err.error);
-        }
-      },
+      onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
+        handleUserLogin(dispatch, queryFulfilled),
     }),
     register: builder.query({
       query: ({ email, firstName, lastName, password, phone }) => ({
-        url: `auth/register`,
+        url: 'auth/register',
         method: 'POST',
         body: { email, password, firstName, lastName, phone },
         credentials: 'include',
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          await queryFulfilled;
-          const {
-            data: { accessToken, user },
-          } = await queryFulfilled;
-          if (user) {
-            dispatch(setUser({ ...user, loggedIn: true }));
-          }
-          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
-        } catch (err) {
-          console.log(err.error);
-        }
-      },
+      onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
+        handleUserLogin(dispatch, queryFulfilled),
     }),
     logout: builder.mutation({
       query: () => ({
-        url: `auth/logout`,
+        url: 'auth/logout',
         method: 'POST',
         credentials: 'include',
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
         try {
           await queryFulfilled;
           dispatch(logout());
         } catch (err) {
-          console.log(err.error);
+          console.error('Logout failed:', err);
         }
       },
     }),
     loginWithGoogle: builder.mutation({
       query: ({ access_token }) => ({
-        url: `auth/google-login`,
+        url: 'auth/google-login',
         method: 'POST',
         body: { access_token },
         credentials: 'include',
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
+        handleUserLogin(dispatch, queryFulfilled),
+    }),
+    userProfile: builder.query({
+      query: () => ({ url: 'auth/profile', credentials: 'include' }),
+    }),
+    createVerificationSession: builder.mutation({
+      query: () => ({
+        url: 'identity/create-verification-session',
+        method: 'POST',
+      }),
+      onQueryStarted: async (arg, { queryFulfilled }) => {
         try {
-          const {
-            data: { accessToken, user },
-          } = await queryFulfilled;
-          if (user) {
-            dispatch(setUser({ ...user, loggedIn: true }));
-          }
-          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
+          await queryFulfilled;
         } catch (err) {
-          console.error(err.error);
+          console.error('Error creating verification session:', err);
         }
       },
     }),
-    createVerificationSession: builder.mutation({
-      query: (userId) => ({
-        url: 'identity/create-verification-session',
+    chefRegister: builder.mutation({
+      query: ({ shopName, street, buildingNo, city, state, zipCode, ssn }) => ({
+        url: 'chef/register',
         method: 'POST',
-        body: { userId },
+        body: { shopName, street, buildingNo, city, state, zipCode, ssn },
       }),
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+      onQueryStarted: async (arg, { queryFulfilled }) => {
         try {
-          const { data } = await queryFulfilled;
+          await queryFulfilled;
         } catch (err) {
-          console.error('Error creating verification session:', err);
+          console.error('Chef registration error:', err);
         }
       },
     }),
@@ -143,6 +126,8 @@ export const {
   useLogoutMutation,
   useLoginWithGoogleMutation,
   useCreateVerificationSessionMutation,
+  useChefRegisterMutation,
+  useUserProfileQuery,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,

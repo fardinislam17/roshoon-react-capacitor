@@ -14,14 +14,13 @@ const FormInput = ({
   required,
   options = [],
   onChange,
-  readonly = false,
+  readOnly = false,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-
   return (
     <div className="w-full space-y-2 font-lato">
       <div className="flex justify-between">
@@ -48,7 +47,7 @@ const FormInput = ({
           </button>
         )}
       </div>
-      {type === 'dropdown' && !readonly ? (
+      {type === 'dropdown' && !readOnly ? (
         <Select
           id={name}
           options={options}
@@ -59,11 +58,11 @@ const FormInput = ({
         />
       ) : (
         <input
-          id={name}
-          disabled={readonly}
-          readOnly={readonly}
+          disabled={readOnly}
+          readOnly={readOnly}
           defaultValue={defaultValue}
-          {...(readonly ? {} : register(name, { required }))}
+          {...(readOnly ? {} : register(name, { required }))}
+          autoComplete={'new-password'}
           type={type === 'password' && showPassword ? 'text' : type}
           className={cn('form-input', { 'border-red-500': error })}
         />
