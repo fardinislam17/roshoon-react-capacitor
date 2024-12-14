@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import chefImage from 'src/assets/images/chef-opportunity-landing.jpg';
 import communityImage from 'src/assets/images/community-landing.png';
 import mealImage from 'src/assets/images/good-quality-meal.png';
-import SectionImageCard from './SectionImageCard';
+import ImageContentLayout from 'src/components/ImageContentLayout';
 
 const LandingFeature = () => {
   const { t } = useTranslation();
@@ -33,10 +33,10 @@ const LandingFeature = () => {
   ];
 
   return (
-    <div className="px-5 mx-auto">
-      <div className="space-y-10 sm:space-y-16 px-4 py-10 lg:py-20">
+    <div className="sm:px-5 xl:px-0 mx-auto">
+      <div className="space-y-10 sm:space-y-20 lg:space-y-28 py-10 lg:py-20">
         {cards.map((card) => (
-          <SectionImageCard key={card?.id} {...card} />
+          <ImageContentLayout key={card?.id} {...card} />
         ))}
       </div>
     </div>

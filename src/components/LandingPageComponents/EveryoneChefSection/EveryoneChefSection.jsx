@@ -21,7 +21,7 @@ const EveryoneChefSection = () => {
           <CommonDescription className={'text-neutral pt-4 '}>
             {t('common.everyoneChefDescription')}
           </CommonDescription>
-          <div className="mb-10 mt-16 flex justify-center lg:justify-start">
+          <div className="mb-10 mt-10 md:mt-16 flex justify-center lg:justify-start">
             <CommonButton>{t('common.becomeAChef')}</CommonButton>
           </div>
         </div>

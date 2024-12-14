@@ -55,7 +55,9 @@ const LearnMore = () => {
       </p>
 
       <div className="flex justify-center mt-10 xl:mt-20">
-        <CommonButton>{t('common.learnMoreAboutUs')}</CommonButton>
+        <CommonButton className={'uppercase'}>
+          {t('common.learnMoreAboutUs')}
+        </CommonButton>
       </div>
     </div>
   );

@@ -1,3 +1,3 @@
-import LandingFeature from './LandingFeature.jsx';
+import MealOpportunityCommunity from './MealOpportunityCommunity.jsx';
 
-export default LandingFeature;
+export default MealOpportunityCommunity;
