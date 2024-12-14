@@ -13,7 +13,6 @@ import {
   ReportProblemOutlined,
   CancelOutlined,
 } from '@mui/icons-material';
-import zIndex from '@mui/material/styles/zIndex';
 
 const StyledSnackbarProvider = styled(CustomSnackbarProvider)(({ theme }) => ({
   fontWeight: 500,
