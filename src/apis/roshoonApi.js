@@ -106,10 +106,18 @@ export const roshoonApi = createApi({
       },
     }),
     chefRegister: builder.mutation({
-      query: ({ shopName, street, buildingNo, city, state, zipCode, ssn }) => ({
+      query: ({
+        shopName,
+        address,
+        buildingNo,
+        city,
+        state,
+        zipCode,
+        ssn,
+      }) => ({
         url: 'chef/register',
         method: 'POST',
-        body: { shopName, street, buildingNo, city, state, zipCode, ssn },
+        body: { shopName, address, buildingNo, city, state, zipCode, ssn },
       }),
       onQueryStarted: async (arg, { queryFulfilled }) => {
         try {

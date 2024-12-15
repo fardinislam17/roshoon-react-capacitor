@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterLazyQuery, useUserProfileQuery } from 'src/apis';
 import { signUpSchema } from 'src/schemas/authSchema';
-import { notifyError, notifySuccess } from '../SnackbarProvider/useSnackbar';
+import { notifyError, notifySuccess } from '../../SnackbarProvider/useSnackbar';
 import { SIGN_UP_FIELDS } from 'src/app/constants';
-import FormInput from '../Forms/FormInput';
+import FormInput from '../../Forms/FormInput';
 import { cn } from 'src/utils/cn';
 import { homepagePath, loginPath } from 'src/paths';
 
-const SignUpForm = ({ asChef, setCurrentStep }) => {
+const UserRegistrationForm = ({ asChef, setCurrentStep }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -69,7 +69,7 @@ const SignUpForm = ({ asChef, setCurrentStep }) => {
     : handleSubmit(handleSignUp);
 
   return (
-    <form onSubmit={submitHandler} className="w-full max-w-[560px] space-y-6">
+    <form onSubmit={submitHandler} className="w-full space-y-6">
       {fieldsToDisplay.map(({ name, type, required }) => (
         <FormInput
           key={name}
@@ -107,4 +107,4 @@ const SignUpForm = ({ asChef, setCurrentStep }) => {
   );
 };
 
-export default SignUpForm;
+export default UserRegistrationForm;

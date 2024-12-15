@@ -89,8 +89,8 @@ export const SIGN_UP_FIELDS = [
 
 export const ADDRESS_FIELDS = [
   { name: 'shopName', type: 'text', required: true },
-  { name: 'street', type: 'text', required: true },
-  { name: 'buildingNo', type: 'text', required: true },
+  { name: 'address', type: 'text', required: true },
+  { name: 'buildingNo', type: 'text', required: false },
   {
     name: 'state',
     type: 'dropdown',

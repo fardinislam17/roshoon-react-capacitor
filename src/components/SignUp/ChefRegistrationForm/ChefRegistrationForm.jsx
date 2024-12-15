@@ -3,12 +3,15 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { fetchCities } from 'src/utils/statesAndCities';
-import FormInput from '../Forms/FormInput';
+import FormInput from 'src/components/Forms/FormInput';
 import { cn } from 'src/utils/cn';
 import { useChefRegisterMutation } from 'src/apis';
 import { ADDRESS_FIELDS } from 'src/app/constants';
 import { addressSchema } from 'src/schemas/authSchema';
-import { notifyError, notifySuccess } from '../SnackbarProvider/useSnackbar';
+import {
+  notifyError,
+  notifySuccess,
+} from 'src/components/SnackbarProvider/useSnackbar';
 import { homepagePath } from 'src/paths';
 import { useNavigate } from 'react-router-dom';
 

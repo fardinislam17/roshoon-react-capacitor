@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { cn } from 'src/utils/cn';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { formSelectStyles } from 'src/styles/formSelectStyles';
+import { useTranslation } from 'react-i18next';
 
 const FormInput = ({
   label,
@@ -16,6 +17,7 @@ const FormInput = ({
   onChange,
   readOnly = false,
 }) => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -36,12 +38,12 @@ const FormInput = ({
             {showPassword ? (
               <div className="flex items-center text-lg text-grayLight gap-x-3">
                 <VisibilityOff />
-                Hide
+                <span className="text-grayDark">{t('common.hide')}</span>
               </div>
             ) : (
-              <div className="flex items-center text-lg text-grayLight gap-x-3">
+              <div className="flex items-center text-lg text-grayDark gap-x-3">
                 <Visibility />
-                Show
+                {t('common.show')}
               </div>
             )}
           </button>
