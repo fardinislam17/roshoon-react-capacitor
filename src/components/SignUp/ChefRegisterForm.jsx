@@ -87,14 +87,14 @@ const ChefRegisterForm = () => {
       className="w-full max-w-[560px] space-y-6"
     >
       {ADDRESS_FIELDS.map(
-        ({ name, type, required, defaultValue, readonly }) => (
+        ({ name, type, required, defaultValue, readOnly }) => (
           <FormInput
             key={name}
             name={name}
             type={type}
             register={register}
             required={required}
-            readonly={readonly}
+            readOnly={readOnly}
             label={t(`common.${name}`)}
             defaultValue={defaultValue}
             error={errors[name]?.message}
@@ -108,7 +108,7 @@ const ChefRegisterForm = () => {
           type="submit"
           disabled={!isValid || isChefRegistering}
           className={cn(
-            'w-fit bg-greenDark text-white font-lato text-lg py-4 px-10 rounded',
+            'w-fit bg-greenDark text-white font-lato text-lg py-4 px-10',
             { 'bg-grayDark cursor-not-allowed': !isValid || isChefRegistering }
           )}
         >

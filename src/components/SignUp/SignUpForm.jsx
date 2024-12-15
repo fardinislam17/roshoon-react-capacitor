@@ -96,7 +96,7 @@ const SignUpForm = ({ asChef, setCurrentStep }) => {
           type="submit"
           disabled={!isValid && !userInfo}
           className={cn(
-            'w-fit bg-greenDark text-white font-lato text-lg py-4 px-10  rounded ',
+            'w-fit bg-greenDark text-white font-lato text-lg py-4 px-10',
             { 'bg-grayDark cursor-not-allowed': !isValid && !userInfo }
           )}
         >

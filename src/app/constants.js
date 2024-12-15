@@ -112,7 +112,7 @@ export const ADDRESS_FIELDS = [
   {
     name: 'country',
     type: 'text',
-    readonly: true,
+    readOnly: true,
     defaultValue: 'United States',
   },
 ];
