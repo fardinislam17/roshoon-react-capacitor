@@ -1,24 +1,32 @@
 import { useState } from 'react';
+import Select from 'react-select';
+import { cn } from 'src/utils/cn';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { formSelectStyles } from 'src/styles/formSelectStyles';
+import { useTranslation } from 'react-i18next';
 
 const FormInput = ({
   label,
   name,
+  defaultValue,
   type = 'text',
   error,
   register,
   required,
+  options = [],
+  onChange,
+  readOnly = false,
 }) => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-
   return (
-    <div className="w-full max-w-[560px] space-y-2 font-lato">
-      <div className=" flex justify-between">
-        <label htmlFor={name} className="text-lg text-darkGray ">
+    <div className="w-full space-y-2 font-lato">
+      <div className="flex justify-between">
+        <label htmlFor={name} className="text-lg text-grayDark">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
         {type === 'password' && (
@@ -30,26 +38,38 @@ const FormInput = ({
             {showPassword ? (
               <div className="flex items-center text-lg text-grayLight gap-x-3">
                 <VisibilityOff />
-                Hide
+                <span className="text-grayDark">{t('common.hide')}</span>
               </div>
             ) : (
-              <div className="flex  items-center text-lg text-grayLight gap-x-3">
+              <div className="flex items-center text-lg text-grayDark gap-x-3">
                 <Visibility />
-                Show
+                {t('common.show')}
               </div>
             )}
           </button>
         )}
       </div>
+      {type === 'dropdown' && !readOnly ? (
+        <Select
+          id={name}
+          options={options}
+          onChange={onChange}
+          classNamePrefix="select"
+          placeholder={`Select ${label}`}
+          styles={formSelectStyles(error)}
+        />
+      ) : (
+        <input
+          disabled={readOnly}
+          readOnly={readOnly}
+          defaultValue={defaultValue}
+          {...(readOnly ? {} : register(name, { required }))}
+          autoComplete={'new-password'}
+          type={type === 'password' && showPassword ? 'text' : type}
+          className={cn('form-input', { 'border-red-500': error })}
+        />
+      )}
 
-      <input
-        id={name}
-        type={type === 'password' && showPassword ? 'text' : type}
-        {...register(name, { required })}
-        className={`w-full h-14 text-lg px-4 py-2 border border-darkGray focus:border-2 focus:border-secondary focus:outline-none ${
-          error ? 'border-red-500' : ''
-        }`}
-      />
       {error && <p className="text-sm text-red-500">{error}</p>}
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import hidePass from 'src/assets/svgs/hidepass.svg';
-import { Visibility } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
@@ -61,7 +60,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
         {fields.map((field) => (
           <div key={field.label}>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-lg font-lato font-medium text-darkGray">
+              <label className="text-lg font-lato font-medium text-grayDark">
                 {t(field.label)}
                 {field.required && <span className="text-red-500">*</span>}
               </label>
@@ -71,15 +70,15 @@ const CustomForm = ({ fields, handleSubmit }) => {
                   onClick={handleTogglePasswordVisibility}
                 >
                   {showPassword ? (
-                    <>
-                      <img className="h-5" src={hidePass} alt="Hide" />
-                      Hide
-                    </>
+                    <div className="flex items-center text-lg text-grayLight gap-x-3">
+                      <VisibilityOff />
+                      <span className="text-grayDark">{t('common.hide')}</span>
+                    </div>
                   ) : (
-                    <>
-                      <Visibility className="text-grayLight h-5 w-5" />
-                      Show
-                    </>
+                    <div className="flex items-center text-lg text-grayDark gap-x-3">
+                      <Visibility />
+                      {t('common.show')}
+                    </div>
                   )}
                 </button>
               )}
@@ -98,7 +97,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
                 )
               }
               required={field.required}
-              className={`w-full h-14 text-lg px-4 py-2 border border-darkGray focus:border-2 focus:border-secondary focus:outline-none ${
+              className={`w-full h-14 text-lg px-4 py-2 border border-grayDark focus:border-2 focus:border-secondary focus:outline-none ${
                 errors[field.name] ? 'border-red-500' : ''
               }`}
               placeholder={field.placeholder ? t(field.label) : ''}
@@ -113,7 +112,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
         <div className="mt-4 text-right">
           <button
             type="button"
-            className="text-sm underline text-darkGray hover:text-black"
+            className="text-sm underline text-grayDark hover:text-black"
           >
             Forget your password
           </button>

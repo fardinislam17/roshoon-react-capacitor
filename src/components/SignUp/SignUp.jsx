@@ -1,68 +1,48 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import * as paths from 'src/paths';
-import { useRegisterLazyQuery } from 'src/apis';
-import { SIGN_UP_FIELDS } from 'src/app/constants';
-import { FormLayout } from 'src/components/Forms';
-import { signUpSchema } from 'src/schemas/authSchema';
-import {
-  notifyError,
-  notifySuccess,
-} from 'src/components/SnackbarProvider/useSnackbar';
-
-export default function SignUp() {
+import { useSearchParams } from 'react-router-dom';
+import UserRegistrationForm from './UserRegistrationForm/UserRegistrationForm';
+import ChefRegistrationForm from './ChefRegistrationForm/ChefRegistrationForm';
+import roshoon from 'src/assets/images/roshoon.png';
+const SignUp = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const params = new URLSearchParams(window.location.search);
-  const asChef = params.get('asChef') === 'true';
+  const [searchParams] = useSearchParams();
+  const asChef = searchParams.get('asChef') === 'true';
 
-  const [register, { isLoading }] = useRegisterLazyQuery();
+  const [currentStep, setCurrentStep] = useState('signUp');
 
-  const handleSignUp = async ({
-    phoneOrEmail: email,
-    firstName,
-    lastName,
-    password,
-  }) => {
-    try {
-      const { isSuccess, data, error } = await register({
-        email,
-        password,
-        firstName,
-        lastName,
-      });
-      if (isSuccess) {
-        notifySuccess(data.message);
-        navigate(paths.homepage);
-      } else {
-        notifyError(error?.data?.message);
-        if (error?.data?.message === 'Email already exists') {
-          navigate(paths.login);
-        }
-      }
-    } catch (error) {
-      notifyError(error.message);
-    }
+  const renderCurrentForm = () => {
+    return currentStep === 'signUp' ? (
+      <UserRegistrationForm asChef={asChef} setCurrentStep={setCurrentStep} />
+    ) : (
+      <ChefRegistrationForm />
+    );
   };
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 ">
-      <img
-        className="hidden xl:block"
-        src={'/images/sign-up.png'}
-        alt="sign-up"
-      />
-      <div className="flex flex-col justify-center items-center mx-6 my-4">
-        <h5 className="font-lato font-bold text-4xl mb-8">
+    <div className="flex flex-col lg:flex-row w-full mb-10 lg:mb-0">
+      <div className="h-full">
+        <img
+          className="lg:flex hidden h-full object-cover"
+          src="/images/sign-up.png"
+          alt=""
+        />
+      </div>
+      <div className="mt-[100px]">
+        <img
+          className="lg:hidden flex h-[80px] w-[200px] mx-auto"
+          src={roshoon}
+          alt=""
+        />
+      </div>
+      <div className="py-0 lg:py-24 mx-auto px-8 w-full lg:w-1/2 2xl:w-[35%]">
+        <h5 className="font-lato font-bold text-4xl mb-8 text-center">
           {asChef ? t('common.becomeAChef') : t('common.signUp')}
         </h5>
-        <FormLayout
-          fields={SIGN_UP_FIELDS}
-          onSubmit={handleSignUp}
-          schema={signUpSchema}
-          buttonLabel={asChef ? t('common.continue') : t('common.signUp')}
-        />
+        {renderCurrentForm()}
       </div>
     </div>
   );
-}
+};
+
+export default SignUp;
