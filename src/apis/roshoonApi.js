@@ -41,7 +41,8 @@ export const roshoonApi = createApi({
   endpoints: (builder) => ({
     signInWithExistingCookie: builder.query({
       query: () => ({ url: 'auth/token-login', credentials: 'include' }),
-      onQueryStarted: handleUserLogin,
+      onQueryStarted: async (arg, { dispatch, queryFulfilled }) =>
+        handleUserLogin(dispatch, queryFulfilled),
     }),
     signInWithEmailAndPassword: builder.query({
       query: ({ email, password }) => ({
