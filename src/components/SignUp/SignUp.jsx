@@ -20,14 +20,14 @@ const SignUp = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2">
+    <div className="flex flex-col lg:flex-row w-full mb-10 lg:mb-0">
       <img
         className="hidden xl:block"
         src="/images/sign-up.png"
         alt={t('common.signUp')}
       />
-      <div className="flex flex-col justify-center items-center mx-6 my-4">
-        <h5 className="font-lato font-bold text-4xl mb-8">
+      <div className="py-0 lg:py-24 mx-auto px-8 w-full lg:w-1/2 2xl:w-[35%]">
+        <h5 className="font-lato font-bold text-4xl mb-8 text-center">
           {asChef ? t('common.becomeAChef') : t('common.signUp')}
         </h5>
         {renderCurrentForm()}
