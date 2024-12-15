@@ -10,11 +10,11 @@ const LearnMore = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-[#E6E4C6] xl:pb-[143px] py-10 xl:py-0 xl:pt-[120px] w-full my-20 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-0">
+    <div className="bg-light py-10 xl:py-20 w-full my-20 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-0">
       <h2 className="text-[18px] md:text-2xl xl:text-[36px] text-center text-[#195908] uppercase font-julius">
         Roshoon Provides
       </h2>
-      <p className="max-w-[1171px] uppercase mt-[30px] md:mt-16 xl:mt-[94px] mx-auto mx-auto text-sm sm:text-base md:text-2xl xl:text-[60px] text-[#50704C] text-center font-julius xl:leading-[96px] traking-tight  xl:tracking-[-6px] whitespace-nowrap">
+      <p className="max-w-[1171px] uppercase mt-[30px] md:mt-16 xl:mt-[94px] mx-auto text-sm sm:text-base md:text-2xl xl:text-[60px] text-[#50704C] text-center font-julius xl:leading-[96px] traking-tight  xl:tracking-[-6px] whitespace-nowrap">
         we connect you with passionate home
       </p>
       <p className="max-w-[1171px] uppercase  mx-auto text-base md:text-2xl xl:text-[60px] text-[#50704C] text-center  font-julius xl:leading-[96px]  xl:tracking-[-6px]">
@@ -55,7 +55,9 @@ const LearnMore = () => {
       </p>
 
       <div className="flex justify-center mt-10 xl:mt-20">
-        <CommonButton>{t('common.learnMoreAboutUs')}</CommonButton>
+        <CommonButton className={'uppercase'}>
+          {t('common.learnMoreAboutUs')}
+        </CommonButton>
       </div>
     </div>
   );

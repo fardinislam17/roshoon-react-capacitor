@@ -61,13 +61,13 @@ const CustomForm = ({ fields, handleSubmit }) => {
         {fields.map((field) => (
           <div key={field.label}>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-lg font-lato font-medium text-darkGray">
+              <label className="text-lg font-lato font-medium text-grayDark">
                 {t(field.label)}
                 {field.required && <span className="text-red-500">*</span>}
               </label>
               {field.name === 'password' && (
                 <button
-                  className="text-sm text-lightGray font-roboto flex items-center gap-2"
+                  className="text-sm text-grayLight font-roboto flex items-center gap-2"
                   onClick={handleTogglePasswordVisibility}
                 >
                   {showPassword ? (
@@ -77,7 +77,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
                     </>
                   ) : (
                     <>
-                      <Visibility className="text-lightGray h-5 w-5" />
+                      <Visibility className="text-grayLight h-5 w-5" />
                       Show
                     </>
                   )}
@@ -98,7 +98,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
                 )
               }
               required={field.required}
-              className={`w-full h-14 text-lg px-4 py-2 border border-darkGray focus:border-2 focus:border-secondary focus:outline-none ${
+              className={`w-full h-14 text-lg px-4 py-2 border border-grayDark focus:border-2 focus:border-secondary focus:outline-none ${
                 errors[field.name] ? 'border-red-500' : ''
               }`}
               placeholder={field.placeholder ? t(field.label) : ''}
@@ -113,7 +113,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
         <div className="mt-4 text-right">
           <button
             type="button"
-            className="text-sm underline text-darkGray hover:text-black"
+            className="text-sm underline text-grayDark hover:text-black"
           >
             Forget your password
           </button>
@@ -122,7 +122,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
       <div className="flex justify-center mt-6 mb-4">
         <button
           type="submit"
-          className="bg-darkGreen text-white font-lato text-lg py-4 px-10 "
+          className="bg-greenDark text-white font-lato text-lg py-4 px-10 "
         >
           {t('common.logIn')}
         </button>

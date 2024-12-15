@@ -4,5 +4,5 @@
 @tailwind utilities;
 
 .form-input {
-  @apply w-full h-14 text-lg px-4 py-2 border border-darkGray focus:border-2 focus:border-secondary focus:outline-none disabled:pointer-events-none;
+  @apply w-full h-14 text-lg px-4 py-2 border border-grayDark focus:border-2 focus:border-secondary focus:outline-none disabled:pointer-events-none;
 }

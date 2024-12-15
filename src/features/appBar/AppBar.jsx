@@ -27,8 +27,8 @@ const AppBar = () => {
   };
 
   return (
-    <header className="w-fullbg-gray-100 shadow-sm">
-      <nav className="mx-auto h-full flex justify-between items-center px-4 h-[80px]">
+    <header className="w-full z-max shadow-sm fixed top-0 left-0 bg-white">
+      <nav className="container mx-auto flex justify-between items-center pr-4 h-[80px]">
         <div className="flex items-center flex-start">
           <Link to="/" className="flex items-center">
             <img

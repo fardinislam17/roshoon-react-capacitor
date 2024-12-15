@@ -33,7 +33,17 @@
     "zipCode": "Zip Code",
     "ssn": "SSN",
     "country": "Country",
-    "verifyMe": "Verify Me"
+    "verifyMe": "Verify Me",
+    "orderNow": "Order Now",
+    "phoneNumberOrEmailAddress": "Phone number or email address",
+    "everyoneChefTitle": "Everyone can be a chef in their own kitchen",
+    "everyoneChefDescription": "Indulge in the flavors of home, support local talent, and become part of a community that values the love and care that goes into every homemade meal.",
+    "mealQualityTitle": "High-Quality Meals",
+    "mealQualityDescription": "Affordable, high-quality meals that taste like home.",
+    "chefsOpportunitiesTitle": "Opportunities for Chefs",
+    "chefsOpportunitiesDescription": "Opportunities for talented home chefs to showcase their culinary skills and earn a sustainable income.",
+    "nurturingCommunityTitle": "Opportunities for Chefs",
+    "nurturingCommunityDescription": "A community that celebrates the diversity of homemade cuisine and fosters connections between foodies and chefs."
   },
   "errors": {
     "auth": {

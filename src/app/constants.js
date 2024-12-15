@@ -18,14 +18,14 @@ export const SIDEBAR_MENU_OPTIONS = [
 export const LOGIN_FIELDS = [
   {
     name: 'email',
-    label: 'Phone number or email address',
+    label: 'common.phoneNumberOrEmailAddress',
     errorMessage: 'errors.auth.enterValidPhoneOrEmail',
     type: 'text',
     required: true,
   },
   {
     name: 'password',
-    label: 'Password',
+    label: 'common.password',
     errorMessage: 'errors.auth.passwordMustBeSixCharacters',
     type: 'password',
     required: true,

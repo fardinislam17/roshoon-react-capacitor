@@ -24,7 +24,7 @@ const FormInput = ({
   return (
     <div className="w-full space-y-2 font-lato">
       <div className="flex justify-between">
-        <label htmlFor={name} className="text-lg text-darkGray">
+        <label htmlFor={name} className="text-lg text-grayDark">
           {label} {required && <span className="text-red-500">*</span>}
         </label>
         {type === 'password' && (
@@ -34,12 +34,12 @@ const FormInput = ({
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (
-              <div className="flex items-center text-lg text-lightGray gap-x-3">
+              <div className="flex items-center text-lg text-grayLight gap-x-3">
                 <VisibilityOff />
                 Hide
               </div>
             ) : (
-              <div className="flex items-center text-lg text-lightGray gap-x-3">
+              <div className="flex items-center text-lg text-grayLight gap-x-3">
                 <Visibility />
                 Show
               </div>

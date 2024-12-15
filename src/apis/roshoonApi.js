@@ -118,6 +118,27 @@ export const roshoonApi = createApi({
         }
       },
     }),
+    loginWithFacebook: builder.mutation({
+      query: ({ access_token }) => ({
+        url: `auth/facebook-login`,
+        method: 'POST',
+        body: { access_token },
+        credentials: 'include',
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const {
+            data: { accessToken, user },
+          } = await queryFulfilled;
+          if (user) {
+            dispatch(setUser({ ...user, loggedIn: true }));
+          }
+          localStorage.setItem(ROSHOON_ACCESS_TOKEN, accessToken);
+        } catch (err) {
+          console.error(err.error);
+        }
+      },
+    }),
   }),
 });
 
@@ -128,6 +149,7 @@ export const {
   useCreateVerificationSessionMutation,
   useChefRegisterMutation,
   useUserProfileQuery,
+  useLoginWithFacebookMutation,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,

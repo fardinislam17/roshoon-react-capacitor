@@ -4,21 +4,9 @@ const CommonButton = ({ className, title, onClick, children }) => {
   return (
     <button
       onClick={onClick}
-      className={`
-    relative overflow-hidden 
-    font-lato px-6 h-[62px] flex items-center justify-center text-white 
-    text-sm uppercase bg-primaryGreen
-    tracking-[.66px] transition-all duration-500
-    ${className ? className : ''}
-    before:content-[''] before:absolute before:inset-0 before:bg-secondaryGreen 
-    before:w-[300%] before:h-[300%] before:rounded-full before:scale-0 
-    before:origin-bottom-center before:transition-transform before:duration-500 
-    hover:before:scale-100 hover:text-text-primary hover:bg-secondaryGreen
-  `}
+      class={`${className && className} px-6 md:px-12 z-30 h-[32px] md:h-[62px] bg-greenPrimary text-white relative font-medium font-lato after:-z-20 after:absolute after:h-1 after:w-1 after:bg-greenSecondary after:rounded-md after:left-[50%] overflow-hidden after:bottom-0 after:translate-y-full  after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all after:duration-700 transition-all duration-700   hover:text-text-primary hover:bg-greenSecondary tracking-[.66px]`}
     >
-      <span className="relative z-10">
-        {children || title || 'Button Title'}
-      </span>
+      {children || title || 'Button Title'}
     </button>
   );
 };

@@ -79,8 +79,8 @@ const FormLayout = ({ fields, schema, onSubmit, buttonLabel = 'Submit' }) => {
           type="submit"
           disabled={!isValid}
           className={cn(
-            'w-fit bg-darkGreen text-white font-lato text-lg py-3 px-8 rounded ',
-            { 'bg-darkGray cursor-not-allowed': !isValid }
+            'w-fit bg-greenDark text-white font-lato text-lg py-4 px-10 rounded ',
+            { 'bg-grayDark cursor-not-allowed': !isValid }
           )}
         >
           {buttonLabel}

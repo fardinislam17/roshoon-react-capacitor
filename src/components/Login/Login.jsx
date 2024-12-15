@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   useLoginWithGoogleMutation,
+  useLoginWithFacebookMutation,
   useSignInWithEmailAndPasswordLazyQuery,
 } from 'src/apis/roshoonApi';
 import {
@@ -30,6 +31,7 @@ const Login = () => {
   const facebookButtonRef = useRef(null);
   const [signIn, { isFetching }] = useSignInWithEmailAndPasswordLazyQuery();
   const [googleLogin] = useLoginWithGoogleMutation();
+  const [facebookLogin] = useLoginWithFacebookMutation();
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -45,14 +47,21 @@ const Login = () => {
     onError: (error) => console.log(error),
   });
 
-  const loginWithFacebook = (response) => {
+  const loginWithFacebook = (_) => {
     window.FB.login(
-      function (response) {
-        if (response.authResponse) {
-          console.log('Logged in:', response);
-        } else {
-          console.log('User cancelled login or did not fully authorize.');
-        }
+      function (loginresponse) {
+        console.log({ loginresponse });
+        facebookLogin({
+          access_token: 'dummy#$$%^&*()ghtoken',
+        }).then((res) => {
+          notifySuccess(res.data?.message);
+          navigate(homepagePath);
+        });
+        // if (response.authResponse) {
+        //   console.log('Logged in:', response);
+        // } else {
+        //   console.log('User cancelled login or did not fully authorize.');
+        // }
       },
       { scope: 'public_profile' }
     );
@@ -96,7 +105,7 @@ const Login = () => {
             align="center"
             sx={{ mb: 5 }}
           >
-            {t('Log In')}
+            {t('common.logIn')}
           </Typography>
 
           {LOGIN_METHODS.includes('googleLogin') && (
@@ -107,6 +116,7 @@ const Login = () => {
               onClick={loginWithGoogle}
               sx={{
                 mb: 3,
+                p: 1.5,
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 0,
@@ -129,6 +139,7 @@ const Login = () => {
                 onClick={loginWithFacebook}
                 sx={{
                   mb: 2,
+                  p: 1.5,
                   justifyContent: 'center',
                   alignItems: 'center',
                   borderRadius: 0,

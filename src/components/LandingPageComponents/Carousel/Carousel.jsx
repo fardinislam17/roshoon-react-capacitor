@@ -49,7 +49,7 @@ const Carousel = ({
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-[5px] h-[5px] rounded-full ${
-              index === currentSlide ? 'bg-green-olive' : 'bg-gray-light'
+              index === currentSlide ? 'bg-greenOlive' : 'bg-grayLight'
             }`}
             aria-label={`Slide ${index + 1}`}
           />
