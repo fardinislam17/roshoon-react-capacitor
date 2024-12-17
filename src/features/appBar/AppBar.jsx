@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CiLocationOn } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useLogoutMutation } from 'src/apis';
 import RoshoonLogo from 'src/assets/images/roshoon.png';
-import { loginPath, registerPath, becomeAChefPath } from 'src/paths';
-import { getCurrentUser } from 'src/slices';
-import { Constant } from 'src/utils/constant.js';
 import {
   notifyError,
   notifySuccess,
 } from 'src/components/SnackbarProvider/useSnackbar';
+import { becomeAChefPath, loginPath, registerPath } from 'src/paths';
+import { getCurrentUser } from 'src/slices';
+import { Constant } from 'src/utils/constant.js';
+import LocateMeModal from './LocateMeModal';
 
 const AppBar = () => {
   const { t } = useTranslation();
   const currentUser = useSelector(getCurrentUser);
+  const [openLocateMeModal, setOpenLocateMeModal] = useState(false);
   const [userLogout, { isLoading }] = useLogoutMutation();
   const handleLogout = async () => {
     try {
@@ -40,14 +42,19 @@ const AppBar = () => {
         </div>
 
         <div className="flex items-center gap-5">
-          <div className="flex items-center gap-2 p-2">
-            <button className="text-gray-700 text-xl">
-              <CiLocationOn />
-            </button>
-            <Link to="#" className="text-gray-700 font-lato font-medium">
-              {t('common.locateMe')}
-            </Link>
-          </div>
+          {currentUser?.roles?.includes(Constant.BUYER) && (
+            <div
+              onClick={() => setOpenLocateMeModal(!openLocateMeModal)}
+              className="flex items-center gap-2 p-2"
+            >
+              <button className="text-gray-700 text-xl">
+                <CiLocationOn />
+              </button>
+              <Link to="#" className="text-gray-700 font-lato font-medium">
+                {t('common.locateMe')}
+              </Link>
+            </div>
+          )}
 
           {!currentUser?.roles?.includes(Constant.CHEF) && (
             <Link
@@ -87,6 +94,13 @@ const AppBar = () => {
           )}
         </div>
       </nav>
+
+      {openLocateMeModal && (
+        <LocateMeModal
+          isShowing={openLocateMeModal}
+          setIsShowing={setOpenLocateMeModal}
+        />
+      )}
     </header>
   );
 };

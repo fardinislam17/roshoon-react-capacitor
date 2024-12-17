@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CommonButton from 'src/components/CommonButton';
-import CommonDescription from 'src/components/CommonDescription';
-import CommonTitle from 'src/components/CommonTitle';
+import CommonDescription from 'src/components/Typography/CommonDescription';
+import CommonTitle from 'src/components/Typography/CommonTitle';
 import ChefTestimonial from './ChefTestimonial';
 
 const EveryoneChefSection = () => {
