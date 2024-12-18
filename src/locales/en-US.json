@@ -13,6 +13,7 @@
     "userName": "User Name",
     "password": "Password",
     "repeatPassword": "Repeat Password",
+    "resetPassword": "Reset Password",
     "cancel": "Cancel",
     "submit": "Submit",
     "loginWithEmailAndPassword": "Login with email and password",
@@ -21,6 +22,8 @@
     "locateMe": "Locate me",
     "learnMoreAboutUs": "Learn More About Us",
     "profile": "Profile",
+    "verifyCode": "Verify Code",
+    "sendNewCode": "Send New Code",
     "continue": "Continue",
     "phoneOrEmail": "Email or Phone",
     "firstName": "First Name",
@@ -40,7 +43,8 @@
     "auth": {
       "enterValidEmail": "Please enter a valid email address",
       "enterValidPhoneOrEmail": "Please enter a valid phone number or email address",
-      "passwordMustBeSixCharacters": "  Password must be at least 6 characters long"
+      "passwordMustBeSixCharacters": "  Password must be at least 6 characters long",
+      "userNotExist": "This phone/email is not registered. Please register first"
     }
   },
   "login": {

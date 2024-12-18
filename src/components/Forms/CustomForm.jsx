@@ -4,7 +4,7 @@ import { Visibility } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
-const CustomForm = ({ fields, handleSubmit }) => {
+const CustomForm = ({ fields, handleSubmit, handleModal }) => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const [formData, setFormData] = useState({});
@@ -61,7 +61,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
         {fields.map((field) => (
           <div key={field.label}>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-lg font-lato font-medium text-darkGray">
+              <label className="text-lg font-lato font-medium text-grayDark">
                 {t(field.label)}
                 {field.required && <span className="text-red-500">*</span>}
               </label>
@@ -77,7 +77,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
                     </>
                   ) : (
                     <>
-                      <Visibility className="text-grayLight h-5 w-5" />
+                      <Visibility className="text-grayNeutral h-5 w-5" />
                       Show
                     </>
                   )}
@@ -98,7 +98,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
                 )
               }
               required={field.required}
-              className={`w-full h-14 text-lg px-4 py-2 border border-darkGray focus:border-2 focus:border-secondary focus:outline-none ${
+              className={`w-full h-14 text-lg px-4 py-2 border border-grayDark focus:border-2 focus:border-secondary focus:outline-none ${
                 errors[field.name] ? 'border-red-500' : ''
               }`}
               placeholder={field.placeholder ? t(field.label) : ''}
@@ -112,8 +112,9 @@ const CustomForm = ({ fields, handleSubmit }) => {
       {pathname === '/login' && (
         <div className="mt-4 text-right">
           <button
+            onClick={() => handleModal()}
             type="button"
-            className="text-sm underline text-darkGray hover:text-black"
+            className="text-sm underline text-grayDark hover:text-black"
           >
             Forget your password
           </button>

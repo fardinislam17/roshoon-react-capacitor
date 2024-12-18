@@ -4,7 +4,7 @@ import loginImage from 'src/assets/images/login.png';
 import roshoon from 'src/assets/images/roshoon.png';
 import { Button, Divider, LinearProgress, Typography } from '@mui/material';
 import { useGoogleLogin } from '@react-oauth/google';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
@@ -24,9 +24,13 @@ import {
   notifyError,
   notifySuccess,
 } from 'src/components/SnackbarProvider/useSnackbar';
+import ForgetPassModal from './ForgetPassModal';
 
 const Login = () => {
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [isUserValid, setIsUserValid] = useState(null);
   const navigate = useNavigate();
   const facebookButtonRef = useRef(null);
   const [signIn, { isFetching }] = useSignInWithEmailAndPasswordLazyQuery();
@@ -67,6 +71,11 @@ const Login = () => {
     );
   };
 
+  const handleModal = () => {
+    setOpen(!open);
+    setIsUserValid(null);
+  };
+
   const handleLoginWithEmailAndPassword = async ({ email, password }) => {
     try {
       const response = await signIn({ email, password });
@@ -96,7 +105,11 @@ const Login = () => {
             alt=""
           />
         </div>
-        <img className="lg:hidden flex w-3/4 mx-auto" src={roshoon} alt="" />
+        <img
+          className="lg:hidden flex w-3/4 mt-20 mx-auto"
+          src={roshoon}
+          alt=""
+        />
         <div className="py-0  lg:py-24 mx-auto px-8 w-full lg:w-1/2  2xl:w-[35%]">
           <Typography
             fontSize={34}
@@ -185,9 +198,10 @@ const Login = () => {
           </Divider>
           <CustomForm
             fields={LOGIN_FIELDS}
+            handleModal={handleModal}
             handleSubmit={handleLoginWithEmailAndPassword}
           />
-          <h3 className="flex justify-center items-center gap-1 font-lato  text-[#3C4242]">
+          <h3 className="flex justify-center items-center gap-1 font-lato  text-grayDark">
             {t('login.doNotHaveAnAccount')}?{' '}
             <Link to={registerPath} className="underline underline-offset-4">
               {t('common.signUp')}
@@ -196,6 +210,15 @@ const Login = () => {
         </div>
         {isFetching && <LinearProgress />}
       </div>
+      <ForgetPassModal
+        isUserValid={isUserValid}
+        open={open}
+        handleModal={handleModal}
+        setIsUserValid={setIsUserValid}
+        setIsVerified={setIsVerified}
+        isVerified={isVerified}
+        setOpen={setOpen}
+      />
     </>
   );
 };
