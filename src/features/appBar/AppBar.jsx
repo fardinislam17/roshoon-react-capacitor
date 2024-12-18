@@ -12,13 +12,15 @@ import {
 import { becomeAChefPath, loginPath, registerPath } from 'src/paths';
 import { getCurrentUser } from 'src/slices';
 import { Constant } from 'src/utils/constant.js';
-import LocateMeModal from './LocateMeModal';
+import { LocalStorageService } from 'src/utils/LocalStorage';
+import LocateMe from './LocateMe';
 
 const AppBar = () => {
   const { t } = useTranslation();
   const currentUser = useSelector(getCurrentUser);
   const [openLocateMeModal, setOpenLocateMeModal] = useState(false);
   const [userLogout, { isLoading }] = useLogoutMutation();
+  const currentZipCode = LocalStorageService.get('roshoonZipCode');
   const handleLogout = async () => {
     try {
       const status = await userLogout().unwrap();
@@ -42,7 +44,7 @@ const AppBar = () => {
         </div>
 
         <div className="flex items-center gap-5">
-          {currentUser?.roles?.includes(Constant.BUYER) && (
+          {!currentUser?.roles?.includes(Constant.CHEF) && (
             <div
               onClick={() => setOpenLocateMeModal(!openLocateMeModal)}
               className="flex items-center gap-2 p-2"
@@ -51,7 +53,9 @@ const AppBar = () => {
                 <CiLocationOn />
               </button>
               <Link to="#" className="text-gray-700 font-lato font-medium">
-                {t('common.locateMe')}
+                {currentZipCode
+                  ? t('common.updateLocateMe')
+                  : t('common.locateMe')}
               </Link>
             </div>
           )}
@@ -96,7 +100,7 @@ const AppBar = () => {
       </nav>
 
       {openLocateMeModal && (
-        <LocateMeModal
+        <LocateMe
           isShowing={openLocateMeModal}
           setIsShowing={setOpenLocateMeModal}
         />

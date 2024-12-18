@@ -160,7 +160,7 @@ const Input = ({
 
       {errorText && (
         <h3 className="text-red-500 text-sm absolute mt-2 font-lato">
-          {errorText}
+          {t(errorText)}
         </h3>
       )}
     </div>
