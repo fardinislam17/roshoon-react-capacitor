@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import hidePass from 'src/assets/svgs/hidepass.svg';
-import { Visibility } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
@@ -71,15 +70,15 @@ const CustomForm = ({ fields, handleSubmit, handleModal }) => {
                   onClick={handleTogglePasswordVisibility}
                 >
                   {showPassword ? (
-                    <>
-                      <img className="h-5" src={hidePass} alt="Hide" />
-                      Hide
-                    </>
+                    <div className="flex items-center text-lg text-grayLight gap-x-3">
+                      <VisibilityOff />
+                      <span className="text-grayDark">{t('common.hide')}</span>
+                    </div>
                   ) : (
-                    <>
-                      <Visibility className="text-grayNeutral h-5 w-5" />
-                      Show
-                    </>
+                    <div className="flex items-center text-lg text-grayDark gap-x-3">
+                      <Visibility />
+                      {t('common.show')}
+                    </div>
                   )}
                 </button>
               )}

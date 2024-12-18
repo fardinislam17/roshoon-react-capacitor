@@ -105,11 +105,13 @@ const Login = () => {
             alt=""
           />
         </div>
-        <img
-          className="lg:hidden flex w-3/4 mt-20 mx-auto"
-          src={roshoon}
-          alt=""
-        />
+        <div className="mt-[100px]">
+          <img
+            className="lg:hidden flex h-[80px] w-[200px] mx-auto"
+            src={roshoon}
+            alt=""
+          />
+        </div>
         <div className="py-0  lg:py-24 mx-auto px-8 w-full lg:w-1/2  2xl:w-[35%]">
           <Typography
             fontSize={34}

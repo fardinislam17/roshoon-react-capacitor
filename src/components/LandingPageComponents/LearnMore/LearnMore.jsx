@@ -10,7 +10,7 @@ const LearnMore = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="xl:py-0 w-full my-20 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-0">
+    <div className="bg-light py-10 xl:py-20 w-full my-20 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-0">
       <h2 className="text-[18px] md:text-2xl xl:text-[36px] text-center text-[#195908] uppercase font-julius">
         Roshoon Provides
       </h2>
@@ -55,7 +55,9 @@ const LearnMore = () => {
       </p>
 
       <div className="flex justify-center mt-10 xl:mt-20">
-        <CommonButton>{t('common.learnMoreAboutUs')}</CommonButton>
+        <CommonButton className={'uppercase'}>
+          {t('common.learnMoreAboutUs')}
+        </CommonButton>
       </div>
     </div>
   );
