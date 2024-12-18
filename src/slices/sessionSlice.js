@@ -12,6 +12,7 @@ export const sessionSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+
     logout: (state) => {
       state.user = null;
       localStorage.removeItem(ROSHOON_ACCESS_TOKEN);
