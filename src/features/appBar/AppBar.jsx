@@ -54,7 +54,7 @@ const AppBar = () => {
               </button>
               <Link to="#" className="text-gray-700 font-lato font-medium">
                 {currentZipCode
-                  ? t('common.updateLocateMe')
+                  ? `${t('common.updateLocateMe')} ${currentZipCode}`
                   : t('common.locateMe')}
               </Link>
             </div>

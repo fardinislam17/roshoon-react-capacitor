@@ -89,8 +89,8 @@ const LocateMeModal = ({ isShowing, setIsShowing }) => {
             </button>
 
             <CommonButton
+              customHeight={'h-[32px] md:h-[50px]'}
               form="zipCodeAdd"
-              className="h-[32px] md:h-[52px]"
               type="submit"
             >
               {t('common.save')}
