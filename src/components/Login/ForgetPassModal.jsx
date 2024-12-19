@@ -38,15 +38,8 @@ const ForgetPassModal = ({
 
   const handleInputChange = (value) => {
     const email = value;
-    setErrors((prev) => {
-      return {
-        ...prev,
-        [name]:
-          !validateEmail(email) && !validatePhoneNumber(email)
-            ? setErrors(true)
-            : setErrors(false),
-      };
-    });
+    const isValid = validateEmail(email) || validatePhoneNumber(email);
+    setErrors(!isValid);
   };
   const handleReset = async (e) => {
     e.preventDefault();
@@ -68,7 +61,6 @@ const ForgetPassModal = ({
       identifier: email,
       otp,
     });
-    console.log(response);
 
     if (response?.data) {
       localStorage.setItem('access_token', response.data.accessToken);
@@ -78,6 +70,9 @@ const ForgetPassModal = ({
     } else {
       notifyError('Something went wrong');
     }
+  };
+  const handleAutoFill = (value) => {
+    handleInputChange(value);
   };
   const handleNewCode = async () => {
     const response = await resetPasswordRequest({ identifier: email });
@@ -252,7 +247,8 @@ const ForgetPassModal = ({
                   type="text"
                   required
                   name="email"
-                  onChange={(e) => handleInputChange(e.target.value)}
+                  onBlur={(e) => handleAutoFill(e.target.value)}
+                  onInput={(e) => handleInputChange(e.target.value)}
                   className={`w-full h-14 mt-1 text-lg px-4 py-2 border border-grayDark focus:border-2 focus:border-secondary focus:outline-none ${
                     errors ? 'border-red-500' : ''
                   }`}

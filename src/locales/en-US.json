@@ -15,6 +15,7 @@
     "repeatPassword": "Repeat Password",
     "resetPassword": "Reset Password",
     "cancel": "Cancel",
+    "save": "Save",
     "submit": "Submit",
     "hide": "Hide",
     "show": "Show",
@@ -22,6 +23,7 @@
     "continueAsGuest": "Continue as Guest",
     "becomeAChef": "Become a Chef",
     "locateMe": "Locate me",
+    "updateLocateMe": "Update Zip Code:",
     "learnMoreAboutUs": "Learn More About Us",
     "profile": "Profile",
     "verifyCode": "Verify Code",
@@ -56,12 +58,23 @@
       "enterValidPhoneOrEmail": "Please enter a valid phone number or email address",
       "passwordMustBeSixCharacters": "  Password must be at least 6 characters long",
       "userNotExist": "This phone/email is not registered. Please register first"
+    },
+    "validationMessage": {
+      "zipCodeLength": "ZIP Code length must be 5 digits",
+      "zipCodeNumericMessage": "ZIP Code must be numeric"
     }
+  },
+  "notifyMessage": {
+    "zipCodeAddedMessage": "ZIP Code has been added.",
+    "zipCodeAlreadyAddedMessage": "ZIP Code is already saved.",
+    "zipCodeUpdatedMessage": "ZIP Code has been updated."
+  },
+  "placeholder": {
+    "enterZIPCode": "Enter your ZIP code"
   },
   "login": {
     "doNotHaveAnAccount": "Don’t have an account"
   },
-
   "footer": {
     "signUpForNewsLetter": "Sign Up For News Letter",
     "needSomeHelp": "Need Some Help?",

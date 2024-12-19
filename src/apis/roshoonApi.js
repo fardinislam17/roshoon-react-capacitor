@@ -27,13 +27,16 @@ export const roshoonApi = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: `${import.meta.env.BASE_URL}api`,
     baseUrl: import.meta.env.VITE_API_BASE_URL,
-    prepareHeaders: async (headers, { endpoint }) => {
-      if (endpoint === 'signInWithExistingCookie') {
-        const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
-        if (authToken) headers.set(ROSHOON_AUTH_TOKEN, authToken);
-      }
+    prepareHeaders: (headers, { endpoint }) => {
+      const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
       const accessToken = localStorage.getItem(ROSHOON_ACCESS_TOKEN);
-      if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
+
+      if (endpoint === 'signInWithExistingCookie' && authToken) {
+        headers.set('ROSHOON_AUTH_TOKEN', authToken);
+      }
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`);
+      }
       return headers;
     },
   }),
@@ -158,7 +161,6 @@ export const roshoonApi = createApi({
       async onQueryStarted(arg, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Reset Password Request Success:', data);
         } catch (err) {
           console.error('Reset Password Request Error:', err.error);
         }
@@ -174,7 +176,6 @@ export const roshoonApi = createApi({
       async onQueryStarted(arg, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Reset Password Request Success:', data);
         } catch (err) {
           console.error('Reset Password Request Error:', err.error);
         }
@@ -190,7 +191,6 @@ export const roshoonApi = createApi({
       async onQueryStarted(arg, { queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log('Reset Password Request Success:', data);
         } catch (err) {
           console.error('Reset Password Request Error:', err.error);
         }

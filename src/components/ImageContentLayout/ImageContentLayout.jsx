@@ -1,7 +1,7 @@
 import React from 'react';
 import CommonButton from 'src/components/CommonButton';
-import CommonDescription from 'src/components/CommonDescription';
-import CommonTitle from 'src/components/CommonTitle';
+import CommonDescription from 'src/components/Typography/CommonDescription';
+import CommonTitle from 'src/components/Typography/CommonTitle';
 
 const ImageContentLayout = ({
   image,
