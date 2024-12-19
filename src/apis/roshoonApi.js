@@ -25,8 +25,8 @@ export const roshoonApi = createApi({
 
   tagTypes: [],
   baseQuery: fetchBaseQuery({
-    // baseUrl: `${import.meta.env.BASE_URL}api`,
-    baseUrl: import.meta.env.VITE_API_BASE_URL,
+    baseUrl: `${import.meta.env.BASE_URL}api`,
+    // baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, { endpoint }) => {
       const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
       const accessToken = localStorage.getItem(ROSHOON_ACCESS_TOKEN);

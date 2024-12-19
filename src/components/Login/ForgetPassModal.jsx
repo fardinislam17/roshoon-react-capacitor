@@ -45,30 +45,30 @@ const ForgetPassModal = ({
     e.preventDefault();
     const identifier = e.target.email.value;
     const response = await resetPasswordRequest({ identifier });
-    if (response.data.success) {
+    if (response?.data?.success) {
       setEmail(identifier);
       setIsUserValid(!isUserValid);
+    } else if (response?.error) {
+      notifyError(response?.error?.data?.message);
     } else {
-      setIsUserValid(false);
+      notifyError(t('common.somethingWentWrong'));
     }
   };
 
   const handleVerify = async (e) => {
     e.preventDefault();
     const otp = e.target.code.value;
-
     const response = await resetPasswordVerify({
       identifier: email,
       otp,
     });
-
     if (response?.data) {
       localStorage.setItem('access_token', response.data.accessToken);
       setIsVerified(true);
     } else if (response.error) {
       notifyError(response?.error?.data?.message);
     } else {
-      notifyError('Something went wrong');
+      notifyError(t('common.somethingWentWrong'));
     }
   };
   const handleAutoFill = (value) => {
@@ -82,7 +82,7 @@ const ForgetPassModal = ({
     } else if (response?.error) {
       notifyError(response?.error?.data?.message);
     } else {
-      notifyError('Something Went Wrong');
+      notifyError(t('errors.somethingWentWrong'));
     }
   };
 
@@ -98,16 +98,16 @@ const ForgetPassModal = ({
         resetToken,
       });
       if (response.data.success) {
-        notifySuccess('Your password has been successfully reset.');
+        notifySuccess(t('common.PasswordResetDone'));
         localStorage.removeItem('access_token');
         setOpen(!open);
         setIsVerified(!isVerified);
         setIsUserValid(null);
       } else if (response.error) {
-        notifyError('Session expired. Please request a new code.');
+        notifyError(t('errors.sessionExpired'));
       }
     } else {
-      notifyError('Both Passwords must match with each other');
+      notifyError(t('errors.PassNotMatched'));
     }
   };
 
@@ -138,11 +138,10 @@ const ForgetPassModal = ({
           {isUserValid ? (
             <div>
               <h3 className="font-bold text-xl text-center font-roboto">
-                Reset Your Password
+                {t('common.resetYourPassword')}
               </h3>
               <p className="text-gray-600 text-center font-serif my-5">
-                A verification code has been sent to you from roshoon.com. Enter
-                your code below and click Verify Code.
+                {t('common.verifyCodeMessage')}
               </p>
               <form onSubmit={handleVerify}>
                 <div className="flex mt-1 ">
@@ -231,12 +230,10 @@ const ForgetPassModal = ({
           ) : (
             <div>
               <h3 className="font-bold text-3xl font-roboto">
-                Reset Your Password
+                {t('common.resetYourPassword')}
               </h3>
               <p className="text-gray-600 font-serif my-5">
-                Lost your password? Please enter your email address or phone
-                number. You will receive a link to create a new password via
-                email or message
+                {t('common.ResetMessage')}
               </p>
               <form onSubmit={handleReset}>
                 <label className="text-lg font-lato font-medium text-grayDark">
