@@ -27,13 +27,16 @@ export const roshoonApi = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: `${import.meta.env.BASE_URL}api`,
     baseUrl: import.meta.env.VITE_API_BASE_URL,
-    prepareHeaders: async (headers, { endpoint }) => {
-      if (endpoint === 'signInWithExistingCookie') {
-        const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
-        if (authToken) headers.set(ROSHOON_AUTH_TOKEN, authToken);
+    prepareHeaders: (headers, { endpoint }) => {
+      const authToken = Cookies.get('ROSHOON_AUTH_TOKEN');
+      const accessToken = localStorage.getItem('ROSHOON_ACCESS_TOKEN');
+
+      if (endpoint === 'signInWithExistingCookie' && authToken) {
+        headers.set('ROSHOON_AUTH_TOKEN', authToken);
       }
-      const accessToken = localStorage.getItem(ROSHOON_ACCESS_TOKEN);
-      if (accessToken) headers.set('Authorization', `Bearer ${accessToken}`);
+      if (accessToken) {
+        headers.set('Authorization', `Bearer ${accessToken}`);
+      }
       return headers;
     },
   }),
