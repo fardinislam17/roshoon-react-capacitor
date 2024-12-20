@@ -28,7 +28,22 @@ const UnknownRoute = () => {
   return null;
 };
 
+
 const App = () => {
+  useEffect(() => {
+    console.log('trying');
+    const fetchData = async () => {
+      try {
+        const fetchResponse = await $fetch('http://localhost:4545/');
+        console.log(fetchResponse);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <AppRoot>
       <AppBar />
