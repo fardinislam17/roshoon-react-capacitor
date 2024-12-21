@@ -33,6 +33,8 @@ export default {
 
         // Text Colors
         text: {
+          darkGray: '#252C32',
+          midGray: '#B0BABF',
           primary: '#000000', // Black
           neutral: '#00000099', // Black with transparency
           footerMention: '#195908', // Dark Green

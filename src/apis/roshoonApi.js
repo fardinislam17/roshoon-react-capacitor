@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getCookieByName } from 'src/utils';
-import { logout, setUser } from 'src/slices';
 import { ROSHOON_ACCESS_TOKEN, ROSHOON_AUTH_TOKEN } from 'src/app/constants';
+import { logout, setUser } from 'src/slices';
+import { getCookieByName } from 'src/utils';
 
 // Helper function to set the access token in local storage
 const setAccessToken = (accessToken) => {
@@ -95,6 +95,20 @@ export const roshoonApi = createApi({
     userProfile: builder.query({
       query: () => ({ url: 'auth/profile', credentials: 'include' }),
     }),
+    switchRole: builder.mutation({
+      query: () => ({
+        url: 'auth/switch-role',
+        method: 'POST',
+      }),
+      onQueryStarted: async (arg, { queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          console.error('Switching role:', err);
+        }
+      },
+    }),
+
     createVerificationSession: builder.mutation({
       query: () => ({
         url: 'identity/create-verification-session',
@@ -162,6 +176,7 @@ export const {
   useChefRegisterMutation,
   useUserProfileQuery,
   useLoginWithFacebookMutation,
+  useSwitchRoleMutation,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,
