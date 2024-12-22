@@ -26,6 +26,7 @@ export const roshoonApi = createApi({
   tagTypes: [],
   baseQuery: fetchBaseQuery({
     // baseUrl: `${import.meta.env.BASE_URL}api`,
+    tagTypes: ['UserProfile'],
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, { endpoint }) => {
       const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
@@ -92,18 +93,13 @@ export const roshoonApi = createApi({
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
     }),
-    // userProfile: builder.query({
-    //   query: () => ({ url: 'auth/profile', credentials: 'include' }),
-    // }),
     userProfile: builder.query({
       query: () => ({
         url: 'auth/profile',
         method: 'GET',
         credentials: 'include',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem(ROSHOON_ACCESS_TOKEN)}`,
-        },
       }),
+      providesTags: ['UserProfile'],
     }),
     switchRole: builder.mutation({
       query: () => ({
@@ -117,6 +113,7 @@ export const roshoonApi = createApi({
           console.error('Switching role:', err);
         }
       },
+      invalidatesTags: ['UserProfile'],
     }),
 
     createVerificationSession: builder.mutation({

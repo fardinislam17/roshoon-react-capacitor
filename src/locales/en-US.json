@@ -66,7 +66,9 @@
   "notifyMessage": {
     "zipCodeAddedMessage": "ZIP Code has been added.",
     "zipCodeAlreadyAddedMessage": "ZIP Code is already saved.",
-    "zipCodeUpdatedMessage": "ZIP Code has been updated."
+    "zipCodeUpdatedMessage": "ZIP Code has been updated.",
+    "roleSwitched": "Role Updated Successfully",
+    "errorSwitchingRole": "Role can't Updated"
   },
   "placeholder": {
     "enterZIPCode": "Enter your ZIP code"

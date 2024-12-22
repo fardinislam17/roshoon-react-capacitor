@@ -20,6 +20,7 @@ import { getCurrentUser } from 'src/slices';
 import { Constant } from 'src/utils/constant.js';
 import { LocalStorageService } from 'src/utils/LocalStorage';
 import LocateMe from './LocateMe';
+import SwitchRole from './SwitchRole';
 
 const AppBar = () => {
   const { t } = useTranslation();
@@ -31,10 +32,11 @@ const AppBar = () => {
   const { data, refetch } = useUserProfileQuery();
   const userInfo = data?.user;
   const [isSellerMode, setIsSellerMode] = useState(false);
+  const [isSwitchingRole, setIsSwitchingRole] = useState();
 
   // Initialize role based on defaultView
   useEffect(() => {
-    if (userInfo?.loggedIn) {
+    if (currentUser?.loggedIn) {
       if (userInfo?.defaultView === Constant.CHEF) {
         setIsSellerMode(true);
       } else if (userInfo?.defaultView === Constant.BUYER) {
@@ -52,12 +54,22 @@ const AppBar = () => {
 
   // Handle role switching
   const handleSwitchRole = async (role) => {
+    // --Prevent multiple clicks
+    if (isSwitchingRole) return;
+    setIsSwitchingRole(true);
     try {
-      await switchRole().unwrap();
-      notifySuccess(t('common.roleSwitched', { role }));
+      const response = await switchRole().unwrap();
+      const successMessage =
+        response?.message || t('notifyMessage.roleSwitched', { role });
+      notifySuccess(successMessage);
       setIsSellerMode(role === 'seller');
     } catch (error) {
-      notifyError(t('common.errorSwitchingRole', { error: error.message }));
+      const errorMessage =
+        error?.data?.message ||
+        t('notifyMessage.errorSwitchingRole', { error: error.message });
+      notifyError(errorMessage);
+    } finally {
+      setIsSwitchingRole(false);
     }
   };
 
@@ -71,8 +83,6 @@ const AppBar = () => {
     }
   };
 
-  console.log('userInfo', data);
-  console.log('currentUser', currentUser);
   return (
     <header className="w-full z-max shadow-sm fixed top-0 left-0 bg-white">
       <nav className="container mx-auto flex justify-between items-center pr-4 h-[80px]">
@@ -86,10 +96,10 @@ const AppBar = () => {
           </Link>
         </div>
 
-        <div className="flex items-center gap-6">
-          {!isSellerMode && <Search />}
+        <div className="flex items-center gap-4">
+          {!isSellerMode && currentUser?.loggedIn && <Search />}
 
-          {!isSellerMode && !currentUser?.roles?.includes(Constant.CHEF) && (
+          {!currentUser?.roles?.includes(Constant.CHEF) && (
             <div
               onClick={() => setOpenLocateMeModal(!openLocateMeModal)}
               className="flex items-center gap-2 p-2 cursor-pointer"
@@ -104,39 +114,19 @@ const AppBar = () => {
           )}
 
           {currentUser?.loggedIn && (
-            <div className="flex items-center gap-4">
-              <button
-                className={`p-2 ${
-                  !isSellerMode
-                    ? 'bg-green-500 text-white'
-                    : 'text-text-darkGray'
-                }`}
-                onClick={() => {
-                  if (!isSellerMode) handleSwitchRole('buyer');
-                }}
-              >
-                {t('common.customer')}
-              </button>
-              <button
-                className={`p-2 ${
-                  isSellerMode
-                    ? 'bg-green-500 text-white'
-                    : 'text-text-darkGray'
-                }`}
-                onClick={() => {
-                  if (isSellerMode) handleSwitchRole('seller');
-                }}
-              >
-                {t('common.seller')}
-              </button>
-            </div>
+            <SwitchRole
+              isSellerMode={isSellerMode}
+              isSwitchingRole={isSwitchingRole}
+              handleSwitchRole={handleSwitchRole}
+              userInfo={userInfo}
+            />
           )}
 
           {!isSellerMode && currentUser?.loggedIn && (
-            <Link to="#" className="flex items-center gap-2">
+            <Link to="#" className="flex items-center gap-2 mr-2">
               <div className="relative inline-flex items-center">
                 <FaCartShopping className="text-3xl text-text-midGray" />
-                <span className="absolute -top-3 -left-2 bg-green-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2 border-white">
+                <span className="absolute -top-3 -left-2 bg-greenPrimary text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2 border-white">
                   3
                 </span>
               </div>
@@ -148,12 +138,26 @@ const AppBar = () => {
 
           <div className="flex items-center gap-4">
             {currentUser?.loggedIn ? (
-              <button
-                className="text-text-darkGray font-medium border px-4 py-2"
-                onClick={handleLogout}
-              >
-                {t('common.logOut')}
-              </button>
+              <div className="flex items-center gap-4">
+                <button
+                  className="text-text-darkGray font-medium border px-4 h-[47px]"
+                  onClick={handleLogout}
+                >
+                  {t('common.logOut')}
+                </button>
+                <Link to="">
+                  {userInfo?.img ? (
+                    <img
+                      src={userInfo?.img}
+                      alt={`${userInfo?.firstName} ${userInfo?.lastName}`}
+                    />
+                  ) : (
+                    <div className="w-8 h-8 border-2 rounded-full flex items-center justify-center text-text-footerMention text-lg font-medium">
+                      {userInfo?.email?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </Link>
+              </div>
             ) : isLoading ? (
               <div className="w-5 h-5 border-2 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
             ) : (
