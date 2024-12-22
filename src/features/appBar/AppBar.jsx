@@ -28,7 +28,7 @@ const AppBar = () => {
   const [userLogout, { isLoading }] = useLogoutMutation();
   const [switchRole] = useSwitchRoleMutation();
   const currentZipCode = LocalStorageService.get('roshoonZipCode');
-  const { data } = useUserProfileQuery();
+  const { data, refetch } = useUserProfileQuery();
   const userInfo = data?.user;
   const [isSellerMode, setIsSellerMode] = useState(false);
 
@@ -43,12 +43,19 @@ const AppBar = () => {
     }
   }, [userInfo]);
 
+  // Refetch user profile after successful login
+  useEffect(() => {
+    if (currentUser?.loggedIn) {
+      refetch();
+    }
+  }, [currentUser?.loggedIn, refetch]);
+
   // Handle role switching
   const handleSwitchRole = async (role) => {
     try {
       await switchRole().unwrap();
       notifySuccess(t('common.roleSwitched', { role }));
-      setIsSellerMode(role === 'seller'); // Update UI only on success
+      setIsSellerMode(role === 'seller');
     } catch (error) {
       notifyError(t('common.errorSwitchingRole', { error: error.message }));
     }
@@ -64,8 +71,8 @@ const AppBar = () => {
     }
   };
 
-  console.log('userInfo', userInfo);
-
+  console.log('userInfo', data);
+  console.log('currentUser', currentUser);
   return (
     <header className="w-full z-max shadow-sm fixed top-0 left-0 bg-white">
       <nav className="container mx-auto flex justify-between items-center pr-4 h-[80px]">
@@ -87,8 +94,8 @@ const AppBar = () => {
               onClick={() => setOpenLocateMeModal(!openLocateMeModal)}
               className="flex items-center gap-2 p-2 cursor-pointer"
             >
-              <CiLocationOn className="text-gray-700 text-xl" />
-              <span className="text-gray-700 font-medium">
+              <CiLocationOn className="text-text-darkGray text-xl" />
+              <span className="text-text-darkGray font-medium">
                 {currentZipCode
                   ? `${t('common.updateLocateMe')} ${currentZipCode}`
                   : t('common.locateMe')}
@@ -96,11 +103,13 @@ const AppBar = () => {
             </div>
           )}
 
-          {userInfo?.loggedIn && (
+          {currentUser?.loggedIn && (
             <div className="flex items-center gap-4">
               <button
                 className={`p-2 ${
-                  !isSellerMode ? 'bg-green-500 text-white' : 'text-gray-700'
+                  !isSellerMode
+                    ? 'bg-green-500 text-white'
+                    : 'text-text-darkGray'
                 }`}
                 onClick={() => {
                   if (!isSellerMode) handleSwitchRole('buyer');
@@ -110,7 +119,9 @@ const AppBar = () => {
               </button>
               <button
                 className={`p-2 ${
-                  isSellerMode ? 'bg-green-500 text-white' : 'text-gray-700'
+                  isSellerMode
+                    ? 'bg-green-500 text-white'
+                    : 'text-text-darkGray'
                 }`}
                 onClick={() => {
                   if (isSellerMode) handleSwitchRole('seller');
@@ -121,15 +132,15 @@ const AppBar = () => {
             </div>
           )}
 
-          {!isSellerMode && (
+          {!isSellerMode && currentUser?.loggedIn && (
             <Link to="#" className="flex items-center gap-2">
               <div className="relative inline-flex items-center">
-                <FaCartShopping className="text-3xl text-gray-500" />
+                <FaCartShopping className="text-3xl text-text-midGray" />
                 <span className="absolute -top-3 -left-2 bg-green-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border-2 border-white">
                   3
                 </span>
               </div>
-              <span className="text-gray-700 font-medium">
+              <span className="text-text-darkGray font-medium">
                 {t('common.cart')}
               </span>
             </Link>
@@ -138,7 +149,7 @@ const AppBar = () => {
           <div className="flex items-center gap-4">
             {currentUser?.loggedIn ? (
               <button
-                className="text-gray-700 font-medium"
+                className="text-text-darkGray font-medium border px-4 py-2"
                 onClick={handleLogout}
               >
                 {t('common.logOut')}
@@ -147,10 +158,13 @@ const AppBar = () => {
               <div className="w-5 h-5 border-2 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
             ) : (
               <>
-                <Link to={registerPath} className="text-gray-700 font-medium">
+                <Link
+                  to={registerPath}
+                  className="text-text-darkGray font-medium"
+                >
                   {t('common.signUp')}
                 </Link>
-                <Link to={loginPath} className="text-gray-700 font-medium">
+                <Link to={loginPath} className="text-text-darkGray font-medium">
                   {t('common.logIn')}
                 </Link>
               </>

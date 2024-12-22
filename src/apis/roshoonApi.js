@@ -92,8 +92,18 @@ export const roshoonApi = createApi({
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
     }),
+    // userProfile: builder.query({
+    //   query: () => ({ url: 'auth/profile', credentials: 'include' }),
+    // }),
     userProfile: builder.query({
-      query: () => ({ url: 'auth/profile', credentials: 'include' }),
+      query: () => ({
+        url: 'auth/profile',
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(ROSHOON_ACCESS_TOKEN)}`,
+        },
+      }),
     }),
     switchRole: builder.mutation({
       query: () => ({
