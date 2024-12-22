@@ -62,7 +62,7 @@ export const SOCIAL_MEDIA_LINKS = [
     icon: FaTiktok,
     className: 'text-2xl',
   },
-  { platform: 'Facebook', path: 'https://www.facebook.com/', icon: Facebook },
+  // { platform: 'Facebook', path: 'https://www.facebook.com/', icon: Facebook },
   {
     platform: 'Linkedin',
     path: 'https://www.linkedin.com/feed/',

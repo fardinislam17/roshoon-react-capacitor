@@ -172,6 +172,51 @@ export const roshoonApi = createApi({
         }
       },
     }),
+    resetPasswordRequest: builder.mutation({
+      query: ({ identifier }) => ({
+        url: `auth/reset-password/request`,
+        method: 'POST',
+        body: { identifier },
+      }),
+
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+        } catch (err) {
+          console.error('Reset Password Request Error:', err.error);
+        }
+      },
+    }),
+    resetPasswordVerify: builder.mutation({
+      query: ({ identifier, otp }) => ({
+        url: `auth/reset-password/verify-otp`,
+        method: 'POST',
+        body: { identifier, otp },
+      }),
+
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+        } catch (err) {
+          console.error('Reset Password Request Error:', err.error);
+        }
+      },
+    }),
+    updatePassword: builder.mutation({
+      query: ({ resetToken, newPassword, confirmPassword }) => ({
+        url: `auth/reset-password/update`,
+        method: 'POST',
+        body: { resetToken, newPassword, confirmPassword },
+      }),
+
+      async onQueryStarted(arg, { queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+        } catch (err) {
+          console.error('Reset Password Request Error:', err.error);
+        }
+      },
+    }),
   }),
 });
 
@@ -182,8 +227,11 @@ export const {
   useCreateVerificationSessionMutation,
   useChefRegisterMutation,
   useUserProfileQuery,
-  useLoginWithFacebookMutation,
   useSwitchRoleMutation,
+  useLoginWithFacebookMutation,
+  useResetPasswordRequestMutation,
+  useResetPasswordVerifyMutation,
+  useUpdatePasswordMutation,
   endpoints: {
     signInWithEmailAndPassword: {
       useLazyQuery: useSignInWithEmailAndPasswordLazyQuery,

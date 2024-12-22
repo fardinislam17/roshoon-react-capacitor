@@ -12,7 +12,7 @@ const SwitchRole = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-3">
       {/* Customer Button */}
       <button
         className={`flex items-center gap-[10px] font-medium px-4 h-12 transition-all ${

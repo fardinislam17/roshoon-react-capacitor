@@ -3,7 +3,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 
-const CustomForm = ({ fields, handleSubmit }) => {
+const CustomForm = ({ fields, handleSubmit, handleModal }) => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const [formData, setFormData] = useState({});
@@ -111,6 +111,7 @@ const CustomForm = ({ fields, handleSubmit }) => {
       {pathname === '/login' && (
         <div className="mt-4 text-right">
           <button
+            onClick={() => handleModal()}
             type="button"
             className="text-sm underline text-grayDark hover:text-black"
           >

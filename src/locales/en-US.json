@@ -16,6 +16,7 @@
     "userName": "User Name",
     "password": "Password",
     "repeatPassword": "Repeat Password",
+    "resetPassword": "Reset Password",
     "cancel": "Cancel",
     "save": "Save",
     "submit": "Submit",
@@ -28,6 +29,8 @@
     "updateLocateMe": "Update Zip Code:",
     "learnMoreAboutUs": "Learn More About Us",
     "profile": "Profile",
+    "verifyCode": "Verify Code",
+    "sendNewCode": "Send New Code",
     "continue": "Continue",
     "phoneOrEmail": "Email or Phone",
     "firstName": "First Name",
@@ -35,6 +38,7 @@
     "shopName": "Shop Name",
     "address": "Address",
     "buildingNo": "Apartment, suite, etc.",
+    "resetYourPassword": "Reset Your Password",
     "city": "City",
     "state": "State",
     "zipCode": "Zip Code",
@@ -50,18 +54,25 @@
     "chefsOpportunitiesTitle": "Opportunities for Chefs",
     "chefsOpportunitiesDescription": "Opportunities for talented home chefs to showcase their culinary skills and earn a sustainable income.",
     "nurturingCommunityTitle": "Opportunities for Chefs",
-    "nurturingCommunityDescription": "A community that celebrates the diversity of homemade cuisine and fosters connections between foodies and chefs."
+    "nurturingCommunityDescription": "A community that celebrates the diversity of homemade cuisine and fosters connections between foodies and chefs.",
+    "ResetMessage": "Forgot your password? Simply enter your email address or phone number, and we'll send you a one-time passcode (OTP) to help you reset it quickly and securely.",
+    "verifyCodeMessage": "A verification code has been sent to you from roshoon.com. Enter your code below and click Verify Code.",
+    "PasswordResetDone": "Your password has been successfully reset."
   },
   "errors": {
     "auth": {
       "enterValidEmail": "Please enter a valid email address",
       "enterValidPhoneOrEmail": "Please enter a valid phone number or email address",
-      "passwordMustBeSixCharacters": "  Password must be at least 6 characters long"
+      "passwordMustBeSixCharacters": "  Password must be at least 6 characters long",
+      "userNotExist": "This phone/email is not registered. Please register first"
     },
     "validationMessage": {
       "zipCodeLength": "ZIP Code length must be 5 digits",
       "zipCodeNumericMessage": "ZIP Code must be numeric"
-    }
+    },
+    "somethingWentWrong": "Something went wrong",
+    "sessionExpired": "Session expired. Please request a new code.",
+    "PassNotMatched": "Both Passwords must match with each other"
   },
   "notifyMessage": {
     "zipCodeAddedMessage": "ZIP Code has been added.",
