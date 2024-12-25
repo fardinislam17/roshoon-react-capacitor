@@ -57,6 +57,7 @@ export const roshoonApi = createApi({
       }),
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
+      invalidatesTags: ['UserProfile'],
     }),
     register: builder.query({
       query: ({ email, firstName, lastName, password, phone }) => ({
@@ -67,6 +68,7 @@ export const roshoonApi = createApi({
       }),
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
+      invalidatesTags: ['UserProfile'],
     }),
     logout: builder.mutation({
       query: () => ({
@@ -92,6 +94,7 @@ export const roshoonApi = createApi({
       }),
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
+      invalidatesTags: ['UserProfile'],
     }),
     userProfile: builder.query({
       query: () => ({
@@ -150,6 +153,7 @@ export const roshoonApi = createApi({
           console.error('Chef registration error:', err);
         }
       },
+      invalidatesTags: ['UserProfile'],
     }),
     loginWithFacebook: builder.mutation({
       query: ({ access_token }) => ({

@@ -156,10 +156,10 @@ const AppBar = () => {
                   {t('common.logOut')}
                 </button>
                 <Link to="">
-                  {userInfo?.img ? (
+                  {userInfo?.picture ? (
                     <img
                       className="w-8 h-8 rounded-full object-cover"
-                      src={userInfo?.img}
+                      src={userInfo?.picture}
                       alt={`${userInfo?.firstName} ${userInfo?.lastName}`}
                     />
                   ) : (
