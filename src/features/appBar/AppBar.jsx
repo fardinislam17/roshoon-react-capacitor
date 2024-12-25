@@ -15,7 +15,7 @@ import {
   notifyError,
   notifySuccess,
 } from 'src/components/SnackbarProvider/useSnackbar';
-import { loginPath, registerPath } from 'src/paths';
+import { becomeAChefPath, loginPath, registerPath } from 'src/paths';
 import { getCurrentUser } from 'src/slices';
 import { Constant } from 'src/utils/constant.js';
 import { LocalStorageService } from 'src/utils/LocalStorage';
@@ -96,7 +96,7 @@ const AppBar = () => {
           </Link>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-8">
           {!isSellerMode && currentUser?.loggedIn && <Search />}
 
           {!currentUser?.roles?.includes(Constant.CHEF) && (
@@ -113,14 +113,15 @@ const AppBar = () => {
             </div>
           )}
 
-          {currentUser?.loggedIn && (
-            <SwitchRole
-              isSellerMode={isSellerMode}
-              isSwitchingRole={isSwitchingRole}
-              handleSwitchRole={handleSwitchRole}
-              userInfo={userInfo}
-            />
-          )}
+          {currentUser?.loggedIn &&
+            currentUser?.roles?.includes(Constant.CHEF) && (
+              <SwitchRole
+                isSellerMode={isSellerMode}
+                isSwitchingRole={isSwitchingRole}
+                handleSwitchRole={handleSwitchRole}
+                userInfo={userInfo}
+              />
+            )}
 
           {!isSellerMode && currentUser?.loggedIn && (
             <Link to="#" className="flex items-center gap-2 mr-2">
@@ -136,6 +137,15 @@ const AppBar = () => {
             </Link>
           )}
 
+          {!currentUser?.roles?.includes(Constant.CHEF) && (
+            <Link
+              to={becomeAChefPath}
+              className="text-text-darkGray font-medium"
+            >
+              {t('common.becomeAChef')}
+            </Link>
+          )}
+
           <div className="flex items-center gap-4">
             {currentUser?.loggedIn ? (
               <div className="flex items-center gap-4">
@@ -148,6 +158,7 @@ const AppBar = () => {
                 <Link to="">
                   {userInfo?.img ? (
                     <img
+                      className="w-8 h-8 rounded-full object-cover"
                       src={userInfo?.img}
                       alt={`${userInfo?.firstName} ${userInfo?.lastName}`}
                     />
@@ -161,7 +172,7 @@ const AppBar = () => {
             ) : isLoading ? (
               <div className="w-5 h-5 border-2 border-gray-300 border-t-gray-700 rounded-full animate-spin"></div>
             ) : (
-              <>
+              <div className="flex items-center gap-8">
                 <Link
                   to={registerPath}
                   className="text-text-darkGray font-medium"
@@ -171,7 +182,7 @@ const AppBar = () => {
                 <Link to={loginPath} className="text-text-darkGray font-medium">
                   {t('common.logIn')}
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>
