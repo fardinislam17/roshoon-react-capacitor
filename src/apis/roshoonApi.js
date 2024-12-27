@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getCookieByName } from 'src/utils';
-import { logout, setUser } from 'src/slices';
 import { ROSHOON_ACCESS_TOKEN, ROSHOON_AUTH_TOKEN } from 'src/app/constants';
+import { logout, setUser } from 'src/slices';
+import { getCookieByName } from 'src/utils';
 
 // Helper function to set the access token in local storage
 const setAccessToken = (accessToken) => {
@@ -25,8 +25,9 @@ export const roshoonApi = createApi({
 
   tagTypes: [],
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.BASE_URL}api`,
-    // baseUrl: import.meta.env.VITE_API_BASE_URL,
+    // baseUrl: `${import.meta.env.BASE_URL}api`,
+    tagTypes: ['UserProfile'],
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, { endpoint }) => {
       const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
       const accessToken = localStorage.getItem(ROSHOON_ACCESS_TOKEN);
@@ -56,6 +57,7 @@ export const roshoonApi = createApi({
       }),
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
+      invalidatesTags: ['UserProfile'],
     }),
     register: builder.query({
       query: ({ email, firstName, lastName, password, phone }) => ({
@@ -66,6 +68,7 @@ export const roshoonApi = createApi({
       }),
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
+      invalidatesTags: ['UserProfile'],
     }),
     logout: builder.mutation({
       query: () => ({
@@ -91,10 +94,31 @@ export const roshoonApi = createApi({
       }),
       onQueryStarted: (arg, { dispatch, queryFulfilled }) =>
         handleUserLogin(dispatch, queryFulfilled),
+      invalidatesTags: ['UserProfile'],
     }),
     userProfile: builder.query({
-      query: () => ({ url: 'auth/profile', credentials: 'include' }),
+      query: () => ({
+        url: 'auth/profile',
+        method: 'GET',
+        credentials: 'include',
+      }),
+      providesTags: ['UserProfile'],
     }),
+    switchRole: builder.mutation({
+      query: () => ({
+        url: 'auth/switch-role',
+        method: 'POST',
+      }),
+      onQueryStarted: async (arg, { queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+        } catch (err) {
+          console.error('Switching role:', err);
+        }
+      },
+      invalidatesTags: ['UserProfile'],
+    }),
+
     createVerificationSession: builder.mutation({
       query: () => ({
         url: 'identity/create-verification-session',
@@ -129,6 +153,7 @@ export const roshoonApi = createApi({
           console.error('Chef registration error:', err);
         }
       },
+      invalidatesTags: ['UserProfile'],
     }),
     loginWithFacebook: builder.mutation({
       query: ({ access_token }) => ({
@@ -206,6 +231,7 @@ export const {
   useCreateVerificationSessionMutation,
   useChefRegisterMutation,
   useUserProfileQuery,
+  useSwitchRoleMutation,
   useLoginWithFacebookMutation,
   useResetPasswordRequestMutation,
   useResetPasswordVerifyMutation,

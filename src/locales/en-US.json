@@ -6,8 +6,11 @@
     "createNew": "Create New",
     "signIn": "Sign In",
     "logIn": "Log In",
-    "logOut": "Log Out",
+    "logOut": "Sign Out",
+    "customer": "Customer",
+    "seller": "Seller",
     "signUp": "Sign Up",
+    "cart": "Cart",
     "name": "Name",
     "email": "Email",
     "userName": "User Name",
@@ -74,7 +77,9 @@
   "notifyMessage": {
     "zipCodeAddedMessage": "ZIP Code has been added.",
     "zipCodeAlreadyAddedMessage": "ZIP Code is already saved.",
-    "zipCodeUpdatedMessage": "ZIP Code has been updated."
+    "zipCodeUpdatedMessage": "ZIP Code has been updated.",
+    "roleSwitched": "Role Updated Successfully",
+    "errorSwitchingRole": "Role can't Updated"
   },
   "placeholder": {
     "enterZIPCode": "Enter your ZIP code"
