@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   server: {
     // url: 'https://roshoon.com',
-    url: 'http://192.168.0.192:3333',
+    url: 'http://192.168.20.161:3000',
     cleartext: true,
   },
   plugins: {
