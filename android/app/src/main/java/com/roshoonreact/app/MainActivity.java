@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
-import com.getcapacitor.browser.Browser; 
 
 public class MainActivity extends BridgeActivity {
     @Override
@@ -13,13 +12,26 @@ public class MainActivity extends BridgeActivity {
         handleAuthCallback();
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent); // Update the intent to the new one
+        handleAuthCallback();
+    }
+
     private void handleAuthCallback() {
         Intent intent = getIntent();
-        String action = intent.getAction();
+        if (intent == null) {
+            return;
+        }
+
         Uri data = intent.getData();
-        
         if (data != null && "roshoon".equals(data.getScheme()) && "auth-callback".equals(data.getHost())) {
-            finish(); // Close the activity to return control to your app
+            // Handle the auth callback
+            Intent resultIntent = new Intent();
+            resultIntent.setData(data); // Pass the data back
+            setResult(RESULT_OK, resultIntent);
+            finish(); // Close the activity
         }
     }
 }
