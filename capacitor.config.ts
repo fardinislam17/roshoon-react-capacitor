@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
   appName: 'roshoon-react',
   webDir: 'dist',
   server: {
-    url: 'https://roshoon.com',
+    // url: 'https://roshoon.com',
+    url: 'http://192.168.0.192:3333',
     cleartext: true,
   },
   plugins: {
