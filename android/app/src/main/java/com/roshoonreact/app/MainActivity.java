@@ -1,5 +1,9 @@
 package com.roshoonreact.app;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.webkit.Browser;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.Bridge;
