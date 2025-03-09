@@ -42,10 +42,8 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
 
-    // Add Google Auth and Firebase dependencies
+    // Add Google Auth 
     implementation 'com.google.android.gms:play-services-auth:20.7.0' // Google Auth
-    implementation platform('com.google.firebase:firebase-bom:32.3.1') // Firebase BoM
-    implementation 'com.google.firebase:firebase-auth' // Firebase Auth
 }
 
 apply from: 'capacitor.build.gradle'
