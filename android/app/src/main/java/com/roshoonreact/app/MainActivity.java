@@ -40,19 +40,10 @@ package com.roshoonreact.app;
 
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
-// import com.getcapacitor.Plugin; // Import the Plugin class
-// import com.codetrixstudio.capacitor.GoogleAuth.GoogleAuth; // Import the GoogleAuth plugin
-// import java.util.ArrayList; // Import the ArrayList class
 
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    // Initializes the Bridge
-    // this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-    //   // Additional plugins you've installed go here
-    //   add(GoogleAuth.class);
-    // }});
+    super.onCreate(savedInstanceState); // Initialize Capacitor
   }
 }
