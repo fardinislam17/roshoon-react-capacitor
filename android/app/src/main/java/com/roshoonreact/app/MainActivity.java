@@ -4,11 +4,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
+import com.codetrixstudio.capacitor.GoogleAuth.GoogleAuth; // Import the GoogleAuth plugin
 
 public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Register the GoogleAuth plugin
+        registerPlugin(GoogleAuth.class);
+
+        // Handle authentication callbacks
         handleAuthCallback();
     }
 
