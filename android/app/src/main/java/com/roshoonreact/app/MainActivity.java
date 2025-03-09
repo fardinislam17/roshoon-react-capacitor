@@ -11,11 +11,16 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Register the GoogleAuth plugin
-        registerPlugin(GoogleAuth.class);
+        // Register the GoogleAuth pluginsuper.onCreate(savedInstanceState);
+
+        // Initializes the Bridge
+        this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
+        // Additional plugins you've installed go here
+        add(GoogleAuth.class);
+        }});
 
         // Handle authentication callbacks
-        handleAuthCallback();
+        // handleAuthCallback();
     }
 
     @Override
