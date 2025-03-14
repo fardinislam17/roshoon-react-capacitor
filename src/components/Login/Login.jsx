@@ -25,6 +25,8 @@ import {
   notifySuccess,
 } from 'src/components/SnackbarProvider/useSnackbar';
 import ForgetPassModal from './ForgetPassModal';
+import { Capacitor } from '@capacitor/core';
+import { setCookie } from 'src/utils';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -37,19 +39,74 @@ const Login = () => {
   const [googleLogin] = useLoginWithGoogleMutation();
   // const [facebookLogin] = useLoginWithFacebookMutation();
 
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
+  // const loginWithGoogle = useGoogleLogin({
+  //   onSuccess: async (tokenResponse) => {
+  //     try {
+  //       const access_token = tokenResponse.access_token;
+  //       const response = await googleLogin({ access_token });
+  //       notifySuccess(response.data.message);
+  //       navigate(homepagePath);
+  //     } catch (error) {
+  //       notifyError(error.message || DEFAULT_ERROR_MESSAGE);
+  //     }
+  //   },
+  //   onError: (error) => console.log(error),
+  // });
+
+  const loginWithGoogle = async () => {
+    console.log(Capacitor.isNativePlatform());
+
+    if (Capacitor.isNativePlatform()) {
+      // Use Capacitor Google Auth for Android
       try {
-        const access_token = tokenResponse.access_token;
-        const response = await googleLogin({ access_token });
-        notifySuccess(response.data.message);
-        navigate(homepagePath);
+        const user = await GoogleAuth.signIn();
+        // const res = await SocialLogin.login({
+        //   provider: 'google',
+        //   options: {
+        //     scopes: ['email', 'profile'],
+        //   },
+        // });
+        // const res2 = await SocialLogin.getAuthorizationCode({
+        //   provider: 'google',
+        // });
+        // console.log('Google User (Android):', user);
+
+        const accessToken = user?.authentication?.accessToken;
+        if (!accessToken) {
+          throw new Error('No access token found in Google Sign-In response');
+        }
+
+        const response = await googleLogin(accessToken); // Call your backend API
+
+        if (response) {
+          const { accessToken: appAccessToken, refreshToken } = response;
+          setCookie(ROSHOON_AUTH_TOKEN, refreshToken);
+          setCookie(ROSHOON_ACCESS_TOKEN, appAccessToken);
+          router.push('/dashboard');
+        }
+
+        return true;
       } catch (error) {
-        notifyError(error.message || DEFAULT_ERROR_MESSAGE);
+        console.error('Google Login Error (Android):', error);
+        return false;
       }
-    },
-    onError: (error) => console.log(error),
-  });
+    } else {
+      // Use NextAuth.js for Web
+      useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+          try {
+            const access_token = tokenResponse.access_token;
+            const response = await googleLogin({ access_token });
+            notifySuccess(response.data.message);
+            navigate(homepagePath);
+          } catch (error) {
+            notifyError(error.message || DEFAULT_ERROR_MESSAGE);
+          }
+        },
+        onError: (error) => console.log(error),
+      });
+    }
+  };
 
   // const loginWithFacebook = (_) => {
   //   window.FB.login(
