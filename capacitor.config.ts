@@ -4,11 +4,11 @@ const config: CapacitorConfig = {
   appId: 'com.roshoonreact.app',
   appName: 'roshoon-react',
   webDir: 'dist',
-  server: {
-    // url: 'https://roshoon.com',
-    url: 'http://192.168.0.192:3000',
-    cleartext: true,
-  },
+  // server: {
+  //   // url: 'https://roshoon.com',
+  //   url: 'http://192.168.0.192:3000',
+  //   cleartext: true,
+  // },
   plugins: {
     SplashScreen: {
       launchShowDuration: 3000,
