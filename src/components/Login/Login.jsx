@@ -4,7 +4,7 @@ import loginImage from 'src/assets/images/login.png';
 import roshoon from 'src/assets/images/roshoon.png';
 import { Button, Divider, LinearProgress, Typography } from '@mui/material';
 import { useGoogleLogin } from '@react-oauth/google';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // import FacebookLogin from 'react-facebook-login';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
@@ -39,32 +39,25 @@ const Login = () => {
   const [googleLogin] = useLoginWithGoogleMutation();
   // const [facebookLogin] = useLoginWithFacebookMutation();
 
-  // const loginWithGoogle = useGoogleLogin({
-  //   onSuccess: async (tokenResponse) => {
-  //     try {
-  //       const access_token = tokenResponse.access_token;
-  //       const response = await googleLogin({ access_token });
-  //       notifySuccess(response.data.message);
-  //       navigate(homepagePath);
-  //     } catch (error) {
-  //       notifyError(error.message || DEFAULT_ERROR_MESSAGE);
-  //     }
-  //   },
-  //   onError: (error) => console.log(error),
-  // });
-
+  const webGoogleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const access_token = tokenResponse.access_token;
+        const response = await googleLogin({ access_token });
+        notifySuccess(response.data.message);
+        navigate(homepagePath);
+      } catch (error) {
+        notifyError(error.message || DEFAULT_ERROR_MESSAGE);
+      }
+    },
+    onError: (error) => console.log(error),
+  });
   const loginWithGoogle = async () => {
     console.log(Capacitor.isNativePlatform());
 
-    if (Capacitor.isNativePlatform()) {
+    if (Capacitor.isNativePlatform() === 'android') {
       // Use Capacitor Google Auth for Android
       try {
-        await GoogleAuth.initialize({
-          clientId:
-            '197474516781-qqmjomhai2tfq4k8menop27c6aqujkli.apps.googleusercontent.com',
-          scopes: ['profile', 'email'],
-          grantOfflineAccess: true,
-        });
         const user = await GoogleAuth.signIn();
         // const res = await SocialLogin.login({
         //   provider: 'google',
@@ -97,22 +90,19 @@ const Login = () => {
         return false;
       }
     } else {
-      // Use NextAuth.js for Web
-      useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-          try {
-            const access_token = tokenResponse.access_token;
-            const response = await googleLogin({ access_token });
-            notifySuccess(response.data.message);
-            navigate(homepagePath);
-          } catch (error) {
-            notifyError(error.message || DEFAULT_ERROR_MESSAGE);
-          }
-        },
-        onError: (error) => console.log(error),
-      });
+      webGoogleLogin();
     }
   };
+  useEffect(() => {
+    if (Capacitor.isNativePlatform() === 'android') {
+      GoogleAuth.initialize({
+        clientId:
+          '197474516781-qqmjomhai2tfq4k8menop27c6aqujkli.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+        grantOfflineAccess: true,
+      });
+    }
+  }, []);
 
   // const loginWithFacebook = (_) => {
   //   window.FB.login(
