@@ -59,6 +59,12 @@ const Login = () => {
     if (Capacitor.isNativePlatform()) {
       // Use Capacitor Google Auth for Android
       try {
+        await GoogleAuth.initialize({
+          clientId:
+            '197474516781-qqmjomhai2tfq4k8menop27c6aqujkli.apps.googleusercontent.com',
+          scopes: ['profile', 'email'],
+          grantOfflineAccess: true,
+        });
         const user = await GoogleAuth.signIn();
         // const res = await SocialLogin.login({
         //   provider: 'google',
