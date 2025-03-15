@@ -83,33 +83,19 @@ const Login = () => {
   };
   useEffect(() => {
     if (Capacitor.getPlatform() === 'android') {
-      GoogleAuth.initialize({
-        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-        scopes: ['profile', 'email'],
-        grantOfflineAccess: true,
-      });
+      // GoogleAuth.initialize({
+      //   clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+      //   scopes: ['profile', 'email'],
+      //   grantOfflineAccess: true,
+      // })
+      //   .then(() => console.log('GoogleAuth Initialized'))
+      //   .catch((err) => console.error('GoogleAuth Init Error:', err));
+
+      GoogleAuth.init()
+        .then(() => console.log('GoogleAuth initialized'))
+        .catch((err) => console.error('GoogleAuth Init Error:', err));
     }
   }, []);
-
-  // const loginWithFacebook = (_) => {
-  //   window.FB.login(
-  //     function (loginresponse) {
-  //       console.log({ loginresponse });
-  //       facebookLogin({
-  //         access_token: 'dummy#$$%^&*()ghtoken',
-  //       }).then((res) => {
-  //         notifySuccess(res.data?.message);
-  //         navigate(homepagePath);
-  //       });
-  // if (response.authResponse) {
-  //   console.log('Logged in:', response);
-  // } else {
-  //   console.log('User cancelled login or did not fully authorize.');
-  // }
-  //     },
-  //     { scope: 'public_profile' }
-  //   );
-  // };
 
   const handleModal = () => {
     setOpen(!open);
