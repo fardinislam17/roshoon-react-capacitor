@@ -53,34 +53,22 @@ const Login = () => {
     onError: (error) => console.log(error),
   });
   const loginWithGoogle = async () => {
-    console.log(Capacitor.isNativePlatform());
-
     if (Capacitor.getPlatform() === 'android') {
       // Use Capacitor Google Auth for Android
       try {
         const user = await GoogleAuth.signIn();
-        // const res = await SocialLogin.login({
-        //   provider: 'google',
-        //   options: {
-        //     scopes: ['email', 'profile'],
-        //   },
-        // });
-        // const res2 = await SocialLogin.getAuthorizationCode({
-        //   provider: 'google',
-        // });
-        // console.log('Google User (Android):', user);
 
         const accessToken = user?.authentication?.accessToken;
         if (!accessToken) {
           throw new Error('No access token found in Google Sign-In response');
         }
 
-        const response = await googleLogin(accessToken); // Call your backend API
+        const response = await googleLogin({ access_token: accessToken }); // Call your backend API
 
         if (response) {
-          const { accessToken: appAccessToken, refreshToken } = response;
-          setCookie(ROSHOON_AUTH_TOKEN, refreshToken);
-          setCookie(ROSHOON_ACCESS_TOKEN, appAccessToken);
+          // const { accessToken: appAccessToken, refreshToken } = response;
+          // setCookie(ROSHOON_AUTH_TOKEN, refreshToken);
+          // setCookie(ROSHOON_ACCESS_TOKEN, appAccessToken);
           router.push('/dashboard');
         }
 
@@ -96,8 +84,7 @@ const Login = () => {
   useEffect(() => {
     if (Capacitor.getPlatform() === 'android') {
       GoogleAuth.initialize({
-        clientId:
-          '197474516781-qqmjomhai2tfq4k8menop27c6aqujkli.apps.googleusercontent.com',
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
         scopes: ['profile', 'email'],
         grantOfflineAccess: true,
       });
