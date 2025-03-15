@@ -55,7 +55,7 @@ const Login = () => {
   const loginWithGoogle = async () => {
     console.log(Capacitor.isNativePlatform());
 
-    if (Capacitor.isNativePlatform() === 'android') {
+    if (Capacitor.getPlatform() === 'android') {
       // Use Capacitor Google Auth for Android
       try {
         const user = await GoogleAuth.signIn();
@@ -94,7 +94,7 @@ const Login = () => {
     }
   };
   useEffect(() => {
-    if (Capacitor.isNativePlatform() === 'android') {
+    if (Capacitor.getPlatform() === 'android') {
       GoogleAuth.initialize({
         clientId:
           '927800944445-hhfb93qkn78qgurg65qj36tr5iugu24e.apps.googleusercontent.com',
