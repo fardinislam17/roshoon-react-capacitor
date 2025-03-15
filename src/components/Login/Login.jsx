@@ -97,7 +97,7 @@ const Login = () => {
     if (Capacitor.isNativePlatform() === 'android') {
       GoogleAuth.initialize({
         clientId:
-          '197474516781-qqmjomhai2tfq4k8menop27c6aqujkli.apps.googleusercontent.com',
+          '927800944445-hhfb93qkn78qgurg65qj36tr5iugu24e.apps.googleusercontent.com',
         scopes: ['profile', 'email'],
         grantOfflineAccess: true,
       });
