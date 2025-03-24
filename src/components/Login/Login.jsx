@@ -91,9 +91,7 @@ const Login = () => {
       //   .then(() => console.log('GoogleAuth Initialized'))
       //   .catch((err) => console.error('GoogleAuth Init Error:', err));
 
-      GoogleAuth.init()
-        .then(() => console.log('GoogleAuth initialized'))
-        .catch((err) => console.error('GoogleAuth Init Error:', err));
+      GoogleAuth.initialize();
     }
   }, []);
 
