@@ -56,6 +56,7 @@ const Login = () => {
     if (Capacitor.getPlatform() === 'android') {
       // Use Capacitor Google Auth for Android
       try {
+        GoogleAuth.initialize();
         const user = await GoogleAuth.signIn();
 
         const accessToken = user?.authentication?.accessToken;
