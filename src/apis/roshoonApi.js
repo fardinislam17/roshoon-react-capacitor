@@ -30,7 +30,9 @@ export const roshoonApi = createApi({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, { endpoint }) => {
       const authToken = getCookieByName(ROSHOON_AUTH_TOKEN);
-      const accessToken = localStorage.getItem(ROSHOON_ACCESS_TOKEN);
+      const accessToken =
+        localStorage.getItem(ROSHOON_ACCESS_TOKEN) ||
+        getCookieByName(ROSHOON_ACCESS_TOKEN);
 
       if (endpoint === 'signInWithExistingCookie' && authToken) {
         headers.set('ROSHOON_AUTH_TOKEN', authToken);

@@ -1,22 +1,21 @@
-import FacebookIcon from '@mui/icons-material/Facebook';
 import GoogleIcon from '@mui/icons-material/Google';
 import loginImage from 'src/assets/images/login.png';
 import roshoon from 'src/assets/images/roshoon.png';
 import { Button, Divider, LinearProgress, Typography } from '@mui/material';
 import { useGoogleLogin } from '@react-oauth/google';
 import React, { useEffect, useRef, useState } from 'react';
-// import FacebookLogin from 'react-facebook-login';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   useLoginWithGoogleMutation,
-  useLoginWithFacebookMutation,
   useSignInWithEmailAndPasswordLazyQuery,
 } from 'src/apis/roshoonApi';
 import {
   DEFAULT_ERROR_MESSAGE,
   LOGIN_FIELDS,
   LOGIN_METHODS,
+  ROSHOON_ACCESS_TOKEN,
+  ROSHOON_AUTH_TOKEN,
 } from 'src/app/constants';
 import { CustomForm } from 'src/components/Forms';
 import { homepagePath, registerPath } from 'src/paths';
@@ -26,6 +25,7 @@ import {
 } from 'src/components/SnackbarProvider/useSnackbar';
 import ForgetPassModal from './ForgetPassModal';
 import { Capacitor } from '@capacitor/core';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { setCookie } from 'src/utils';
 
 const Login = () => {
@@ -52,25 +52,36 @@ const Login = () => {
     },
     onError: (error) => console.log(error),
   });
+  // console.log('GoogleAuth plugin:', GoogleAuth);
   const loginWithGoogle = async () => {
     if (Capacitor.getPlatform() === 'android') {
       // Use Capacitor Google Auth for Android
       try {
-        GoogleAuth.initialize();
+        // GoogleAuth.initialize();
         const user = await GoogleAuth.signIn();
+        console.log('user data', JSON.stringify(user));
+
+        // const user = { authentication: { accessToken: 'token' } };
 
         const accessToken = user?.authentication?.accessToken;
+        console.log('token', accessToken);
         if (!accessToken) {
           throw new Error('No access token found in Google Sign-In response');
         }
 
-        const response = await googleLogin({ access_token: accessToken }); // Call your backend API
-
-        if (response) {
-          // const { accessToken: appAccessToken, refreshToken } = response;
-          // setCookie(ROSHOON_AUTH_TOKEN, refreshToken);
-          // setCookie(ROSHOON_ACCESS_TOKEN, appAccessToken);
-          router.push('/dashboard');
+        const { error, data } = await googleLogin({
+          access_token: accessToken,
+        }); // Call your backend API
+        console.log(
+          'api response',
+          JSON.stringify(error),
+          JSON.stringify(data)
+        );
+        if (data) {
+          const { accessToken: appAccessToken, refreshToken } = data;
+          setCookie(ROSHOON_AUTH_TOKEN, refreshToken);
+          setCookie(ROSHOON_ACCESS_TOKEN, appAccessToken);
+          navigate('/dashboard');
         }
 
         return true;
@@ -84,15 +95,21 @@ const Login = () => {
   };
   useEffect(() => {
     if (Capacitor.getPlatform() === 'android') {
-      // GoogleAuth.initialize({
-      //   clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      //   scopes: ['profile', 'email'],
-      //   grantOfflineAccess: true,
-      // })
-      //   .then(() => console.log('GoogleAuth Initialized'))
-      //   .catch((err) => console.error('GoogleAuth Init Error:', err));
-
-      GoogleAuth.initialize();
+      // if (typeof GoogleAuth === 'undefined') {
+      //   console.error('GoogleAuth is not defined');
+      //   return;
+      // }
+      console.log('Initializing GoogleAuth...');
+      GoogleAuth.initialize({
+        clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        scopes: ['profile', 'email'],
+      })
+        .then(() => {
+          console.log('GoogleAuth Initialized');
+        })
+        .catch((err) => {
+          console.error('GoogleAuth Init Error:', err);
+        });
     }
   }, []);
 
